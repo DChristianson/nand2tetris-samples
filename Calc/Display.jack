@@ -1,0 +1,224 @@
+/**
+ * Segmented digit display.
+ */
+class Display {
+
+    // user settable attributes
+    static int displayTop;
+    static int displayLeft;
+    static int displayWidth;
+    static int displayHeight;
+    static int digitWidth;
+    static int digitHeight;
+    static int lineThickness;
+    static int digitSpacing;
+    static int displayMargin;
+
+    // internal attributes
+    static int displayRight;
+    static int displayBottom;
+    static int digitTop;
+    static int digitMiddle;
+    static int digitBottom;
+        
+    function void setPosition(int left, int top, int width, int height) {
+        let displayTop = top;
+        let displayLeft = left;
+        let displayWidth = width;
+        let displayHeight = height;
+        do Display.resize();
+        return;
+    }
+
+    function void setDigitSize(int width, int height, int thickness, int spacing) {
+        let digitWidth = width;
+        let digitHeight = height;
+        let lineThickness = thickness;
+        let digitSpacing = spacing;
+        do Display.resize();
+        return;
+    }
+
+    function void setMargin(int margin) {
+        let displayMargin = margin;
+        do Display.resize();
+        return;
+    }
+
+    /**
+     * Clear the display 
+     */
+    function void clear() {
+        do Screen.setColor(0);
+        do Screen.drawRectangle(
+            displayLeft, displayTop,
+            displayRight, displayBottom
+        );
+        return;
+    }
+
+    /**
+     * Display a decimal number
+     */
+    function void displayDecimal32(Decimal32 d) {
+        var char c;
+        var int i, len, x, step;
+        var String value;
+
+        let value = String.new(12);
+        do d.format(value);
+
+        let len = value.length();
+        let step = digitWidth + digitSpacing;
+        let x = displayRight - displayMargin - (len * step);
+
+        do Display.clear();
+        do Debug.value("len", len);
+        do Debug.value("i", i);
+
+        while (i < len) {
+            let c = value.charAt(i);
+            do Display.displayChar(c, x);
+            let x = x + step;
+            let i = i + 1;
+        }
+
+        do value.dispose();
+        return;
+    }
+
+   function void displayChar(char c, int x) {
+
+        var int segments;
+        var int right;
+
+        let segments = Display.getDisplaySegments(c);
+
+        let right = x + digitWidth;
+
+        // draw digit segments
+        do Screen.setColor(1);
+        if (segments & 128) {
+            do Screen.drawRectangle(
+                x, digitTop,
+                right, digitTop + lineThickness
+            );
+        }
+        if (segments & 64) {
+            do Screen.drawRectangle(
+                x, digitTop,
+                x + lineThickness, digitMiddle
+            );
+        }
+        if (segments & 32) {
+            do Screen.drawRectangle(
+                right - lineThickness, digitTop,
+                right, digitMiddle
+            );
+        }
+        if (segments & 16) {
+            do Screen.drawRectangle(
+                x, digitMiddle - lineThickness,
+                right, digitMiddle
+            );
+        }
+        if (segments & 8) {
+            do Screen.drawRectangle(
+                x, digitMiddle,
+                x + lineThickness, digitBottom
+            );
+        }
+        if (segments & 4) {
+            do Screen.drawRectangle(
+                right - lineThickness, digitMiddle,
+                right, digitBottom
+            );
+        }
+        if (segments & 2) {
+            do Screen.drawRectangle(
+                x, digitBottom - lineThickness,
+                right, digitBottom
+            );
+        }
+        if (segments & 1) {
+            do Screen.drawRectangle(
+                right - lineThickness, digitBottom - lineThickness,
+                right, digitBottom
+            );
+        }
+
+        return;
+    }
+
+    /**
+     * Internal function to recalculate boundaries
+     */
+    function void resize() {
+        let displayRight = displayLeft + displayWidth;
+        let displayBottom = displayTop + displayHeight;
+        let digitTop = displayTop + displayMargin;
+        let digitMiddle = digitTop + (displayHeight / 2);
+        let digitBottom = digitTop + digitHeight;
+        return;
+    }
+
+    /**
+     * Map from character to display segments.
+     */
+    function int getDisplaySegments(char c) {
+        if (c = 48) {
+            // 48 - 11101110 - 228 
+            return 238;
+        }
+        if (c = 49) {
+            // 49 - 00100100 - 36
+            return 36;
+        }
+        if (c = 50) {
+            // 50 - 10111010 - 186
+            return 186;
+        }
+        if (c = 51) {
+            // 51 - 10110110 - 182
+            return 182;
+        }
+        if (c = 52) {
+            // 52 - 01110100 - 116
+            return 116;
+        }
+        if (c = 53) {
+            // 53 - 11010110 - 214
+            return 214;
+        }
+        if (c = 54) {
+            // 54 - 11011110 - 222
+            return 222;
+        }
+        if (c = 55) {
+            // 55 - 10100100 - 164
+            return 164;
+        }
+        if (c = 56) {
+            // 56 - 11111110 - 254
+            return 254;
+        }
+        if (c = 57) {
+            // 57 - 11110100 - 244
+            return 244;
+        }
+        if (c = 46) {
+            // 46 - 00000001 - 1
+            return 1;
+        }
+        if (c = 45) {
+            // 45 - 00010000 - 16
+            return 16;
+        }
+        if (c = 69) {
+            // 69 - 11011010 - 218
+            return 218;
+        }
+        return 255;
+    }
+
+}

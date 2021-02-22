@@ -1,0 +1,17 @@
+class Debug {
+
+    function void info(String s) {
+        do Output.printString(s);
+        do Output.println();
+        return;
+    }
+
+    function void value(String label, int i) {
+        do Output.printString(label);
+        do Output.printString(": ");
+        do Output.printInt(i);
+        do Output.println();
+        return;
+    }
+
+}

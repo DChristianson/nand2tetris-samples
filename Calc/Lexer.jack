@@ -1,0 +1,110 @@
+/**
+ * Lexer for calculator expressions.
+ * Processes a string into tokens, stopping after each one.
+ * 
+ *    numeric := r/[0-9]*(.[0-9]*)?/
+ *    operator := '+' | '-' | '*' | '/'
+ *    lparen := '('
+ *    rparen := ')'    
+ *
+ */
+class Lexer {
+
+    field String string;
+    field int tokenType; 
+    field int startOffset, endOffset, len;
+
+    constructor Lexer new(String s) {
+        let string = s;
+        let tokenType = 0;
+        let startOffset = 0;
+        let endOffset = 0;
+        let len = string.length();
+        return this;
+    }
+
+    /**
+     * get the last matched token.
+     * 0 = unknown, 1 = numeric, 2 = operator, 3 = lparen, 4 = rparen
+     */
+    method int tokenType() {
+        return tokenType;
+    }
+
+    method int startOffset() {
+        return startOffset;
+    }
+
+    method int endOffset() {
+        return endOffset;
+    }
+
+    method bool next() {
+        var int c;
+        let startOffset = endOffset;
+        while (endOffset < len) {
+            let c = string.charAt(endOffset);
+            let endOffset = endOffset + 1;
+            if (c > 33) {
+                // ignore all whitespace and control characters
+
+                // '.' | '0'-'9' 
+                if ((c = 46) | ((c > 47) & (c < 58))) {
+                    let tokenType = 1;
+                    do consumeNumeric();
+                    return true;
+
+                }
+
+                // '+' | '-' | '*' | '/'
+                if ((c = 42) | (c = 43) | (c = 45) | (c = 47)) {
+                    let tokenType = 2;
+                    return true;
+
+                }
+
+                // '('
+                if (c = 40) {
+                    let tokenType = 4;
+                    return true;
+                    
+                } 
+
+                // ')'
+                if (c = 41) {
+                    let tokenType = 5;
+                    return true;
+
+                }
+
+                // no idea
+                let tokenType = 0;
+                return true;
+
+            }
+
+        }
+        return false; 
+    }
+
+    /**
+     * internal method to consume all the chars in a numeric string
+     */
+    method void consumeNumeric() {
+        var int c;
+        while (endOffset < len) {
+            let c = string.charAt(endOffset);
+            if ((~(c = 46)) & ((c < 48) | (c > 57))) {
+                return;
+            }
+            let endOffset = endOffset + 1;
+        }
+        return;
+    }
+    
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+}

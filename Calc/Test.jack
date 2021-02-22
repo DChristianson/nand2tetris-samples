@@ -1,0 +1,92 @@
+class Test {
+
+    function void test() {
+        var Decimal32 result;
+        // do CalcExpression.eval("0");
+        // do CalcExpression.eval("1");
+        // do CalcExpression.eval("10");
+        // do CalcExpression.eval("1024");
+        // do CalcExpression.eval("12.5");
+        // do CalcExpression.eval(".5");
+        // do CalcExpression.eval("-1");
+        // do CalcExpression.eval(".001");
+        // do CalcExpression.eval("-.001");
+
+
+        // do CalcExpression.eval("1/2");
+        // do CalcExpression.eval("1/.02");
+        // do CalcExpression.eval("-.001 * 100");
+
+        // do CalcExpression.eval("1 + 2");
+        // do CalcExpression.eval("1 - 2");
+
+        // do CalcExpression.eval("-1 - -2");
+
+
+        // do CalcExpression.eval("2 + 3 * 4");
+        // do CalcExpression.eval("(2 + 3) * 4");
+        // do CalcExpression.eval("2 + (3 * 4)");
+        //     let result = CalcExpression.eval("0");
+        // do result.print();
+        // do Output.println();
+        // do result.dispose();
+
+        // let result = CalcExpression.eval("1");
+        // do result.print();
+        // do Output.println();
+        // do result.dispose();
+
+        // let result = CalcExpression.eval("10");
+        // do result.print();
+        // do Output.println();
+        // do result.dispose();
+
+        // let result = CalcExpression.eval("1024");
+        // do result.print();
+        // do Output.println();
+        // do result.dispose();
+
+        // let result = CalcExpression.eval("00000000001024.1");
+        // do result.print();
+        // do Output.println();
+        // do result.dispose();
+
+        // let result = CalcExpression.eval("1.375");
+        // do result.print();
+        // do Output.println();
+        // do result.dispose();
+
+        // let result = CalcExpression.eval("1024375");
+        // do result.print();
+        // do Output.println();
+        // do result.dispose();
+
+        // // do Debug.value("w0 1", Bits.word0(1));
+        // // do Debug.value("w1 256", Bits.word1(256));
+        // // do Debug.value("w0 400", Bits.word0(400));
+        // // do Debug.value("w1 400", Bits.word1(400));
+        // // do Debug.value("w1 400 << 8", Bits.lshift8(Bits.word1(400)));
+        // // do Debug.value("w0 32767", Bits.word0(32767));
+        // // do Debug.value("w1 32767", Bits.word1(32767));
+        // // do Debug.value("w0 -32767", Bits.word0(-32767));
+        // // do Debug.value("w1 -32767", Bits.word1(-32767));
+        // // do Debug.value("-32768", -32767 - 1);
+        // // do Debug.value("w0 -32768", Bits.word0(-32767 - 1));
+        // // do Debug.value("w1 -32768", Bits.word1(-32767 - 1));
+        // // do Debug.value("w0 -1", Bits.word0(-1));
+        // // do Debug.value("w1 -1", Bits.word1(-1));
+
+        // let result = CalcExpression.eval("1024.375");
+        // do result.print();
+        // do Output.println();
+        // do result.dispose();
+
+        // let result = CalcExpression.eval("0.001");
+        // do result.print();
+        // do Output.println();
+        // do result.dispose();
+        return;
+    }
+
+
+}

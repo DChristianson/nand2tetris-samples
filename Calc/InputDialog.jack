@@ -1,0 +1,46 @@
+class InputDialog {
+
+    static int inputTop;
+    static int inputLeft;
+    static int inputBottom;
+    static int inputRight;
+
+    static int inputRow;
+    static int inputCol;
+
+            
+    function void setPosition(int left, int top, int width, int height) {
+        let inputTop = top;
+        let inputLeft = left;
+        let inputRight = left + width;
+        let inputBottom = top + height;
+        let inputRow = (top / 11) + 1;
+        let inputCol = (left / 8) + 1;
+        return;
+    }
+
+    function void draw() {
+
+        do Screen.setColor(0);
+        do Screen.drawRectangle(inputLeft, inputTop, inputRight, inputBottom);
+        do Screen.setColor(1);
+        do Screen.drawLine(inputLeft, inputTop, inputRight, inputTop);
+        do Screen.drawLine(inputLeft, inputTop, inputLeft, inputBottom);
+        do Screen.drawLine(inputRight, inputTop, inputRight, inputBottom);
+        do Screen.drawLine(inputLeft, inputBottom, inputRight, inputBottom);
+
+        return;
+    }
+
+    function String readInput(String message) {
+
+        do InputDialog.draw();
+
+        do Output.moveCursor(inputRow, inputCol);
+        do Output.printString(message);
+        do Output.moveCursor(inputRow + 1, inputCol);
+        return Keyboard.readLine(">");
+
+    }
+
+}

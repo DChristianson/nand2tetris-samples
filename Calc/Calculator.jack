@@ -1,0 +1,95 @@
+class Calculator {
+
+    field Decimal32 currentValue;
+
+    constructor Calculator new() {
+        let currentValue = Decimal32.new();
+        return this;
+    }
+
+    method Decimal32 currentValue() {
+        return currentValue;
+    }
+
+    method void update(String expression) {
+        var Lexer lexer;
+        var Decimal32 result;
+
+        let lexer = Lexer.new(expression);
+        let result = eval(expression, lexer);
+        do lexer.dispose();
+
+        do currentValue.copy(result);
+        do result.dispose();
+
+        return;
+    }
+
+    method Decimal32 eval(String expression, Lexer lexer) {
+        var Decimal32 result, value;
+        var int tokenType;
+        var char pendingOp;
+        let result = Decimal32.new();
+        while (lexer.next()) {
+            let tokenType = lexer.tokenType();
+
+            if (tokenType = 1) {
+                // 1 = numeric
+                let value = Decimal32.new();
+                do value.tryParse(expression, lexer.startOffset(), lexer.endOffset());
+                do evalOp(pendingOp, result, value, result);
+                let pendingOp = 0;
+                do value.dispose();
+            }
+            if (tokenType = 2) {
+                // 2 = operator
+                let pendingOp = expression.charAt(lexer.startOffset());
+            }
+            if (tokenType = 3) {
+                // 3 = lparen
+                let value = eval(expression, lexer);
+                let pendingOp = evalOp(pendingOp, result, value, result);
+                do value.dispose();
+            }
+            if (tokenType = 4) {
+                // 4 = rparen
+                return result;
+            }
+        }
+        return result;
+    }
+
+    method int evalOp(char op, Decimal32 a, Decimal32 b, Decimal32 out) {
+        if (op = 43) {
+            // +
+            Decimal32.add(a, b, out); 
+            return;
+        }
+        if (op = 45) {
+            // -
+            Decimal32.sub(a, b, out); 
+            return;
+        }
+        if (op = 42) {
+            // *
+            Decimal32.mul(a, b, out); 
+            return;
+        }
+        if (op = 47) {
+            // /
+            Decimal32.div(a, b, out);             
+            return;
+        }
+        // otherwise replace with b
+        do out.copy(b);
+        return;
+    }
+    
+    method void dispose() {
+        do currentValue.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+
+}

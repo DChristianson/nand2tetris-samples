@@ -1,0 +1,97 @@
+class UInt32 {
+
+    field int i0, i1;
+
+    constructor UInt32 new() {
+        return this;
+    }
+
+    method void set(int lo, int hi) {
+        let i0 = lo;
+        let i1 = hi;
+        return;
+    }
+
+    method bool isNonzero() {
+        return ~((i0 | i1) = 0);
+    }
+
+    method void copy(UInt32 f) {
+        var Array p; let p = f;
+        let i0 = p[0];
+        let i1 = p[1];
+        return;
+    }
+
+   method void format(String output) {
+       
+        var UInt32 x;
+        var Array s;
+        var int i, r;
+
+        // shortcut if the number is zero
+        if ((i0 | (i1 & 127)) = 0) {
+            do output.appendChar(48);
+            return;
+        }
+
+        // UInt32 needs enough space for 10 digits
+        let s = Array.new(10);
+
+        // K+R algo
+        let x = UInt32.new();
+        do x.copy(this);
+        while ((i < 11) & x.isNonzero()) {
+            let r = Math32.div32x8(x, 10, x);
+            let s[i] = 48 + r;
+            let i = i + 1;
+        }
+        do x.dispose();
+
+        // output in reverse order
+        while (i > 0) {
+            let i = i - 1;
+            do output.appendChar(s[i]);
+        }
+        do s.dispose();
+
+        return;
+    }
+
+    method bool tryParse(String s, int startOffset, int endOffset) {
+
+        var char c;
+
+        // reset self
+        let i0 = 0;
+        let i1 = 0;
+
+        // skip leading zeros
+        let c = 48;
+        while ((startOffset < endOffset) & (c = 48)) {
+            let c = s.charAt(startOffset);
+            if (c = 48) {
+                let startOffset = startOffset + 1;
+            }
+        }
+
+        // parse integer part
+        while (startOffset < endOffset) {
+            let c = s.charAt(startOffset);
+            let startOffset = startOffset + 1;
+            // 32 bit unsigned operations
+            do Math32.mul32x8(this, 10, this);
+            do Math32.add32x16(this, c - 48, this);
+        }
+
+        // we now have the integer value
+        return true;
+
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    } 
+
+}

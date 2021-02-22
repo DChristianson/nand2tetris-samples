@@ -1,0 +1,280 @@
+/**
+ * Decimal floating point number.
+ * Stored as sign bit, 8 bit exponent, 23 bit siginificand
+ * Exponent 10^n stored in binary e = 127 + n, 
+ */
+class Decimal32 {
+
+    field int i0, i1;
+
+    constructor Decimal32 new() {
+        return this;
+    }
+
+    method void copy(Decimal32 f) {
+        var Array p; let p = f;
+        let i0 = p[0];
+        let i1 = p[1];
+        return;
+    }
+
+    method int sign() {
+        return i1 < 0;
+    }
+
+    method int exponent() {
+        return ((i1 & 32640) / 128) - 127;
+    }
+
+    method bool isNonzero() {
+        return ~((i0 | i1) = 0);
+    }
+
+    /**
+     * Get the significand as a UInt32. Since this implies memory allocation,
+     * the option is provided to pass in an already allocated Int32.
+     * If a 0 (null pointer) is provided, a new UInt32 will be allocated.
+     */
+    method UInt32 significand(UInt32 in) {
+        if (in = 0) {
+            let in = UInt32.new();
+        }
+        do in.set(i0, i1 & 127);
+        return in;
+    }
+
+    method void format(String output) {
+
+        var UInt32 x; // temp var 
+        var Array s; // space to build integer
+        var boolean sn; // use scientific notation
+        var int i, remainder, exponent, sd; // counters
+
+        // shortcut if the number is zero
+        if ((i0 | (i1 & 127)) = 0) {
+            do output.appendChar(48);
+            return;
+        }
+  
+        // let's emit 7 significant digits
+        let s = Array.new(7);
+
+        // K+R algo
+        let x = significand(0);
+        while ((i < 7) & x.isNonzero()) {
+            let remainder = Math32.div32x8(x, 10, x);
+            let s[i] = 48 + remainder;
+            let i = i + 1;
+        }
+        do x.dispose();
+
+        if (sign()) {
+            do output.appendChar(45);
+        }
+
+        // decide if we need scientific notation
+        let exponent = exponent();
+        let sd = i + exponent;
+        if ((exponent < -7) | (sd > 7)) {
+            let sn = true;
+            let exponent = sd - 1;
+            let sd = 1;
+        }
+        
+        // pad fractional exponent
+        if (sd < 0) {
+            do output.appendChar(48);
+            do output.appendChar(46);
+            while (sd < 0) {
+                do output.appendChar(48);
+                let sd = sd + 1;
+            }
+            let sd = -1;
+        }
+
+        // output in reverse order
+        while (i > 0) {
+            if (sd = 0) {
+                do output.appendChar(46);
+            }
+            let sd = sd - 1;
+            let i = i - 1;
+            do output.appendChar(s[i]);
+        }
+
+        // pad for positive exponent
+        while (sd > 0) {
+            do output.appendChar(48);
+            let sd = sd - 1;
+        }
+
+        do Output.moveCursor(10, 0);
+        do Output.printString(" -----> ");
+        do Output.printInt(i0);
+        do Output.printString(" , ");
+        do Output.printInt(i1);
+        do Output.printString(" , ");
+        do Output.printInt(exponent);
+        do Output.printString(" = ");
+        do Output.printString(output);
+        do Output.println();
+
+
+        // emit scientific notation
+        if (sn) {
+            do output.appendChar(69); // e
+            if (exponent < 0) {
+                do output.appendChar(45);
+                let exponent = -exponent;
+            } 
+            // result s-array to convert exponent
+            while (~(exponent = 0)) {
+                let sd = exponent / 10;
+                let remainder = exponent - (sd * 10);
+                let exponent = sd;
+                let s[i] = 48 + remainder;
+                let i = i + 1;
+            }
+            while (i > 0) {
+                let i = i - 1;
+                do output.appendChar(s[i]);
+            }
+        }
+
+
+        do s.dispose();
+
+        return;
+    }
+
+    method bool tryParse(String s, int startOffset, int endOffset) {
+
+        var int decimalExponent;
+        var bool hasFraction;
+        var char c;
+
+        // reset self
+        let i0 = 0;
+        let i1 = 0;
+
+        // skip leading zeros
+        let c = 48;
+        while ((startOffset < endOffset) & (c = 48)) {
+            let c = s.charAt(startOffset);
+            if (c = 48) {
+                let startOffset = startOffset + 1;
+            }
+        }
+
+        // parse integer part
+        while (startOffset < endOffset) {
+            let c = s.charAt(startOffset);
+            let startOffset = startOffset + 1;
+            if (c = 46) {
+                if (hasFraction) {
+                    return false;
+                }
+                let hasFraction = true;
+            } else {
+                if (i1 < 11) {
+                    // multiply by 10 and add new digit
+                    do Math32.mul32x8(this, 10, this);
+                    do Math32.add32x16(this, c - 48, this);
+                    if (hasFraction) {
+                        let decimalExponent = decimalExponent - 1;
+                    }
+                } else {
+                    // out of digits, just add exponent
+                    if (~hasFraction) {
+                        let decimalExponent = decimalExponent + 1;
+                    }
+                }
+            }
+        }
+
+        // we now have the integer value
+        let i1 = (i1 & 127) + (128 * (127 + decimalExponent));
+        return true;
+
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    } 
+
+    function void add(Decimal32 a, Decimal32 b, Decimal32 out) {
+        var UInt32 sa, sb;
+        var int ea, eb;
+        let sa = a.significand();
+        let ea = a.exponent();
+        let sb = b.significand();
+        let eb = b.exponent();
+        while (eb < ea) {
+            let eb = eb + 1;
+            do Math32.div32x8(sb, 10, sb);
+        }
+        while (ea < eb) {
+            let ea = ea + 1;
+            do Math32.div32x8(sa, 10, sa);
+        }
+        do Math32.add32(sa, sb, sa);
+        out.set(ea, sa);
+        do sa.dispose();
+        do sb.dispose();
+        return;
+    }
+
+    function void sub(Decimal32 a, Decimal32 b, Decimal32 out) {
+        var UInt32 sa, sb;
+        var int ea, eb;
+        let sa = a.significand();
+        let ea = a.exponent();
+        let sb = b.significand();
+        let eb = b.exponent();
+        while (eb < ea) {
+            let eb = eb + 1;
+            do Math32.div32x8(sb, 10, sb);
+        }
+        while (ea < eb) {
+            let ea = ea + 1;
+            do Math32.div32x8(sa, 10, sa);
+        }
+        do Math32.sub32(sa, sb, sa);
+        out.set(ea, sa);
+        do sa.dispose();
+        do sb.dispose();
+        return;
+    }
+
+    function void mul(Decimal32 a, Decimal32 b, Decimal32 out) {
+        var UInt32 sa, sb;
+        var int ea, eb;
+        let sa = a.significand();
+        let sb = b.significand();
+        do Math32.mul32(sa, sb, sa);
+        let ea = a.exponent();
+        let eb = b.exponent();
+        let ea = ea + eb;
+        out.set(ea, sa);
+        do sa.dispose();
+        do sb.dispose();
+        return;
+    }
+
+    function void div(Decimal32 a, Decimal32 b, Decimal32 out) {
+        var UInt32 sa, sb;
+        var int ea, eb;
+        let sa = a.significand();
+        let sb = b.significand();
+        do Math32.div32(sa, sb, sa);
+        let ea = a.exponent();
+        let eb = b.exponent();
+        let ea = ea + eb;
+        out.set(ea, sa);
+        do sa.dispose();
+        do sb.dispose();
+        return;
+    }
+
+}
