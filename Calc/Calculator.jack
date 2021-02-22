@@ -59,25 +59,25 @@ class Calculator {
         return result;
     }
 
-    method int evalOp(char op, Decimal32 a, Decimal32 b, Decimal32 out) {
+    method void evalOp(char op, Decimal32 a, Decimal32 b, Decimal32 out) {
         if (op = 43) {
             // +
-            Decimal32.add(a, b, out); 
+            do Decimal32.add(a, b, out); 
             return;
         }
         if (op = 45) {
             // -
-            Decimal32.sub(a, b, out); 
+            do Decimal32.sub(a, b, out); 
             return;
         }
         if (op = 42) {
             // *
-            Decimal32.mul(a, b, out); 
+            do Decimal32.mul(a, b, out); 
             return;
         }
         if (op = 47) {
             // /
-            Decimal32.div(a, b, out);             
+            do Decimal32.div(a, b, out);             
             return;
         }
         // otherwise replace with b

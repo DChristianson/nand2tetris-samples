@@ -11,6 +11,16 @@ class Decimal32 {
         return this;
     }
 
+    method void set(int sign, int exponent, UInt32 significand) {
+        var Array p; let p = significand;
+        let i0 = p[0];
+        let i1 = (p[1] & 127) + (128 * (127 + exponent));
+        if (sign > 0) {
+            let i1 = i1 | (~32767);
+        }
+        return;
+    }
+
     method void copy(Decimal32 f) {
         var Array p; let p = f;
         let i0 = p[0];
@@ -31,14 +41,10 @@ class Decimal32 {
     }
 
     /**
-     * Get the significand as a UInt32. Since this implies memory allocation,
-     * the option is provided to pass in an already allocated Int32.
-     * If a 0 (null pointer) is provided, a new UInt32 will be allocated.
+     * Get the significand as a UInt32. Caller must dispose of the value.
      */
-    method UInt32 significand(UInt32 in) {
-        if (in = 0) {
-            let in = UInt32.new();
-        }
+    method UInt32 significand() {
+        var UInt32 in; let in = UInt32.new();
         do in.set(i0, i1 & 127);
         return in;
     }
@@ -60,7 +66,7 @@ class Decimal32 {
         let s = Array.new(7);
 
         // K+R algo
-        let x = significand(0);
+        let x = significand();
         while ((i < 7) & x.isNonzero()) {
             let remainder = Math32.div32x8(x, 10, x);
             let s[i] = 48 + remainder;
@@ -204,76 +210,112 @@ class Decimal32 {
     } 
 
     function void add(Decimal32 a, Decimal32 b, Decimal32 out) {
-        var UInt32 sa, sb;
-        var int ea, eb;
-        let sa = a.significand();
-        let ea = a.exponent();
-        let sb = b.significand();
-        let eb = b.exponent();
-        while (eb < ea) {
-            let eb = eb + 1;
-            do Math32.div32x8(sb, 10, sb);
+        var int signA, signB;
+        var UInt32 significandA, significandB;
+        var int exponentA, exponentB;
+        let signA = a.sign();
+        let signB = b.sign();
+        let significandA = a.significand();
+        let significandB = b.significand();
+        let exponentA = a.exponent();
+        let exponentB = b.exponent();
+
+        while (exponentB < exponentA) {
+            let exponentB = exponentB + 1;
+            do Math32.div32x8(significandB, 10, significandB);
         }
-        while (ea < eb) {
-            let ea = ea + 1;
-            do Math32.div32x8(sa, 10, sa);
+        while (exponentA < exponentB) {
+            let exponentA = exponentA + 1;
+            do Math32.div32x8(significandA, 10, significandA);
         }
-        do Math32.add32(sa, sb, sa);
-        out.set(ea, sa);
-        do sa.dispose();
-        do sb.dispose();
+
+        // TODO: signed math
+        do Math32.add32(significandA, significandB, significandA);
+        do out.set(signA, exponentA, significandA);
+
+        do significandA.dispose();
+        do significandB.dispose();
         return;
     }
 
     function void sub(Decimal32 a, Decimal32 b, Decimal32 out) {
-        var UInt32 sa, sb;
-        var int ea, eb;
-        let sa = a.significand();
-        let ea = a.exponent();
-        let sb = b.significand();
-        let eb = b.exponent();
-        while (eb < ea) {
-            let eb = eb + 1;
-            do Math32.div32x8(sb, 10, sb);
+        var int signA, signB;
+        var UInt32 significandA, significandB;
+        var int exponentA, exponentB;
+        let signA = a.sign();
+        let signB = b.sign();
+        let significandA = a.significand();
+        let significandB = b.significand();
+        let exponentA = a.exponent();
+        let exponentB = b.exponent();
+
+        while (exponentB < exponentA) {
+            let exponentB = exponentB + 1;
+            do Math32.div32x8(significandB, 10, significandB);
         }
-        while (ea < eb) {
-            let ea = ea + 1;
-            do Math32.div32x8(sa, 10, sa);
+        while (exponentA < exponentB) {
+            let exponentA = exponentA + 1;
+            do Math32.div32x8(significandA, 10, significandA);
         }
-        do Math32.sub32(sa, sb, sa);
-        out.set(ea, sa);
-        do sa.dispose();
-        do sb.dispose();
+
+        // TODO: signed math
+        do Math32.sub32(significandA, significandB, significandA);
+        do out.set(signA, exponentA, significandA);
+
+        do significandA.dispose();
+        do significandB.dispose();
         return;
     }
 
     function void mul(Decimal32 a, Decimal32 b, Decimal32 out) {
-        var UInt32 sa, sb;
-        var int ea, eb;
-        let sa = a.significand();
-        let sb = b.significand();
-        do Math32.mul32(sa, sb, sa);
-        let ea = a.exponent();
-        let eb = b.exponent();
-        let ea = ea + eb;
-        out.set(ea, sa);
-        do sa.dispose();
-        do sb.dispose();
+        var int signA, signB;
+        var UInt32 significandA, significandB;
+        var int exponentA, exponentB;
+        let signA = a.sign();
+        let signB = b.sign();
+        let significandA = a.significand();
+        let significandB = b.significand();
+        let exponentA = a.exponent();
+        let exponentB = b.exponent();
+
+        do Math32.mul32(significandA, significandB, significandA);
+        let exponentA = exponentA + exponentB;
+        if (signA = signB) {
+            let signA = 0;
+        } else {
+            let signA = 1;
+        }
+
+        do out.set(signA, exponentA, significandA);
+
+        do significandA.dispose();
+        do significandB.dispose();
         return;
     }
 
     function void div(Decimal32 a, Decimal32 b, Decimal32 out) {
-        var UInt32 sa, sb;
-        var int ea, eb;
-        let sa = a.significand();
-        let sb = b.significand();
-        do Math32.div32(sa, sb, sa);
-        let ea = a.exponent();
-        let eb = b.exponent();
-        let ea = ea + eb;
-        out.set(ea, sa);
-        do sa.dispose();
-        do sb.dispose();
+        var int signA, signB;
+        var UInt32 significandA, significandB;
+        var int exponentA, exponentB;
+        let signA = a.sign();
+        let signB = b.sign();
+        let significandA = a.significand();
+        let significandB = b.significand();
+        let exponentA = a.exponent();
+        let exponentB = b.exponent();
+
+        do Math32.div32(significandA, significandB, significandA);
+        let exponentA = exponentA + exponentB;
+        if (signA = signB) {
+            let signA = 0;
+        } else {
+            let signA = 1;
+        }
+
+        do out.set(signA, exponentA, significandA);
+
+        do significandA.dispose();
+        do significandB.dispose();
         return;
     }
 

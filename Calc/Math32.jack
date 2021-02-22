@@ -50,6 +50,18 @@ class Math32 {
         return carry;
     }
 
+    function int mul32(Array a, int b, Array out) {
+        return 0;
+    }
+
+    function int div32(Array a, int b, Array out) {
+        return 0;
+    }
+
+    function int sub32(Array a, int b, Array out) {
+        return 0;
+    }
+
     /**
      * Unsigned multiplication of 32 bit array by a byte
      */
