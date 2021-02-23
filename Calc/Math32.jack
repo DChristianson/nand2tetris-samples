@@ -51,7 +51,7 @@ class Math32 {
     }
 
     function int sub32(Array a, Array b, Array out) {
-       var int x, y, borrow;
+        var int x, y, borrow;
 
         // lower 16 bits
         let x = Bits.word0(a[0]) - Bits.word0(b[0]);

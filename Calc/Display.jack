@@ -76,7 +76,11 @@ class Display {
 
         while (i < len) {
             let c = value.charAt(i);
-            do Display.displayChar(c, x);
+            if (x < 0) {
+                do Output.printString("off screen");
+            } else {
+                do Display.displayChar(c, x);
+            }
             let x = x + step;
             let i = i + 1;
         }

@@ -104,7 +104,7 @@ class Decimal32 {
         var int i, remainder, exponent, sd; // counters
 
         // shortcut if the number is zero
-        if ((i0 | (i1 & 127)) = 0) {
+        if (isZero()) {
             do output.appendChar(48);
             return;
         }
@@ -253,12 +253,24 @@ class Decimal32 {
         var UInt32 significandA, significandB;
         var int exponentA, exponentB;
         var Array p;
+        var int carry;
+        var String s;
         let signA = a.sign();
         let signB = b.sign();
         let significandA = a.significand();
         let significandB = b.significand();
         let exponentA = a.exponent();
         let exponentB = b.exponent();
+
+        // shortcut zero
+        if (a.isZero()) {
+            do out.copy(b);
+            return;
+        }
+        if (b.isZero()) {
+            do out.copy(a);
+            return;
+        }
 
         // match up exponents
         while (exponentB < exponentA) {
@@ -270,22 +282,24 @@ class Decimal32 {
             do Math32.div32x8(significandA, 10, significandA);
         }
 
+        // convert to two's complement
+        if (signA) {
+            do significandA.complement();
+        }
+        if (signB) {
+            do significandB.complement();
+        }
+
         // add significands
-        if (signA = signB) {
-            do Math32.add32(significandA, significandB, significandA);
-        } else {
-            if (signB) {
-                let signA = Math32.sub32(significandA, significandB, significandA);
-            } else {
-                if (signA) {
-                    let signA = Math32.sub32(significandB, significandA, significandA);
-                }
-            }
+        do Math32.add32(significandA, significandB, significandA);
+        if (significandA.isHighBitSet()) {
+            let signA = true;
+            do significandA.complement();
         }
 
         // normalize output
         let p = significandA;
-        while (p[1] > 127) {
+        while ((p[1] & (~127)) > 0) {
             let exponentA = exponentA + 1;
             do Math32.div32x8(significandA, 10, significandA);
         }

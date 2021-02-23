@@ -66,14 +66,14 @@ class Lexer {
 
                 // '('
                 if (c = 40) {
-                    let tokenType = 4;
+                    let tokenType = 3;
                     return true;
                     
                 } 
 
                 // ')'
                 if (c = 41) {
-                    let tokenType = 5;
+                    let tokenType = 4;
                     return true;
 
                 }

@@ -8,7 +8,7 @@ class Main {
 
         // init calculator display
         do Display.setPosition(0, 10, 511, 90);
-        do Display.setDigitSize(40, 80, 4, 4);
+        do Display.setDigitSize(38, 80, 4, 4);
         do Display.setMargin(2);
 
         // draw input dialog

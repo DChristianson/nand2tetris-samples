@@ -12,6 +12,10 @@ class UInt32 {
         return;
     }
 
+    method bool isHighBitSet() {
+        return i1 < 0;
+    }
+    
     method bool isNonzero() {
         return ~((i0 | i1) = 0);
     }
@@ -20,6 +24,17 @@ class UInt32 {
         var Array p; let p = f;
         let i0 = p[0];
         let i1 = p[1];
+        return;
+    }
+
+    /**
+     * Compute the 2's complement.
+     * (effectively creates a signed Int32)
+     */
+    method void complement() {
+        let i1 = ~i1;
+        let i0 = ~i0;
+        do Math32.add32x16(this, 1, this);
         return;
     }
 
