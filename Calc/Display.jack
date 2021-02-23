@@ -73,8 +73,6 @@ class Display {
         let x = displayRight - displayMargin - (len * step);
 
         do Display.clear();
-        do Debug.value("len", len);
-        do Debug.value("i", i);
 
         while (i < len) {
             let c = value.charAt(i);

@@ -50,15 +50,39 @@ class Math32 {
         return carry;
     }
 
-    function int mul32(Array a, int b, Array out) {
-        return 0;
+    function int sub32(Array a, Array b, Array out) {
+       var int x, y, borrow;
+
+        // lower 16 bits
+        let x = Bits.word0(a[0]) - Bits.word0(b[0]);
+        let borrow = x < 0; // take advantage of true = -1
+        if (borrow) {
+            let x = x + 256;
+        }
+        let y = Bits.word1(a[0]) - Bits.word1(b[0]) + borrow;
+        let borrow = y < 0;
+        if (borrow) {
+            let y = y + 256;
+        }
+        let out[0] = Bits.lshift8(Bits.word0(y)) + Bits.word0(x);
+
+        // upper 16 bits
+        let x = Bits.word0(a[1]) - Bits.word0(b[1]) + borrow;
+        let borrow = x < 0;
+        if (borrow) {
+            let x = x + 256;
+        }
+        let y = Bits.word1(a[1]) - Bits.word1(b[1]) + borrow;
+        let borrow = y < 0;
+        if (borrow) {
+            let y = y + 256;
+        }
+        let out[1] = Bits.lshift8(Bits.word0(y)) + Bits.word0(x);
+
+        return borrow;
     }
 
-    function int div32(Array a, int b, Array out) {
-        return 0;
-    }
-
-    function int sub32(Array a, int b, Array out) {
+    function int mul32(Array a, Array b, Array out) {
         return 0;
     }
 
@@ -117,5 +141,5 @@ class Math32 {
 
         return remainder;
     }
-         
+        
 }

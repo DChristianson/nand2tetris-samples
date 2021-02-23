@@ -41,7 +41,7 @@ class UInt32 {
         // K+R algo
         let x = UInt32.new();
         do x.copy(this);
-        while ((i < 11) & x.isNonzero()) {
+        while ((i < 10) & x.isNonzero()) {
             let r = Math32.div32x8(x, 10, x);
             let s[i] = 48 + r;
             let i = i + 1;

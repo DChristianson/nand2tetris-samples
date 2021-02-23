@@ -11,11 +11,11 @@ class Decimal32 {
         return this;
     }
 
-    method void set(int sign, int exponent, UInt32 significand) {
+    method void set(boolean sign, int exponent, UInt32 significand) {
         var Array p; let p = significand;
         let i0 = p[0];
         let i1 = (p[1] & 127) + (128 * (127 + exponent));
-        if (sign > 0) {
+        if (sign) {
             let i1 = i1 | (~32767);
         }
         return;
@@ -28,16 +28,63 @@ class Decimal32 {
         return;
     }
 
-    method int sign() {
+    method boolean sign() {
         return i1 < 0;
+    }
+
+    method void negate() {
+        if (i1 < 0) {
+            let i1 = i1 & 32767;
+        } else {
+            let i1 = i1 | (~32767);
+        }
+        return;
+    }
+
+    method void invert() {
+        // TODO: reverse sign on exponent
+        return;
     }
 
     method int exponent() {
         return ((i1 & 32640) / 128) - 127;
     }
 
-    method bool isNonzero() {
-        return ~((i0 | i1) = 0);
+    method boolean isZero() {
+        return ((i0 | (i1 & 127)) = 0);
+    }
+
+    method boolean isNonzero() {
+        return ~((i0 | (i1 & 127)) = 0);
+    }
+
+    /**
+     * Attempt to "normalize" the number by shifting it over
+     * as far as left as possible while shifting exponent down.
+     */
+    method void normalize() {
+        var boolean sign;
+        var int exponent;
+        if (isZero()) {
+            return;
+        }
+        let sign = sign();
+        let exponent = exponent();
+        let i1 = i1 & 127;
+        // shift left
+        // don't overflow the last bit
+        // TODO: could get a few more bits if we check i0
+        while (i1 < 11) { 
+            // multiply by ten but lower the exponent
+            // gives same number, more significant digits
+            do Math32.mul32x8(this, 10, this);
+            let exponent = exponent - 1;
+        }
+        let i1 = i1 + (128 * (127 + exponent));
+        if (sign) {
+            let i1 = i1 | (~32767);
+        }
+        return;
     }
 
     /**
@@ -114,18 +161,6 @@ class Decimal32 {
             let sd = sd - 1;
         }
 
-        do Output.moveCursor(10, 0);
-        do Output.printString(" -----> ");
-        do Output.printInt(i0);
-        do Output.printString(" , ");
-        do Output.printInt(i1);
-        do Output.printString(" , ");
-        do Output.printInt(exponent);
-        do Output.printString(" = ");
-        do Output.printString(output);
-        do Output.println();
-
-
         // emit scientific notation
         if (sn) {
             do output.appendChar(69); // e
@@ -147,16 +182,15 @@ class Decimal32 {
             }
         }
 
-
         do s.dispose();
 
         return;
     }
 
-    method bool tryParse(String s, int startOffset, int endOffset) {
+    method boolean tryParse(String s, int startOffset, int endOffset) {
 
         var int decimalExponent;
-        var bool hasFraction;
+        var boolean hasFraction;
         var char c;
 
         // reset self
@@ -182,7 +216,10 @@ class Decimal32 {
                 }
                 let hasFraction = true;
             } else {
-                if (i1 < 11) {
+                // shift left
+                // don't overflow the last bit
+                // TODO: could get a few more bits if we check i0
+                if (i1 < 11) { 
                     // multiply by 10 and add new digit
                     do Math32.mul32x8(this, 10, this);
                     do Math32.add32x16(this, c - 48, this);
@@ -209,10 +246,13 @@ class Decimal32 {
         return;
     } 
 
+
     function void add(Decimal32 a, Decimal32 b, Decimal32 out) {
-        var int signA, signB;
+
+        var boolean signA, signB;
         var UInt32 significandA, significandB;
         var int exponentA, exponentB;
+        var Array p;
         let signA = a.sign();
         let signB = b.sign();
         let significandA = a.significand();
@@ -220,6 +260,7 @@ class Decimal32 {
         let exponentA = a.exponent();
         let exponentB = b.exponent();
 
+        // match up exponents
         while (exponentB < exponentA) {
             let exponentB = exponentB + 1;
             do Math32.div32x8(significandB, 10, significandB);
@@ -229,37 +270,27 @@ class Decimal32 {
             do Math32.div32x8(significandA, 10, significandA);
         }
 
-        // TODO: signed math
-        do Math32.add32(significandA, significandB, significandA);
-        do out.set(signA, exponentA, significandA);
-
-        do significandA.dispose();
-        do significandB.dispose();
-        return;
-    }
-
-    function void sub(Decimal32 a, Decimal32 b, Decimal32 out) {
-        var int signA, signB;
-        var UInt32 significandA, significandB;
-        var int exponentA, exponentB;
-        let signA = a.sign();
-        let signB = b.sign();
-        let significandA = a.significand();
-        let significandB = b.significand();
-        let exponentA = a.exponent();
-        let exponentB = b.exponent();
-
-        while (exponentB < exponentA) {
-            let exponentB = exponentB + 1;
-            do Math32.div32x8(significandB, 10, significandB);
+        // add significands
+        if (signA = signB) {
+            do Math32.add32(significandA, significandB, significandA);
+        } else {
+            if (signB) {
+                let signA = Math32.sub32(significandA, significandB, significandA);
+            } else {
+                if (signA) {
+                    let signA = Math32.sub32(significandB, significandA, significandA);
+                }
+            }
         }
-        while (exponentA < exponentB) {
+
+        // normalize output
+        let p = significandA;
+        while (p[1] > 127) {
             let exponentA = exponentA + 1;
             do Math32.div32x8(significandA, 10, significandA);
         }
 
-        // TODO: signed math
-        do Math32.sub32(significandA, significandB, significandA);
+        // set output
         do out.set(signA, exponentA, significandA);
 
         do significandA.dispose();
@@ -268,7 +299,7 @@ class Decimal32 {
     }
 
     function void mul(Decimal32 a, Decimal32 b, Decimal32 out) {
-        var int signA, signB;
+        var boolean signA, signB;
         var UInt32 significandA, significandB;
         var int exponentA, exponentB;
         let signA = a.sign();
@@ -278,38 +309,15 @@ class Decimal32 {
         let exponentA = a.exponent();
         let exponentB = b.exponent();
 
+        // multiply significands
         do Math32.mul32(significandA, significandB, significandA);
+
+        // add exponents
         let exponentA = exponentA + exponentB;
         if (signA = signB) {
-            let signA = 0;
+            let signA = false;
         } else {
-            let signA = 1;
-        }
-
-        do out.set(signA, exponentA, significandA);
-
-        do significandA.dispose();
-        do significandB.dispose();
-        return;
-    }
-
-    function void div(Decimal32 a, Decimal32 b, Decimal32 out) {
-        var int signA, signB;
-        var UInt32 significandA, significandB;
-        var int exponentA, exponentB;
-        let signA = a.sign();
-        let signB = b.sign();
-        let significandA = a.significand();
-        let significandB = b.significand();
-        let exponentA = a.exponent();
-        let exponentB = b.exponent();
-
-        do Math32.div32(significandA, significandB, significandA);
-        let exponentA = exponentA + exponentB;
-        if (signA = signB) {
-            let signA = 0;
-        } else {
-            let signA = 1;
+            let signA = true;
         }
 
         do out.set(signA, exponentA, significandA);

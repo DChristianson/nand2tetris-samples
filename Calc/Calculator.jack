@@ -1,3 +1,8 @@
+/**
+ * The Calculator class models an algebraic calculator (of sorts).
+ * It holds a single floating point number in memory.
+ * Given an algebraic equation as input it will update that number.
+ */
 class Calculator {
 
     field Decimal32 currentValue;
@@ -37,6 +42,7 @@ class Calculator {
                 // 1 = numeric
                 let value = Decimal32.new();
                 do value.tryParse(expression, lexer.startOffset(), lexer.endOffset());
+                do value.normalize();
                 do evalOp(pendingOp, result, value, result);
                 let pendingOp = 0;
                 do value.dispose();
@@ -67,7 +73,8 @@ class Calculator {
         }
         if (op = 45) {
             // -
-            do Decimal32.sub(a, b, out); 
+            do b.negate();
+            do Decimal32.add(a, b, out); 
             return;
         }
         if (op = 42) {
@@ -77,7 +84,8 @@ class Calculator {
         }
         if (op = 47) {
             // /
-            do Decimal32.div(a, b, out);             
+            do b.invert();
+            do Decimal32.mul(a, b, out);
             return;
         }
         // otherwise replace with b

@@ -45,9 +45,10 @@ class Lexer {
         while (endOffset < len) {
             let c = string.charAt(endOffset);
             let endOffset = endOffset + 1;
-            if (c > 33) {
+            if (c < 33) {
                 // ignore all whitespace and control characters
-
+                let startOffset = endOffset;
+            } else {
                 // '.' | '0'-'9' 
                 if ((c = 46) | ((c > 47) & (c < 58))) {
                     let tokenType = 1;
