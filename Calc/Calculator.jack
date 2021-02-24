@@ -84,7 +84,6 @@ class Calculator {
         }
         if (op = 47) {
             // /
-            do b.invert();
             do Decimal32.mul(a, b, out);
             return;
         }

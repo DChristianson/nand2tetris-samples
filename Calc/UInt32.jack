@@ -1,4 +1,8 @@
-class UInt32 {
+/**
+ * Class + utilities for working with 32 bit unsigned integers.
+ * Represents the integer as any pair of two 16-bit integers.
+ */
+ class UInt32 {
 
     field int i0, i1;
 
@@ -34,11 +38,11 @@ class UInt32 {
     method void complement() {
         let i1 = ~i1;
         let i0 = ~i0;
-        do Math32.add32x16(this, 1, this);
+        do UInt32.add32x16(this, 1, this);
         return;
     }
 
-   method void format(String output) {
+    method void format(String output) {
        
         var UInt32 x;
         var Array s;
@@ -57,7 +61,7 @@ class UInt32 {
         let x = UInt32.new();
         do x.copy(this);
         while ((i < 10) & x.isNonzero()) {
-            let r = Math32.div32x8(x, 10, x);
+            let r = UInt32.div32x8(x, 10, x);
             let s[i] = 48 + r;
             let i = i + 1;
         }
@@ -95,8 +99,8 @@ class UInt32 {
             let c = s.charAt(startOffset);
             let startOffset = startOffset + 1;
             // 32 bit unsigned operations
-            do Math32.mul32x8(this, 10, this);
-            do Math32.add32x16(this, c - 48, this);
+            do UInt32.mul32x8(this, 10, this);
+            do UInt32.add32x16(this, c - 48, this);
         }
 
         // we now have the integer value
@@ -109,4 +113,150 @@ class UInt32 {
         return;
     } 
 
+    /**
+     * Unsigned addition of 32 bit UInt32s
+     */
+    function int add32(UInt32 a, UInt32 b, UInt32 out) {
+        var int x, y, carry;
+        
+        // lower 16 bits
+        let x = Bits.word0(a[0]) + Bits.word0(b[0]);
+        let carry = Bits.word1(x);
+        let y = Bits.word1(a[0]) + Bits.word1(b[0]) + carry;
+        let carry = Bits.word1(y);
+        let out[0] = Bits.lshift8(Bits.word0(y)) + Bits.word0(x);
+
+        // upper 16 bits
+        let x = Bits.word0(a[1]) + Bits.word0(b[1]) + carry;
+        let carry = Bits.word1(x);
+        let y = Bits.word1(a[1]) + Bits.word1(b[1]) + carry;
+        let carry = Bits.word1(y);
+        let out[1] = Bits.lshift8(Bits.word0(y)) + Bits.word0(x);
+
+        return carry;
+    }
+
+    /**
+     * Unsigned addition of 32 bit UInt32 by a 16 bit integer
+     */
+    function int add32x16(UInt32 a, int b, UInt32 out) {
+        var int x, y, carry;
+        
+        // lower 16 bits
+        let x = Bits.word0(a[0]) + Bits.word0(b);
+        let carry = Bits.word1(x);
+        let y = Bits.word1(a[0]) + Bits.word1(b) + carry;
+        let carry = Bits.word1(y);
+        let out[0] = Bits.lshift8(Bits.word0(y)) + Bits.word0(x);
+
+        // upper 16 bits
+        let x = Bits.word0(a[1]) + carry;
+        let carry = Bits.word1(x);
+        let y = Bits.word1(a[1]) + carry;
+        let carry = Bits.word1(y);
+        let out[1] = Bits.lshift8(Bits.word0(y)) + Bits.word0(x);
+
+        return carry;
+    }
+
+   /**
+     * Unsigned multiplication of 32 bit UInt32s
+     */
+    function void mul32(UInt32 a, UInt32 b, UInt32 out) {
+        var UInt32 x, y;
+        
+        let x = UInt32.new();
+        let y = UInt32.new();
+
+        do Output.moveCursor(10, 0);
+
+        do Debug.printUInt32(a);
+        do Output.printString(" ");
+        do Debug.printUInt32(b);
+        do Output.println();
+
+        // word 0
+        do UInt32.mul32x8(a, Bits.word0(b[0]), x);
+        do y.copy(x);
+
+        // word 1 - shift 8
+        do UInt32.mul32x8(a, Bits.word1(b[0]), x);
+        let x[1] = Bits.lshift8(Bits.word0(x[1])) + Bits.word1(x[0]);
+        let x[0] = Bits.lshift8(Bits.word0(x[0]));
+        do UInt32.add32(y, x, y);
+
+        // word 2 - shift 16
+        do UInt32.mul32x8(a, Bits.word0(b[1]), x);
+        let x[1] = x[0]; 
+        let x[0] = 0;
+        do UInt32.add32(y, x, y);
+
+        // word 3 - shift 24
+        do UInt32.mul32x8(a, Bits.word1(b[1]), x);
+        let x[1] = Bits.lshift8(Bits.word0(x[0]));
+        let x[0] = 0;
+        do UInt32.add32(y, x, y);
+
+        do out.copy(y);
+        do x.dispose();
+        do y.dispose();
+        return;
+    }
+
+    /**
+     * Unsigned multiplication of 32 bit UInt32 by a byte
+     */
+    function int mul32x8(UInt32 a, int b, UInt32 out) {
+        var int x, y, carry;
+        
+        // truncate b
+        let b = Bits.word0(b);
+
+        // lower 16 bits
+        let x = Bits.word0(a[0]) * b;
+        let carry = Bits.word1(x);
+        let y = (Bits.word1(a[0]) * b) + carry;
+        let carry = Bits.word1(y);
+        let out[0] = Bits.lshift8(Bits.word0(y)) + Bits.word0(x);
+
+        // upper 16 bits
+        let x = (Bits.word0(a[1]) * b) + carry;
+        let carry = Bits.word1(x);
+        let y = (Bits.word1(a[1]) * b) + carry;
+        let carry = Bits.word1(y);
+        let out[1] = Bits.lshift8(Bits.word0(y)) + Bits.word0(x);
+
+        return carry;
+    }
+
+    /**
+     * Unsigned division of 32 bit UInt32 by a byte
+     */
+    function int div32x8(UInt32 a, int b, UInt32 out) {
+        var int x, y, carry, remainder;
+
+        // truncate b 
+        let b = Bits.word0(b);
+
+        // upper 16 bits
+        let carry = Bits.word1(a[1]);
+        let y = carry / b;
+        let remainder = carry - (y * b);
+        let carry = Bits.lshift8(remainder) + Bits.word0(a[1]);
+        let x = carry / b;
+        let remainder = carry - (x * b);
+        let out[1] = Bits.lshift8(y) + x;
+        
+        // lower 16 bits
+        let carry = Bits.lshift8(remainder) + Bits.word1(a[0]);
+        let y = carry / b;
+        let remainder = carry - (y * b);
+        let carry = Bits.lshift8(remainder) + Bits.word0(a[0]);
+        let x = carry / b;
+        let remainder = carry - (x * b);
+        let out[0] = Bits.lshift8(y) + x;
+
+        return remainder;
+    }
+        
 }

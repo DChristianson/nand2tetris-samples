@@ -14,4 +14,20 @@ class Debug {
         return;
     }
 
+    function void printDecimal32(Decimal32 d) {
+        var String s; let s = String.new(13);
+        do d.format(s);
+        do Output.printString(s);
+        do s.dispose();
+        return;
+    }
+
+    function void printUInt32(UInt32 i) {
+        var String s; let s = String.new(13);
+        do i.format(s);
+        do Output.printString(s);
+        do s.dispose();
+        return;
+    }
+
 }

@@ -77,7 +77,7 @@ class Display {
         while (i < len) {
             let c = value.charAt(i);
             if (x < 0) {
-                do Output.printString("off screen");
+                // ERROR: we're off screen
             } else {
                 do Display.displayChar(c, x);
             }
