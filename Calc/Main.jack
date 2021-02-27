@@ -7,18 +7,36 @@ class Main {
         let calculator = Calculator.new();
 
         // init calculator display
-        do Display.setPosition(0, 10, 511, 90);
+        do Display.setPosition(0, 13, 511, 90);
         do Display.setDigitSize(38, 80, 4, 4);
-        do Display.setMargin(2);
+        do Display.setMargin(2);        
 
-        // draw input dialog
+        // init input dialog
         do InputDialog.setPosition(0, 209, 511, 45);
 
-        // REPL loop
+        // test mode
+        // if (true) {
+        //     do Test.test();
+        //     return;
+        // }
+
+        // clear display and draw static content
         do Screen.clearScreen();
+        do Text.drawTextAligned("DC21", 0, 63, 2);
+        do Screen.drawLine(0, 11, 511, 11);
+        do Screen.drawLine(0, 105, 511, 105);
+        do Text.drawTextAligned("Simple Calculator", 13, 33, 1);
+        do Text.drawTextAligned("Enjoy!", 14, 33, 1);
+
+        // REPL loop
         while (true) {
             do Display.displayDecimal32(calculator.currentValue());
             let input = InputDialog.readInput("Enter an algebraic expression");
+            while (calculator.error()) {
+                do input.dispose();
+                // TODO: display error position
+                let input = InputDialog.readInput("Error reading expression, try again:");
+            }
             do calculator.update(input);
             do input.dispose();
         }

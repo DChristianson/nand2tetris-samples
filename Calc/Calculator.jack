@@ -1,11 +1,13 @@
 /**
  * The Calculator class models an algebraic calculator (of sorts).
- * It holds a single floating point number in memory.
- * Given an algebraic equation as input it will update that number.
+ * It holds a single floating point number in memory. It takes
+ * an algebraic equation as input then updates the number.
  */
 class Calculator {
 
     field Decimal32 currentValue;
+    field boolean error;
+    field int errorOffset;
 
     constructor Calculator new() {
         let currentValue = Decimal32.new();
@@ -16,12 +18,22 @@ class Calculator {
         return currentValue;
     }
 
+    method boolean error() {
+        return error;
+    }
+
+    method int errorOffset() {
+        return errorOffset;
+    }
+
     method void update(String expression) {
         var Lexer lexer;
         var Decimal32 result;
 
+        let error = false;
+        let errorOffset = 0;
         let lexer = Lexer.new(expression);
-        let result = eval(expression, lexer);
+        let result = eval(expression, lexer, currentValue);
         do lexer.dispose();
 
         do currentValue.copy(result);
@@ -30,11 +42,15 @@ class Calculator {
         return;
     }
 
-    method Decimal32 eval(String expression, Lexer lexer) {
+    method Decimal32 eval(String expression, Lexer lexer, Decimal32 pendingValue) {
         var Decimal32 result, value;
         var int tokenType;
-        var char pendingOp;
+        var boolean negation;
+        var char pendingOp, nextOp;
         let result = Decimal32.new();
+        if (pendingValue > 0) {
+            do result.copy(pendingValue);
+        }
         while (lexer.next()) {
             let tokenType = lexer.tokenType();
 
@@ -43,18 +59,40 @@ class Calculator {
                 let value = Decimal32.new();
                 do value.tryParse(expression, lexer.startOffset(), lexer.endOffset());
                 do value.normalize();
+                if (negation) {
+                    do value.negate();
+                    let negation = false;
+                }
                 do evalOp(pendingOp, result, value, result);
                 let pendingOp = 0;
                 do value.dispose();
             }
             if (tokenType = 2) {
                 // 2 = operator
-                let pendingOp = expression.charAt(lexer.startOffset());
+                let nextOp = expression.charAt(lexer.startOffset());
+                if (pendingOp > 0) {
+                    if (nextOp = 45) {
+                        // push down - as unary negation operation
+                        let negation = true;
+                    } else {
+                        // two ops in a row no bueno
+                        let error = true;
+                        let errorOffset = lexer.startOffset();
+                        return result;
+                    }
+                } else {
+                    let pendingOp = nextOp;
+                }
             }
             if (tokenType = 3) {
                 // 3 = lparen
-                let value = eval(expression, lexer);
-                let pendingOp = evalOp(pendingOp, result, value, result);
+                let value = eval(expression, lexer, 0);
+                if (negation) {
+                    do value.negate();
+                    let negation = false;
+                }
+                do evalOp(pendingOp, result, value, result);
+                let pendingOp = 0;
                 do value.dispose();
             }
             if (tokenType = 4) {
@@ -73,6 +111,7 @@ class Calculator {
         }
         if (op = 45) {
             // -
+            // add to negation of b
             do b.negate();
             do Decimal32.add(a, b, out); 
             return;
@@ -84,7 +123,7 @@ class Calculator {
         }
         if (op = 47) {
             // /
-            do Decimal32.mul(a, b, out);
+            do Decimal32.div(a, b, out);
             return;
         }
         // otherwise replace with b

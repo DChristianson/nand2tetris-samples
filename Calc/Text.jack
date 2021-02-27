@@ -1,0 +1,23 @@
+class Text {
+
+    /**
+     * Print text at the given row/col position. An alignment of 1 will center the 
+     * string at the specified position, 2 will right align, any other input will left align.
+     */
+    function void drawTextAligned(String s, int row, int col, int alignment) {
+        if (alignment = 1) {
+            let col = col - (s.length() / 2);
+        } else {
+            if (alignment = 2) {
+                let col = col - s.length();
+            }
+        }
+        if (col < 0) {
+            let col = 0;
+        }
+        do Output.moveCursor(row, col);
+        do Output.printString(s);
+        return;
+    }
+
+}

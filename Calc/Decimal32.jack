@@ -13,10 +13,26 @@ class Decimal32 {
 
     method void set(boolean sign, int exponent, UInt32 significand) {
         let i0 = significand[0];
-        let i1 = (significand[1] & 127) + (128 * (127 + exponent));
+        let i1 = significand[1];
+        // if significand is too big we need to shrink it down
+        while (~((i1 & (~127)) = 0)) {
+            let exponent = exponent + 1;
+            do UInt32.div32x8(this, 10, this);
+        }
+        let i1 = i1 + (128 * (127 + exponent));
         if (sign) {
             let i1 = i1 | (~32767);
         }
+        return;
+    }
+
+    method void setInt(int significand, int exponent) {
+        let i1 = (128 * (127 + exponent));
+        if (significand < 0) {
+            let i1 = i1 | (~32767);
+            let significand = -significand;
+        }
+        let i0 = significand;
         return;
     }
 
@@ -26,39 +42,8 @@ class Decimal32 {
         return;
     }
 
-    // method void reciprocal(int i) {
-    //     var Decimal32 x, y;
-    //     let x = Decimal32.new();
-    //     let y = Decimal32.new();
-    //     do x.set(sign(), 1, 1);
-    //     while (i > 0) {
-    //         let i = i - 1;
-    //         do Decimal32.mul(x, this, y);
-    //         do y.negate();
-    //         do Decimal32.add(y, 2, y);
-    //         do Decimal32.mul(x, y, x);
-    //         do y.copy(x);
-    //     }
-    //     do copy(x);
-    //     do x.dispose();
-    //     do y.dispose();
-    //     return;
-    // }
-
     method boolean sign() {
         return i1 < 0;
-    }
-
-    /**
-     * Invert the sign
-     */
-    method void negate() {
-        if (i1 < 0) {
-            let i1 = i1 & 32767;
-        } else {
-            let i1 = i1 | (~32767);
-        }
-        return;
     }
 
     method int exponent() {
@@ -74,8 +59,20 @@ class Decimal32 {
     }
 
     /**
-     * Attempt to "normalize" the number by shifting it over
-     * as far as left as possible while shifting exponent down.
+     * Invert the sign. Note this modifies the Decimal32 in place.
+     */
+    method void negate() {
+        if (i1 < 0) {
+            let i1 = i1 & 32767;
+        } else {
+            let i1 = i1 | (~32767);
+        }
+        return;
+    }
+
+    /**
+     * Try to "normalize" the number by shifting it left while shifting exponent down.
+     * Note this modifies the Decimal32 in place.
      */
     method void normalize() {
         var boolean sign;
@@ -88,7 +85,7 @@ class Decimal32 {
         let i1 = i1 & 127;
         // shift left
         // don't overflow the last bit
-        // TODO: could get a few more bits if we check i0
+        // TODO: could get a few more bits if we check the lower 16 bits
         while (i1 < 11) { 
             // multiply by ten but lower the exponent
             // gives same number, more significant digits
@@ -112,7 +109,7 @@ class Decimal32 {
     }
 
     /**
-     * Write to a string
+     * Write to a string.
      */
     method void format(String output) {
 
@@ -211,7 +208,7 @@ class Decimal32 {
         var boolean hasFraction;
         var char c;
 
-        // reset self
+        // reset self (will use self as UInt32 for parsing purposes)
         let i0 = 0;
         let i1 = 0;
 
@@ -273,7 +270,6 @@ class Decimal32 {
         var boolean signA, signB;
         var UInt32 significandA, significandB;
         var int exponentA, exponentB;
-        var int carry;
         var String s;
         let signA = a.sign();
         let signB = b.sign();
@@ -312,15 +308,11 @@ class Decimal32 {
 
         // add significands
         do UInt32.add32(significandA, significandB, significandA);
-        if (significandA.isHighBitSet()) {
+        if (significandA[1] < 0) {
             let signA = true;
             do significandA.complement();
-        }
-
-        // normalize output
-        while ((significandA[1] & (~127)) > 0) {
-            let exponentA = exponentA + 1;
-            do UInt32.div32x8(significandA, 10, significandA);
+        } else {
+            let signA = false;
         }
 
         // set output
@@ -332,7 +324,7 @@ class Decimal32 {
     }
 
     /**
-     * Multiply two decimals
+     * Multiply two decimals. 
      */ 
     function void mul(Decimal32 a, Decimal32 b, Decimal32 out) {
         var boolean signA, signB;
@@ -340,7 +332,7 @@ class Decimal32 {
         var int exponentA, exponentB;
 
         if (a.isZero() | b.isZero()) {
-            do out.set(0, 0, significandA);
+            do out.setInt(0, 0);
             return;
         }
 
@@ -373,15 +365,59 @@ class Decimal32 {
         }
 
         // normalize output
-        while ((significandA[1] & (~127)) > 0) {
-            let exponentA = exponentA + 1;
-            do UInt32.div32x8(significandA, 10, significandA);
-        }
         do out.set(signA, exponentA, significandA);
 
         do significandA.dispose();
         do significandB.dispose();
         return;
     }
+
+    /**
+     * Divide one decimal by another. Note the dividend will be shifted down to 8 bits
+     * which will cause some loss of precision.
+     */
+    function void div(Decimal32 a, Decimal32 b, Decimal32 out) {
+        var boolean signA, signB;
+        var UInt32 significandA, significandB;
+        var int exponentA, exponentB;
+
+        if (a.isZero() | b.isZero()) {
+            do out.setInt(0, 0);
+            return;
+        }
+
+        let signA = a.sign();
+        let signB = b.sign();
+        let significandA = a.significand();
+        let significandB = b.significand();
+        let exponentA = a.exponent();
+        let exponentB = b.exponent();
+
+        // make sure b < a
+        while ((Bits.word0(significandB[1]) > 0) | (Bits.word1(significandB[0]) > 0)) {
+            let exponentB = exponentB + 1;
+            do UInt32.div32x8(significandB, 10, significandB);
+        }
+
+        // divide a by b
+        do UInt32.div32x8(significandA, significandB[0], significandA);
+        
+        // sub exponents
+        let exponentA = exponentA - exponentB;
+        if (signA = signB) {
+            let signA = false;
+        } else {
+            let signA = true;
+        }
+        
+        // normalize output
+        do out.set(signA, exponentA, significandA);
+        do out.normalize();
+
+        do significandA.dispose();
+        do significandB.dispose();
+        return;
+    }
+
 
 }

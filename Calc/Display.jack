@@ -65,7 +65,7 @@ class Display {
         var int i, len, x, step;
         var String value;
 
-        let value = String.new(12);
+        let value = String.new(13);
         do d.format(value);
 
         let len = value.length();
@@ -153,7 +153,7 @@ class Display {
     }
 
     /**
-     * Internal function to recalculate boundaries
+     * Internal function to recalculate display boundaries
      */
     function void resize() {
         let displayRight = displayLeft + displayWidth;
