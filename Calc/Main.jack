@@ -31,7 +31,7 @@ class Main {
         // REPL loop
         while (true) {
             do Display.displayDecimal32(calculator.currentValue());
-            let input = InputDialog.readInput("Enter an algebraic expression");
+            let input = InputDialog.readInput("Enter an expression (example: 10 + (3 * 2.5)):");
             while (calculator.error()) {
                 do input.dispose();
                 // TODO: display error position
