@@ -1,0 +1,45 @@
+class StarMap {
+
+    field Array sectors;
+
+    constructor StarMap new() {
+        var int i;
+        let sectors = Array.new(8);
+        while (i < 64) {
+            let sectors[i] = Sector.new(Strings.sectorName(i));
+            let i = i + 1;
+        }
+        return this;
+    }
+
+    method Sector sector(int index) {
+        return sectors[index];
+    }
+
+    method void dispose() {
+        var int i;
+        var Sector s;
+        while (i < 8) {
+            let s = sectors[i];
+            do s.dispose();
+            let i = i + 1;
+        }
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    function int sectorIndex(int x, int y) {
+        return y * 8 + x;
+    }
+
+    function int subsectorIndex(int x, int y) {
+        return y * 12 + x;
+    }
+
+    function int distance(int x1, int y1, int x2, int y2) {
+        let x1 = x2 - x1;
+        let y1 = y2 - y1;
+        return Math.sqrt((x1 * x1) + (y1 * y1));
+    }
+
+}

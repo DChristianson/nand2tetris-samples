@@ -1,0 +1,26 @@
+class StarHackGame {
+
+    field int stardate;
+    field PlayerShip player;
+    field StarMap starMap;
+
+    constructor StarHackGame new() {
+        let stardate = Random.randInt();
+        let player = PlayerShip.new(3, 3);
+        let starMap = StarMap.new();
+        return this;
+    }
+
+    method void dispose() {
+        do player.dispose();
+        do starMap.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void update() {
+        do player.update();
+        return;
+    }
+
+}

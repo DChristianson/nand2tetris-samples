@@ -1,0 +1,25 @@
+/**
+ * Bit shifting operations
+ */
+class Bits {
+
+    function int word0(int a) {
+        return a & 255;
+    }
+
+    function int word1(int a) {
+        // seeing artifacts in VME if we don't clear bits
+        let a = a & (~255); 
+        return (a / 256) & 255;
+    }
+
+    function int lshift8(int a) {
+        // seeing artifacts in VME if we don't clear bits
+        let a = a & 255;
+        if (a & 128) {
+            return ((a & 127) * 256) | (~32767);
+        }
+        return a * 256;
+    }
+
+}

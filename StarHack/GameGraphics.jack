@@ -1,0 +1,55 @@
+class GameGraphics {
+
+    static Array screen;
+
+    function void init() {
+        let screen = 16384;
+        return;
+    }
+
+    function void wipeScreen() {
+        var int i, j;
+        while (i < 16) {
+            let i = i + 1;
+            let j = 16 - i;
+            while (j < 8192) {
+                let screen[j] = 0;
+                let j = j + 16;
+            }
+        }
+        return;
+    }
+
+    function void drawImageToScreen(Array image) {
+        var int run;
+        var int value;
+        var Array ptr;
+        let ptr = screen;
+        while (true) {
+            let value = image[0];
+            let image = image + 1;
+            if (value = 0) {
+                return;
+            }
+            if (value > 0) {
+                let run = ptr + value;
+                let value = image[0];
+                let image = image + 1;
+                while (run > ptr) {
+                    let ptr[0] = value;
+                    let ptr = ptr + 1;
+                }
+            } else {
+                let run = ptr - value;
+                while (run > ptr) {
+                    let value = image[0];
+                    let image = image + 1;
+                    let ptr[0] = value;
+                    let ptr = ptr + 1;
+                }
+            }
+        }
+        return;
+    }
+
+}

@@ -1,0 +1,51 @@
+class PlayerShip {
+
+    field int sectorIndex;
+    field int subsectorIndex;
+
+    field int shields;
+    field int hull;
+    field int engines;
+    field int weapons;
+    field int repair;
+    field int missiles;
+    field int power;
+
+    constructor PlayerShip new(int sector, int subsector) {
+
+        let sectorIndex = sector;
+        let subsectorIndex = subsector;
+
+        let shields = 100;
+        let weapons = 100;
+        let missiles = 5;
+        let engines = 100;
+        let repair = 100;
+        let hull = 100;
+        let power = 100;
+
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void move(int x, int y) {
+        let subsectorIndex = StarMap.subsectorIndex(x, y);
+        // TODO: power usage
+        return;
+    }
+
+    method void warp(int x, int y) {
+        let sectorIndex = StarMap.sectorIndex(x, y);
+        // TODO: power usage
+        return;
+    }
+
+    method void update() {
+        return;
+    }
+
+}

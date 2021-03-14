@@ -1,0 +1,74 @@
+class Main {
+
+    static StarHackGame game;
+
+    function void main() {
+
+        do Strings.init();
+        do ItitleScreen.init();
+        do IgameScreen.init();
+        do GameGraphics.init();
+
+        // attract loop
+        do GameGraphics.drawImageToScreen(ItitleScreen.titleScreen());
+        do Text.drawTextAligned("Press any key to start...", 19, 31, 1);
+        do Main.waitForKey();
+        do GameGraphics.wipeScreen();
+
+        // prep game
+        do Random.seed();
+        let game = StarHackGame.new();
+
+        // intro
+        do Text.drawTextAligned("[message received @t4.17.100.0010+]", 2, 3, 0);
+        do Text.drawTextAligned("We have received reports of anomalies in sector {}", 4, 3, 0);
+        do Text.drawTextAligned("Scans indicate presence of hostile Von Neumann probes.", 5, 3, 0);
+        do Text.drawTextAligned("You are being dispatched immediately to investigate...", 7, 7, 0);
+        do Text.drawTextAligned("Press any key to continue...", 19, 31, 1);
+        do Main.waitForKey();
+        do GameGraphics.wipeScreen();
+
+        // main game loop 
+        do GameGraphics.drawImageToScreen(IgameScreen.gameScreen());
+
+        return;
+    }
+
+    function void waitForKey() {
+        while (Keyboard.keyPressed() = 0) {
+            // TODO: animate
+        }
+        while (Keyboard.keyPressed() > 0) {
+            // TODO: animate
+        }
+        return;
+    }
+
+    function void drawMap() {
+        var int i;
+        do Screen.drawRectangle(32, 32, 223, 223);
+        let i = 48;
+        while (i < 223) {
+            do Screen.drawLine(i, 32, i, 223);
+            do Screen.drawLine(32, i, 223, i);
+            let i = i + 16;
+        }
+
+        do Text.drawTextAligned("LRS = long range scan", 11, 35, 0);
+        do Text.drawTextAligned("SRS = short range scan", 12, 35, 0);
+
+        do Text.drawTextAligned("MAN = maneuver", 13, 35, 0);
+        do Text.drawTextAligned("WRP = warp drive", 14, 35, 0);
+
+        do Text.drawTextAligned("SIG = communicator", 15, 35, 0);
+
+        do Text.drawTextAligned("LAS = laser cannon", 16, 35, 0);
+        do Text.drawTextAligned("MIS = missiles", 17, 35, 0);        
+
+        do Text.drawTextAligned("DEF = shield", 18, 35, 0);
+        do Text.drawTextAligned("REP = repair", 18, 35, 0);
+
+        return;
+    }
+
+}

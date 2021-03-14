@@ -1,0 +1,19 @@
+class Random {
+
+    static int x, w, s;
+
+    function void seed() {
+        let s = -681;
+        return;
+    }
+
+    function int randInt() {
+        // Middle Square Weyl Sequence PRNG
+        var int i;
+        let x = x * x;
+        let w = w + s;
+        let x = x + w;
+        return Bits.word1(x) | Bits.lshift8(Bits.word0(x));
+    }
+
+}

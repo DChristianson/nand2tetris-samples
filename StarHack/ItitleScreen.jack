@@ -1,0 +1,3554 @@
+class ItitleScreen {
+    #pragma optimizeArrayAssignment
+    static Array titleScreen;
+    function void init() {
+        let titleScreen = Array.new(3262);
+        // 341: 0
+        let titleScreen[0] = 341;
+        // -1: 65024
+        let titleScreen[2] = -1;
+        let titleScreen[3] = -512;
+        // 31: 0
+        let titleScreen[4] = 31;
+        // -2: 65534,127
+        let titleScreen[6] = -2;
+        let titleScreen[7] = -2;
+        let titleScreen[8] = 127;
+        // 29: 0
+        let titleScreen[9] = 29;
+        // -1: 61440
+        let titleScreen[11] = -1;
+        let titleScreen[12] = -4096;
+        // 2: 1023
+        let titleScreen[13] = 2;
+        let titleScreen[14] = 1023;
+        // 29: 0
+        let titleScreen[15] = 29;
+        // -3: 65280,1,8128
+        let titleScreen[17] = -3;
+        let titleScreen[18] = -256;
+        let titleScreen[19] = 1;
+        let titleScreen[20] = 8128;
+        // 29: 0
+        let titleScreen[21] = 29;
+        // -3: 4080,0,31744
+        let titleScreen[23] = -3;
+        let titleScreen[24] = 4080;
+        let titleScreen[26] = 31744;
+        // 29: 0
+        let titleScreen[27] = 29;
+        // -4: 254,0,61440,1
+        let titleScreen[29] = -4;
+        let titleScreen[30] = 254;
+        let titleScreen[32] = -4096;
+        let titleScreen[33] = 1;
+        // 27: 0
+        let titleScreen[34] = 27;
+        // -5: 49152,31,0,49152,3
+        let titleScreen[36] = -5;
+        let titleScreen[37] = -16384;
+        let titleScreen[38] = 31;
+        let titleScreen[40] = -16384;
+        let titleScreen[41] = 3;
+        // 27: 0
+        let titleScreen[42] = 27;
+        // -2: 61440,3
+        let titleScreen[44] = -2;
+        let titleScreen[45] = -4096;
+        let titleScreen[46] = 3;
+        // 2: 0
+        let titleScreen[47] = 2;
+        // -1: 7
+        let titleScreen[49] = -1;
+        let titleScreen[50] = 7;
+        // 27: 0
+        let titleScreen[51] = 27;
+        // -1: 32256
+        let titleScreen[53] = -1;
+        let titleScreen[54] = 32256;
+        // 3: 0
+        let titleScreen[55] = 3;
+        // -1: 14
+        let titleScreen[57] = -1;
+        let titleScreen[58] = 14;
+        // 27: 0
+        let titleScreen[59] = 27;
+        // -1: 3968
+        let titleScreen[61] = -1;
+        let titleScreen[62] = 3968;
+        // 3: 0
+        let titleScreen[63] = 3;
+        // -1: 28
+        let titleScreen[65] = -1;
+        let titleScreen[66] = 28;
+        // 27: 0
+        let titleScreen[67] = 27;
+        // -1: 1008
+        let titleScreen[69] = -1;
+        let titleScreen[70] = 1008;
+        // 3: 0
+        let titleScreen[71] = 3;
+        // -1: 48
+        let titleScreen[73] = -1;
+        let titleScreen[74] = 48;
+        // 27: 0
+        let titleScreen[75] = 27;
+        // -1: 124
+        let titleScreen[77] = -1;
+        let titleScreen[78] = 124;
+        // 3: 0
+        let titleScreen[79] = 3;
+        // -1: 96
+        let titleScreen[81] = -1;
+        let titleScreen[82] = 96;
+        // 27: 0
+        let titleScreen[83] = 27;
+        // -1: 31
+        let titleScreen[85] = -1;
+        let titleScreen[86] = 31;
+        // 3: 0
+        let titleScreen[87] = 3;
+        // -1: 224
+        let titleScreen[89] = -1;
+        let titleScreen[90] = 224;
+        // 26: 0
+        let titleScreen[91] = 26;
+        // -2: 49152,7
+        let titleScreen[93] = -2;
+        let titleScreen[94] = -16384;
+        let titleScreen[95] = 7;
+        // 3: 0
+        let titleScreen[96] = 3;
+        // -1: 448
+        let titleScreen[98] = -1;
+        let titleScreen[99] = 448;
+        // 26: 0
+        let titleScreen[100] = 26;
+        // -1: 61440
+        let titleScreen[102] = -1;
+        let titleScreen[103] = -4096;
+        // 4: 0
+        let titleScreen[104] = 4;
+        // -1: 384
+        let titleScreen[106] = -1;
+        let titleScreen[107] = 384;
+        // 26: 0
+        let titleScreen[108] = 26;
+        // -1: 15360
+        let titleScreen[110] = -1;
+        let titleScreen[111] = 15360;
+        // 4: 0
+        let titleScreen[112] = 4;
+        // -1: 896
+        let titleScreen[114] = -1;
+        let titleScreen[115] = 896;
+        // 26: 0
+        let titleScreen[116] = 26;
+        // -1: 3840
+        let titleScreen[118] = -1;
+        let titleScreen[119] = 3840;
+        // 4: 0
+        let titleScreen[120] = 4;
+        // -1: 768
+        let titleScreen[122] = -1;
+        let titleScreen[123] = 768;
+        // 26: 0
+        let titleScreen[124] = 26;
+        // -1: 960
+        let titleScreen[126] = -1;
+        let titleScreen[127] = 960;
+        // 4: 0
+        let titleScreen[128] = 4;
+        // -1: 1536
+        let titleScreen[130] = -1;
+        let titleScreen[131] = 1536;
+        // 26: 0
+        let titleScreen[132] = 26;
+        // -1: 240
+        let titleScreen[134] = -1;
+        let titleScreen[135] = 240;
+        // 4: 0
+        let titleScreen[136] = 4;
+        // -1: 1536
+        let titleScreen[138] = -1;
+        let titleScreen[139] = 1536;
+        // 26: 0
+        let titleScreen[140] = 26;
+        // -1: 124
+        let titleScreen[142] = -1;
+        let titleScreen[143] = 124;
+        // 4: 0
+        let titleScreen[144] = 4;
+        // -1: 3584
+        let titleScreen[146] = -1;
+        let titleScreen[147] = 3584;
+        // 26: 0
+        let titleScreen[148] = 26;
+        // -1: 31
+        let titleScreen[150] = -1;
+        let titleScreen[151] = 31;
+        // 4: 0
+        let titleScreen[152] = 4;
+        // -1: 3072
+        let titleScreen[154] = -1;
+        let titleScreen[155] = 3072;
+        // 25: 0
+        let titleScreen[156] = 25;
+        // -2: 32768,7
+        let titleScreen[158] = -2;
+        let titleScreen[159] = ~32767;
+        let titleScreen[160] = 7;
+        // 4: 0
+        let titleScreen[161] = 4;
+        // -1: 3072
+        let titleScreen[163] = -1;
+        let titleScreen[164] = 3072;
+        // 25: 0
+        let titleScreen[165] = 25;
+        // -2: 57344,1
+        let titleScreen[167] = -2;
+        let titleScreen[168] = -8192;
+        let titleScreen[169] = 1;
+        // 4: 0
+        let titleScreen[170] = 4;
+        // -1: 7168
+        let titleScreen[172] = -1;
+        let titleScreen[173] = 7168;
+        // 25: 0
+        let titleScreen[174] = 25;
+        // -1: 30720
+        let titleScreen[176] = -1;
+        let titleScreen[177] = 30720;
+        // 5: 0
+        let titleScreen[178] = 5;
+        // -1: 6144
+        let titleScreen[180] = -1;
+        let titleScreen[181] = 6144;
+        // 25: 0
+        let titleScreen[182] = 25;
+        // -1: 15360
+        let titleScreen[184] = -1;
+        let titleScreen[185] = 15360;
+        // 5: 0
+        let titleScreen[186] = 5;
+        // -1: 6144
+        let titleScreen[188] = -1;
+        let titleScreen[189] = 6144;
+        // 25: 0
+        let titleScreen[190] = 25;
+        // -1: 3840
+        let titleScreen[192] = -1;
+        let titleScreen[193] = 3840;
+        // 5: 0
+        let titleScreen[194] = 5;
+        // -1: 6144
+        let titleScreen[196] = -1;
+        let titleScreen[197] = 6144;
+        // 25: 0
+        let titleScreen[198] = 25;
+        // -1: 896
+        let titleScreen[200] = -1;
+        let titleScreen[201] = 896;
+        // 5: 0
+        let titleScreen[202] = 5;
+        // -1: 6144
+        let titleScreen[204] = -1;
+        let titleScreen[205] = 6144;
+        // 25: 0
+        let titleScreen[206] = 25;
+        // -1: 480
+        let titleScreen[208] = -1;
+        let titleScreen[209] = 480;
+        // 5: 0
+        let titleScreen[210] = 5;
+        // -1: 14336
+        let titleScreen[212] = -1;
+        let titleScreen[213] = 14336;
+        // 25: 0
+        let titleScreen[214] = 25;
+        // -1: 112
+        let titleScreen[216] = -1;
+        let titleScreen[217] = 112;
+        // 5: 0
+        let titleScreen[218] = 5;
+        // -1: 12288
+        let titleScreen[220] = -1;
+        let titleScreen[221] = 12288;
+        // 25: 0
+        let titleScreen[222] = 25;
+        // -1: 60
+        let titleScreen[224] = -1;
+        let titleScreen[225] = 60;
+        // 5: 0
+        let titleScreen[226] = 5;
+        // -1: 12288
+        let titleScreen[228] = -1;
+        let titleScreen[229] = 12288;
+        // 25: 0
+        let titleScreen[230] = 25;
+        // -1: 15
+        let titleScreen[232] = -1;
+        let titleScreen[233] = 15;
+        // 5: 0
+        let titleScreen[234] = 5;
+        // -1: 12288
+        let titleScreen[236] = -1;
+        let titleScreen[237] = 12288;
+        // 24: 0
+        let titleScreen[238] = 24;
+        // -2: 32768,7
+        let titleScreen[240] = -2;
+        let titleScreen[241] = ~32767;
+        let titleScreen[242] = 7;
+        // 5: 0
+        let titleScreen[243] = 5;
+        // -1: 12288
+        let titleScreen[245] = -1;
+        let titleScreen[246] = 12288;
+        // 24: 0
+        let titleScreen[247] = 24;
+        // -2: 49152,1
+        let titleScreen[249] = -2;
+        let titleScreen[250] = -16384;
+        let titleScreen[251] = 1;
+        // 5: 0
+        let titleScreen[252] = 5;
+        // -1: 12288
+        let titleScreen[254] = -1;
+        let titleScreen[255] = 12288;
+        // 24: 0
+        let titleScreen[256] = 24;
+        // -1: 61440
+        let titleScreen[258] = -1;
+        let titleScreen[259] = -4096;
+        // 6: 0
+        let titleScreen[260] = 6;
+        // -1: 12288
+        let titleScreen[262] = -1;
+        let titleScreen[263] = 12288;
+        // 24: 0
+        let titleScreen[264] = 24;
+        // -1: 14336
+        let titleScreen[266] = -1;
+        let titleScreen[267] = 14336;
+        // 6: 0
+        let titleScreen[268] = 6;
+        // -1: 12288
+        let titleScreen[270] = -1;
+        let titleScreen[271] = 12288;
+        // 24: 0
+        let titleScreen[272] = 24;
+        // -1: 7680
+        let titleScreen[274] = -1;
+        let titleScreen[275] = 7680;
+        // 6: 0
+        let titleScreen[276] = 6;
+        // -1: 12288
+        let titleScreen[278] = -1;
+        let titleScreen[279] = 12288;
+        // 24: 0
+        let titleScreen[280] = 24;
+        // -1: 1792
+        let titleScreen[282] = -1;
+        let titleScreen[283] = 1792;
+        // 6: 0
+        let titleScreen[284] = 6;
+        // -1: 12288
+        let titleScreen[286] = -1;
+        let titleScreen[287] = 12288;
+        // 24: 0
+        let titleScreen[288] = 24;
+        // -1: 960
+        let titleScreen[290] = -1;
+        let titleScreen[291] = 960;
+        // 6: 0
+        let titleScreen[292] = 6;
+        // -1: 12288
+        let titleScreen[294] = -1;
+        let titleScreen[295] = 12288;
+        // 24: 0
+        let titleScreen[296] = 24;
+        // -1: 480
+        let titleScreen[298] = -1;
+        let titleScreen[299] = 480;
+        // 6: 0
+        let titleScreen[300] = 6;
+        // -1: 12288
+        let titleScreen[302] = -1;
+        let titleScreen[303] = 12288;
+        // 24: 0
+        let titleScreen[304] = 24;
+        // -1: 112
+        let titleScreen[306] = -1;
+        let titleScreen[307] = 112;
+        // 6: 0
+        let titleScreen[308] = 6;
+        // -1: 12288
+        let titleScreen[310] = -1;
+        let titleScreen[311] = 12288;
+        // 24: 0
+        let titleScreen[312] = 24;
+        // -1: 60
+        let titleScreen[314] = -1;
+        let titleScreen[315] = 60;
+        // 6: 0
+        let titleScreen[316] = 6;
+        // -1: 12288
+        let titleScreen[318] = -1;
+        let titleScreen[319] = 12288;
+        // 24: 0
+        let titleScreen[320] = 24;
+        // -1: 30
+        let titleScreen[322] = -1;
+        let titleScreen[323] = 30;
+        // 6: 0
+        let titleScreen[324] = 6;
+        // -1: 12288
+        let titleScreen[326] = -1;
+        let titleScreen[327] = 12288;
+        // 24: 0
+        let titleScreen[328] = 24;
+        // -1: 7
+        let titleScreen[330] = -1;
+        let titleScreen[331] = 7;
+        // 6: 0
+        let titleScreen[332] = 6;
+        // -1: 6144
+        let titleScreen[334] = -1;
+        let titleScreen[335] = 6144;
+        // 23: 0
+        let titleScreen[336] = 23;
+        // -2: 32768,3
+        let titleScreen[338] = -2;
+        let titleScreen[339] = ~32767;
+        let titleScreen[340] = 3;
+        // 6: 0
+        let titleScreen[341] = 6;
+        // -1: 6144
+        let titleScreen[343] = -1;
+        let titleScreen[344] = 6144;
+        // 23: 0
+        let titleScreen[345] = 23;
+        // -2: 57344,1
+        let titleScreen[347] = -2;
+        let titleScreen[348] = -8192;
+        let titleScreen[349] = 1;
+        // 6: 0
+        let titleScreen[350] = 6;
+        // -1: 6144
+        let titleScreen[352] = -1;
+        let titleScreen[353] = 6144;
+        // 23: 0
+        let titleScreen[354] = 23;
+        // -1: 28672
+        let titleScreen[356] = -1;
+        let titleScreen[357] = 28672;
+        // 7: 0
+        let titleScreen[358] = 7;
+        // -1: 6144
+        let titleScreen[360] = -1;
+        let titleScreen[361] = 6144;
+        // 23: 0
+        let titleScreen[362] = 23;
+        // -1: 14336
+        let titleScreen[364] = -1;
+        let titleScreen[365] = 14336;
+        // 7: 0
+        let titleScreen[366] = 7;
+        // -1: 6144
+        let titleScreen[368] = -1;
+        let titleScreen[369] = 6144;
+        // 23: 0
+        let titleScreen[370] = 23;
+        // -1: 7680
+        let titleScreen[372] = -1;
+        let titleScreen[373] = 7680;
+        // 7: 0
+        let titleScreen[374] = 7;
+        // -1: 6144
+        let titleScreen[376] = -1;
+        let titleScreen[377] = 6144;
+        // 23: 0
+        let titleScreen[378] = 23;
+        // -1: 1792
+        let titleScreen[380] = -1;
+        let titleScreen[381] = 1792;
+        // 7: 0
+        let titleScreen[382] = 7;
+        // -1: 7168
+        let titleScreen[384] = -1;
+        let titleScreen[385] = 7168;
+        // 23: 0
+        let titleScreen[386] = 23;
+        // -1: 896
+        let titleScreen[388] = -1;
+        let titleScreen[389] = 896;
+        // 7: 0
+        let titleScreen[390] = 7;
+        // -1: 3072
+        let titleScreen[392] = -1;
+        let titleScreen[393] = 3072;
+        // 23: 0
+        let titleScreen[394] = 23;
+        // -1: 448
+        let titleScreen[396] = -1;
+        let titleScreen[397] = 448;
+        // 7: 0
+        let titleScreen[398] = 7;
+        // -1: 3072
+        let titleScreen[400] = -1;
+        let titleScreen[401] = 3072;
+        // 23: 0
+        let titleScreen[402] = 23;
+        // -1: 224
+        let titleScreen[404] = -1;
+        let titleScreen[405] = 224;
+        // 7: 0
+        let titleScreen[406] = 7;
+        // -1: 3072
+        let titleScreen[408] = -1;
+        let titleScreen[409] = 3072;
+        // 23: 0
+        let titleScreen[410] = 23;
+        // -1: 120
+        let titleScreen[412] = -1;
+        let titleScreen[413] = 120;
+        // 7: 0
+        let titleScreen[414] = 7;
+        // -1: 3072
+        let titleScreen[416] = -1;
+        let titleScreen[417] = 3072;
+        // 23: 0
+        let titleScreen[418] = 23;
+        // -1: 28
+        let titleScreen[420] = -1;
+        let titleScreen[421] = 28;
+        // 7: 0
+        let titleScreen[422] = 7;
+        // -1: 1536
+        let titleScreen[424] = -1;
+        let titleScreen[425] = 1536;
+        // 23: 0
+        let titleScreen[426] = 23;
+        // -1: 14
+        let titleScreen[428] = -1;
+        let titleScreen[429] = 14;
+        // 7: 0
+        let titleScreen[430] = 7;
+        // -1: 1536
+        let titleScreen[432] = -1;
+        let titleScreen[433] = 1536;
+        // 23: 0
+        let titleScreen[434] = 23;
+        // -1: 7
+        let titleScreen[436] = -1;
+        let titleScreen[437] = 7;
+        // 7: 0
+        let titleScreen[438] = 7;
+        // -1: 1536
+        let titleScreen[440] = -1;
+        let titleScreen[441] = 1536;
+        // 22: 0
+        let titleScreen[442] = 22;
+        // -2: 32768,3
+        let titleScreen[444] = -2;
+        let titleScreen[445] = ~32767;
+        let titleScreen[446] = 3;
+        // 7: 0
+        let titleScreen[447] = 7;
+        // -1: 1536
+        let titleScreen[449] = -1;
+        let titleScreen[450] = 1536;
+        // 22: 0
+        let titleScreen[451] = 22;
+        // -2: 49152,1
+        let titleScreen[453] = -2;
+        let titleScreen[454] = -16384;
+        let titleScreen[455] = 1;
+        // 7: 0
+        let titleScreen[456] = 7;
+        // -1: 768
+        let titleScreen[458] = -1;
+        let titleScreen[459] = 768;
+        // 22: 0
+        let titleScreen[460] = 22;
+        // -1: 61440
+        let titleScreen[462] = -1;
+        let titleScreen[463] = -4096;
+        // 8: 0
+        let titleScreen[464] = 8;
+        // -1: 768
+        let titleScreen[466] = -1;
+        let titleScreen[467] = 768;
+        // 22: 0
+        let titleScreen[468] = 22;
+        // -1: 14336
+        let titleScreen[470] = -1;
+        let titleScreen[471] = 14336;
+        // 8: 0
+        let titleScreen[472] = 8;
+        // -1: 768
+        let titleScreen[474] = -1;
+        let titleScreen[475] = 768;
+        // 22: 0
+        let titleScreen[476] = 22;
+        // -1: 7168
+        let titleScreen[478] = -1;
+        let titleScreen[479] = 7168;
+        // 8: 0
+        let titleScreen[480] = 8;
+        // -1: 896
+        let titleScreen[482] = -1;
+        let titleScreen[483] = 896;
+        // 22: 0
+        let titleScreen[484] = 22;
+        // -1: 3584
+        let titleScreen[486] = -1;
+        let titleScreen[487] = 3584;
+        // 8: 0
+        let titleScreen[488] = 8;
+        // -1: 384
+        let titleScreen[490] = -1;
+        let titleScreen[491] = 384;
+        // 22: 0
+        let titleScreen[492] = 22;
+        // -1: 1792
+        let titleScreen[494] = -1;
+        let titleScreen[495] = 1792;
+        // 8: 0
+        let titleScreen[496] = 8;
+        // -1: 384
+        let titleScreen[498] = -1;
+        let titleScreen[499] = 384;
+        // 22: 0
+        let titleScreen[500] = 22;
+        // -1: 896
+        let titleScreen[502] = -1;
+        let titleScreen[503] = 896;
+        // 31: 0
+        let titleScreen[504] = 31;
+        // -1: 448
+        let titleScreen[506] = -1;
+        let titleScreen[507] = 448;
+        // 31: 0
+        let titleScreen[508] = 31;
+        // -1: 224
+        let titleScreen[510] = -1;
+        let titleScreen[511] = 224;
+        // 628: 0
+        let titleScreen[512] = 628;
+        // -2: 61440,255
+        let titleScreen[514] = -2;
+        let titleScreen[515] = -4096;
+        let titleScreen[516] = 255;
+        // 4: 0
+        let titleScreen[517] = 4;
+        // -1: 8176
+        let titleScreen[519] = -1;
+        let titleScreen[520] = 8176;
+        // 11: 0
+        let titleScreen[521] = 11;
+        // -1: 32704
+        let titleScreen[523] = -1;
+        let titleScreen[524] = 32704;
+        // 3: 0
+        let titleScreen[525] = 3;
+        // -2: 65528,7
+        let titleScreen[527] = -2;
+        let titleScreen[528] = -8;
+        let titleScreen[529] = 7;
+        // 8: 0
+        let titleScreen[530] = 8;
+        // -3: 65024,4095,65472
+        let titleScreen[532] = -3;
+        let titleScreen[533] = -512;
+        let titleScreen[534] = 4095;
+        let titleScreen[535] = -64;
+        // 2: 65535
+        let titleScreen[536] = 2;
+        let titleScreen[537] = -1;
+        // -5: 31,16368,0,65024,16383
+        let titleScreen[538] = -5;
+        let titleScreen[539] = 31;
+        let titleScreen[540] = 16368;
+        let titleScreen[542] = -512;
+        let titleScreen[543] = 16383;
+        // 3: 0
+        let titleScreen[544] = 3;
+        // -1: 65472
+        let titleScreen[546] = -1;
+        let titleScreen[547] = -64;
+        // 2: 0
+        let titleScreen[548] = 2;
+        // -3: 4092,0,65472
+        let titleScreen[550] = -3;
+        let titleScreen[551] = 4092;
+        let titleScreen[553] = -64;
+        // 2: 0
+        let titleScreen[554] = 2;
+        // -6: 49152,65535,61447,63,61440,127
+        let titleScreen[556] = -6;
+        let titleScreen[557] = -16384;
+        let titleScreen[558] = -1;
+        let titleScreen[559] = -4089;
+        let titleScreen[560] = 63;
+        let titleScreen[561] = -4096;
+        let titleScreen[562] = 127;
+        // 5: 0
+        let titleScreen[563] = 5;
+        // -3: 65408,16383,65472
+        let titleScreen[565] = -3;
+        let titleScreen[566] = -128;
+        let titleScreen[567] = 16383;
+        let titleScreen[568] = -64;
+        // 2: 65535
+        let titleScreen[569] = 2;
+        let titleScreen[570] = -1;
+        // -6: 31,16376,0,65024,65535,3
+        let titleScreen[571] = -6;
+        let titleScreen[572] = 31;
+        let titleScreen[573] = 16376;
+        let titleScreen[575] = -512;
+        let titleScreen[576] = -1;
+        let titleScreen[577] = 3;
+        // 2: 0
+        let titleScreen[578] = 2;
+        // -1: 65472
+        let titleScreen[580] = -1;
+        let titleScreen[581] = -64;
+        // 2: 0
+        let titleScreen[582] = 2;
+        // -3: 4092,0,65504
+        let titleScreen[584] = -3;
+        let titleScreen[585] = 4092;
+        let titleScreen[587] = -32;
+        // 2: 0
+        let titleScreen[588] = 2;
+        // -6: 64512,65535,61447,63,63488,127
+        let titleScreen[590] = -6;
+        let titleScreen[591] = -1024;
+        let titleScreen[592] = -1;
+        let titleScreen[593] = -4089;
+        let titleScreen[594] = 63;
+        let titleScreen[595] = -2048;
+        let titleScreen[596] = 127;
+        // 5: 0
+        let titleScreen[597] = 5;
+        // -3: 65504,32767,65472
+        let titleScreen[599] = -3;
+        let titleScreen[600] = -32;
+        let titleScreen[601] = 32767;
+        let titleScreen[602] = -64;
+        // 2: 65535
+        let titleScreen[603] = 2;
+        let titleScreen[604] = -1;
+        // -6: 31,16376,0,65024,65535,15
+        let titleScreen[605] = -6;
+        let titleScreen[606] = 31;
+        let titleScreen[607] = 16376;
+        let titleScreen[609] = -512;
+        let titleScreen[610] = -1;
+        let titleScreen[611] = 15;
+        // 2: 0
+        let titleScreen[612] = 2;
+        // -1: 65472
+        let titleScreen[614] = -1;
+        let titleScreen[615] = -64;
+        // 2: 0
+        let titleScreen[616] = 2;
+        // -3: 4092,0,65504
+        let titleScreen[618] = -3;
+        let titleScreen[619] = 4092;
+        let titleScreen[621] = -32;
+        // 2: 0
+        let titleScreen[622] = 2;
+        // -6: 65280,65535,61447,63,64512,63
+        let titleScreen[624] = -6;
+        let titleScreen[625] = -256;
+        let titleScreen[626] = -1;
+        let titleScreen[627] = -4089;
+        let titleScreen[628] = 63;
+        let titleScreen[629] = -1024;
+        let titleScreen[630] = 63;
+        // 5: 0
+        let titleScreen[631] = 5;
+        // -3: 65520,32767,65472
+        let titleScreen[633] = -3;
+        let titleScreen[634] = -16;
+        let titleScreen[635] = 32767;
+        let titleScreen[636] = -64;
+        // 2: 65535
+        let titleScreen[637] = 2;
+        let titleScreen[638] = -1;
+        // -6: 31,16380,0,65024,65535,63
+        let titleScreen[639] = -6;
+        let titleScreen[640] = 31;
+        let titleScreen[641] = 16380;
+        let titleScreen[643] = -512;
+        let titleScreen[644] = -1;
+        let titleScreen[645] = 63;
+        // 2: 0
+        let titleScreen[646] = 2;
+        // -1: 65472
+        let titleScreen[648] = -1;
+        let titleScreen[649] = -64;
+        // 2: 0
+        let titleScreen[650] = 2;
+        // -3: 4092,0,65520
+        let titleScreen[652] = -3;
+        let titleScreen[653] = 4092;
+        let titleScreen[655] = -16;
+        // 2: 0
+        let titleScreen[656] = 2;
+        // -6: 65472,65535,63491,31,65024,31
+        let titleScreen[658] = -6;
+        let titleScreen[659] = -64;
+        let titleScreen[660] = -1;
+        let titleScreen[661] = -2045;
+        let titleScreen[662] = 31;
+        let titleScreen[663] = -512;
+        let titleScreen[664] = 31;
+        // 5: 0
+        let titleScreen[665] = 5;
+        // -3: 65532,16383,65504
+        let titleScreen[667] = -3;
+        let titleScreen[668] = -4;
+        let titleScreen[669] = 16383;
+        let titleScreen[670] = -32;
+        // 2: 65535
+        let titleScreen[671] = 2;
+        let titleScreen[672] = -1;
+        // -6: 15,16380,0,65280,65535,127
+        let titleScreen[673] = -6;
+        let titleScreen[674] = 15;
+        let titleScreen[675] = 16380;
+        let titleScreen[677] = -256;
+        let titleScreen[678] = -1;
+        let titleScreen[679] = 127;
+        // 2: 0
+        let titleScreen[680] = 2;
+        // -1: 65504
+        let titleScreen[682] = -1;
+        let titleScreen[683] = -32;
+        // 2: 0
+        let titleScreen[684] = 2;
+        // -3: 4092,0,65520
+        let titleScreen[686] = -3;
+        let titleScreen[687] = 4092;
+        let titleScreen[689] = -16;
+        // 2: 0
+        let titleScreen[690] = 2;
+        // -6: 65520,65535,63491,31,65280,15
+        let titleScreen[692] = -6;
+        let titleScreen[693] = -16;
+        let titleScreen[694] = -1;
+        let titleScreen[695] = -2045;
+        let titleScreen[696] = 31;
+        let titleScreen[697] = -256;
+        let titleScreen[698] = 15;
+        // 5: 0
+        let titleScreen[699] = 5;
+        // -3: 65534,16383,65504
+        let titleScreen[701] = -3;
+        let titleScreen[702] = -2;
+        let titleScreen[703] = 16383;
+        let titleScreen[704] = -32;
+        // 2: 65535
+        let titleScreen[705] = 2;
+        let titleScreen[706] = -1;
+        // -6: 15,32766,0,65280,65535,255
+        let titleScreen[707] = -6;
+        let titleScreen[708] = 15;
+        let titleScreen[709] = 32766;
+        let titleScreen[711] = -256;
+        let titleScreen[712] = -1;
+        let titleScreen[713] = 255;
+        // 2: 0
+        let titleScreen[714] = 2;
+        // -1: 32736
+        let titleScreen[716] = -1;
+        let titleScreen[717] = 32736;
+        // 2: 0
+        let titleScreen[718] = 2;
+        // -11: 4092,0,65528,1,0,65532,65535,63491,31,65408,7
+        let titleScreen[720] = -11;
+        let titleScreen[721] = 4092;
+        let titleScreen[723] = -8;
+        let titleScreen[724] = 1;
+        let titleScreen[726] = -4;
+        let titleScreen[727] = -1;
+        let titleScreen[728] = -2045;
+        let titleScreen[729] = 31;
+        let titleScreen[730] = -128;
+        let titleScreen[731] = 7;
+        // 5: 0
+        let titleScreen[732] = 5;
+        // -3: 65535,16383,65504
+        let titleScreen[734] = -3;
+        let titleScreen[735] = -1;
+        let titleScreen[736] = 16383;
+        let titleScreen[737] = -32;
+        // 2: 65535
+        let titleScreen[738] = 2;
+        let titleScreen[739] = -1;
+        // -6: 15,32766,0,65280,65535,511
+        let titleScreen[740] = -6;
+        let titleScreen[741] = 15;
+        let titleScreen[742] = 32766;
+        let titleScreen[744] = -256;
+        let titleScreen[745] = -1;
+        let titleScreen[746] = 511;
+        // 2: 0
+        let titleScreen[747] = 2;
+        // -1: 32736
+        let titleScreen[749] = -1;
+        let titleScreen[750] = 32736;
+        // 2: 0
+        let titleScreen[751] = 2;
+        // -5: 4094,0,65528,1,0
+        let titleScreen[753] = -5;
+        let titleScreen[754] = 4094;
+        let titleScreen[756] = -8;
+        let titleScreen[757] = 1;
+        // 2: 65535
+        let titleScreen[759] = 2;
+        let titleScreen[760] = -1;
+        // -4: 63491,31,65472,3
+        let titleScreen[761] = -4;
+        let titleScreen[762] = -2045;
+        let titleScreen[763] = 31;
+        let titleScreen[764] = -64;
+        let titleScreen[765] = 3;
+        // 5: 0
+        let titleScreen[766] = 5;
+        // -3: 65535,16383,65504
+        let titleScreen[768] = -3;
+        let titleScreen[769] = -1;
+        let titleScreen[770] = 16383;
+        let titleScreen[771] = -32;
+        // 2: 65535
+        let titleScreen[772] = 2;
+        let titleScreen[773] = -1;
+        // -6: 15,32767,0,65280,65535,511
+        let titleScreen[774] = -6;
+        let titleScreen[775] = 15;
+        let titleScreen[776] = 32767;
+        let titleScreen[778] = -256;
+        let titleScreen[779] = -1;
+        let titleScreen[780] = 511;
+        // 2: 0
+        let titleScreen[781] = 2;
+        // -1: 32736
+        let titleScreen[783] = -1;
+        let titleScreen[784] = 32736;
+        // 2: 0
+        let titleScreen[785] = 2;
+        // -5: 4094,0,65532,1,32768
+        let titleScreen[787] = -5;
+        let titleScreen[788] = 4094;
+        let titleScreen[790] = -4;
+        let titleScreen[791] = 1;
+        let titleScreen[792] = ~32767;
+        // 2: 65535
+        let titleScreen[793] = 2;
+        let titleScreen[794] = -1;
+        // -4: 63491,31,65504,1
+        let titleScreen[795] = -4;
+        let titleScreen[796] = -2045;
+        let titleScreen[797] = 31;
+        let titleScreen[798] = -32;
+        let titleScreen[799] = 1;
+        // 4: 0
+        let titleScreen[800] = 4;
+        // -4: 32768,16383,16352,65504
+        let titleScreen[802] = -4;
+        let titleScreen[803] = ~32767;
+        let titleScreen[804] = 16383;
+        let titleScreen[805] = 16352;
+        let titleScreen[806] = -32;
+        // 2: 65535
+        let titleScreen[807] = 2;
+        let titleScreen[808] = -1;
+        // -6: 15,32767,0,65280,65535,1023
+        let titleScreen[809] = -6;
+        let titleScreen[810] = 15;
+        let titleScreen[811] = 32767;
+        let titleScreen[813] = -256;
+        let titleScreen[814] = -1;
+        let titleScreen[815] = 1023;
+        // 2: 0
+        let titleScreen[816] = 2;
+        // -1: 32736
+        let titleScreen[818] = -1;
+        let titleScreen[819] = 32736;
+        // 2: 0
+        let titleScreen[820] = 2;
+        // -10: 2046,0,65532,1,49152,65535,255,63488,31,65520
+        let titleScreen[822] = -10;
+        let titleScreen[823] = 2046;
+        let titleScreen[825] = -4;
+        let titleScreen[826] = 1;
+        let titleScreen[827] = -16384;
+        let titleScreen[828] = -1;
+        let titleScreen[829] = 255;
+        let titleScreen[830] = -2048;
+        let titleScreen[831] = 31;
+        let titleScreen[832] = -16;
+        // 5: 0
+        let titleScreen[833] = 5;
+        // -12: 49152,2047,15872,0,65408,1,0,32767,0,65280,61443,1023
+        let titleScreen[835] = -12;
+        let titleScreen[836] = -16384;
+        let titleScreen[837] = 2047;
+        let titleScreen[838] = 15872;
+        let titleScreen[840] = -128;
+        let titleScreen[841] = 1;
+        let titleScreen[843] = 32767;
+        let titleScreen[845] = -256;
+        let titleScreen[846] = -4093;
+        let titleScreen[847] = 1023;
+        // 2: 0
+        let titleScreen[848] = 2;
+        // -1: 32736
+        let titleScreen[850] = -1;
+        let titleScreen[851] = 32736;
+        // 2: 0
+        let titleScreen[852] = 2;
+        // -10: 2046,0,65532,1,61440,65535,1,63488,15,32760
+        let titleScreen[854] = -10;
+        let titleScreen[855] = 2046;
+        let titleScreen[857] = -4;
+        let titleScreen[858] = 1;
+        let titleScreen[859] = -4096;
+        let titleScreen[860] = -1;
+        let titleScreen[861] = 1;
+        let titleScreen[862] = -2048;
+        let titleScreen[863] = 15;
+        let titleScreen[864] = 32760;
+        // 5: 0
+        let titleScreen[865] = 5;
+        // -12: 49152,1023,14336,0,65408,1,32768,32767,0,65280,49155,2047
+        let titleScreen[867] = -12;
+        let titleScreen[868] = -16384;
+        let titleScreen[869] = 1023;
+        let titleScreen[870] = 14336;
+        let titleScreen[872] = -128;
+        let titleScreen[873] = 1;
+        let titleScreen[874] = ~32767;
+        let titleScreen[875] = 32767;
+        let titleScreen[877] = -256;
+        let titleScreen[878] = -16381;
+        let titleScreen[879] = 2047;
+        // 2: 0
+        let titleScreen[880] = 2;
+        // -1: 32736
+        let titleScreen[882] = -1;
+        let titleScreen[883] = 32736;
+        // 2: 0
+        let titleScreen[884] = 2;
+        // -10: 2046,0,65534,1,63488,8191,0,64512,15,16380
+        let titleScreen[886] = -10;
+        let titleScreen[887] = 2046;
+        let titleScreen[889] = -2;
+        let titleScreen[890] = 1;
+        let titleScreen[891] = -2048;
+        let titleScreen[892] = 8191;
+        let titleScreen[894] = -1024;
+        let titleScreen[895] = 15;
+        let titleScreen[896] = 16380;
+        // 5: 0
+        let titleScreen[897] = 5;
+        // -2: 49152,511
+        let titleScreen[899] = -2;
+        let titleScreen[900] = -16384;
+        let titleScreen[901] = 511;
+        // 2: 0
+        let titleScreen[902] = 2;
+        // -8: 65408,1,32768,65535,0,65408,3,2047
+        let titleScreen[904] = -8;
+        let titleScreen[905] = -128;
+        let titleScreen[906] = 1;
+        let titleScreen[907] = ~32767;
+        let titleScreen[908] = -1;
+        let titleScreen[910] = -128;
+        let titleScreen[911] = 3;
+        let titleScreen[912] = 2047;
+        // 2: 0
+        let titleScreen[913] = 2;
+        // -1: 32752
+        let titleScreen[915] = -1;
+        let titleScreen[916] = 32752;
+        // 2: 0
+        let titleScreen[917] = 2;
+        // -10: 2046,0,65534,3,64512,2047,0,64512,15,8190
+        let titleScreen[919] = -10;
+        let titleScreen[920] = 2046;
+        let titleScreen[922] = -2;
+        let titleScreen[923] = 3;
+        let titleScreen[924] = -1024;
+        let titleScreen[925] = 2047;
+        let titleScreen[927] = -1024;
+        let titleScreen[928] = 15;
+        let titleScreen[929] = 8190;
+        // 5: 0
+        let titleScreen[930] = 5;
+        // -2: 57344,255
+        let titleScreen[932] = -2;
+        let titleScreen[933] = -8192;
+        let titleScreen[934] = 255;
+        // 2: 0
+        let titleScreen[935] = 2;
+        // -8: 65408,1,49152,65535,0,65408,3,4095
+        let titleScreen[937] = -8;
+        let titleScreen[938] = -128;
+        let titleScreen[939] = 1;
+        let titleScreen[940] = -16384;
+        let titleScreen[941] = -1;
+        let titleScreen[943] = -128;
+        let titleScreen[944] = 3;
+        let titleScreen[945] = 4095;
+        // 2: 0
+        let titleScreen[946] = 2;
+        // -1: 16368
+        let titleScreen[948] = -1;
+        let titleScreen[949] = 16368;
+        // 2: 0
+        let titleScreen[950] = 2;
+        // -10: 2046,0,65535,3,65024,511,0,64512,15,4095
+        let titleScreen[952] = -10;
+        let titleScreen[953] = 2046;
+        let titleScreen[955] = -1;
+        let titleScreen[956] = 3;
+        let titleScreen[957] = -512;
+        let titleScreen[958] = 511;
+        let titleScreen[960] = -1024;
+        let titleScreen[961] = 15;
+        let titleScreen[962] = 4095;
+        // 5: 0
+        let titleScreen[963] = 5;
+        // -2: 57344,127
+        let titleScreen[965] = -2;
+        let titleScreen[966] = -8192;
+        let titleScreen[967] = 127;
+        // 2: 0
+        let titleScreen[968] = 2;
+        // -8: 65408,1,49152,65535,0,65408,1,4094
+        let titleScreen[970] = -8;
+        let titleScreen[971] = -128;
+        let titleScreen[972] = 1;
+        let titleScreen[973] = -16384;
+        let titleScreen[974] = -1;
+        let titleScreen[976] = -128;
+        let titleScreen[977] = 1;
+        let titleScreen[978] = 4094;
+        // 2: 0
+        let titleScreen[979] = 2;
+        // -1: 16368
+        let titleScreen[981] = -1;
+        let titleScreen[982] = 16368;
+        // 2: 0
+        let titleScreen[983] = 2;
+        // -10: 2047,0,65535,3,65280,127,0,64512,32783,2047
+        let titleScreen[985] = -10;
+        let titleScreen[986] = 2047;
+        let titleScreen[988] = -1;
+        let titleScreen[989] = 3;
+        let titleScreen[990] = -256;
+        let titleScreen[991] = 127;
+        let titleScreen[993] = -1024;
+        let titleScreen[994] = -32753;
+        let titleScreen[995] = 2047;
+        // 5: 0
+        let titleScreen[996] = 5;
+        // -2: 57344,127
+        let titleScreen[998] = -2;
+        let titleScreen[999] = -8192;
+        let titleScreen[1000] = 127;
+        // 2: 0
+        let titleScreen[1001] = 2;
+        // -8: 65472,1,57344,65535,0,65408,1,4094
+        let titleScreen[1003] = -8;
+        let titleScreen[1004] = -64;
+        let titleScreen[1005] = 1;
+        let titleScreen[1006] = -8192;
+        let titleScreen[1007] = -1;
+        let titleScreen[1009] = -128;
+        let titleScreen[1010] = 1;
+        let titleScreen[1011] = 4094;
+        // 2: 0
+        let titleScreen[1012] = 2;
+        // -1: 16368
+        let titleScreen[1014] = -1;
+        let titleScreen[1015] = 16368;
+        // 2: 0
+        let titleScreen[1016] = 2;
+        // -10: 2047,32768,65535,3,65280,63,0,64512,49167,1023
+        let titleScreen[1018] = -10;
+        let titleScreen[1019] = 2047;
+        let titleScreen[1020] = ~32767;
+        let titleScreen[1021] = -1;
+        let titleScreen[1022] = 3;
+        let titleScreen[1023] = -256;
+        let titleScreen[1024] = 63;
+        let titleScreen[1026] = -1024;
+        let titleScreen[1027] = -16369;
+        let titleScreen[1028] = 1023;
+        // 5: 0
+        let titleScreen[1029] = 5;
+        // -2: 57344,127
+        let titleScreen[1031] = -2;
+        let titleScreen[1032] = -8192;
+        let titleScreen[1033] = 127;
+        // 2: 0
+        let titleScreen[1034] = 2;
+        // -8: 65472,0,57344,65471,0,65408,1,4094
+        let titleScreen[1036] = -8;
+        let titleScreen[1037] = -64;
+        let titleScreen[1039] = -8192;
+        let titleScreen[1040] = -65;
+        let titleScreen[1042] = -128;
+        let titleScreen[1043] = 1;
+        let titleScreen[1044] = 4094;
+        // 2: 0
+        let titleScreen[1045] = 2;
+        // -1: 16368
+        let titleScreen[1047] = -1;
+        let titleScreen[1048] = 16368;
+        // 2: 0
+        let titleScreen[1049] = 2;
+        // -10: 1023,32768,65279,3,65408,31,0,64512,57359,511
+        let titleScreen[1051] = -10;
+        let titleScreen[1052] = 1023;
+        let titleScreen[1053] = ~32767;
+        let titleScreen[1054] = -257;
+        let titleScreen[1055] = 3;
+        let titleScreen[1056] = -128;
+        let titleScreen[1057] = 31;
+        let titleScreen[1059] = -1024;
+        let titleScreen[1060] = -8177;
+        let titleScreen[1061] = 511;
+        // 5: 0
+        let titleScreen[1062] = 5;
+        // -2: 57344,127
+        let titleScreen[1064] = -2;
+        let titleScreen[1065] = -8192;
+        let titleScreen[1066] = 127;
+        // 2: 0
+        let titleScreen[1067] = 2;
+        // -8: 65472,0,57344,65343,1,65408,1,4092
+        let titleScreen[1069] = -8;
+        let titleScreen[1070] = -64;
+        let titleScreen[1072] = -8192;
+        let titleScreen[1073] = -193;
+        let titleScreen[1074] = 1;
+        let titleScreen[1075] = -128;
+        let titleScreen[1076] = 1;
+        let titleScreen[1077] = 4092;
+        // 2: 0
+        let titleScreen[1078] = 2;
+        // -1: 16368
+        let titleScreen[1080] = -1;
+        let titleScreen[1081] = 16368;
+        // 2: 0
+        let titleScreen[1082] = 2;
+        // -10: 1023,32768,64767,7,65472,7,0,64512,61447,255
+        let titleScreen[1084] = -10;
+        let titleScreen[1085] = 1023;
+        let titleScreen[1086] = ~32767;
+        let titleScreen[1087] = -769;
+        let titleScreen[1088] = 7;
+        let titleScreen[1089] = -64;
+        let titleScreen[1090] = 7;
+        let titleScreen[1092] = -1024;
+        let titleScreen[1093] = -4089;
+        let titleScreen[1094] = 255;
+        // 5: 0
+        let titleScreen[1095] = 5;
+        // -2: 57344,127
+        let titleScreen[1097] = -2;
+        let titleScreen[1098] = -8192;
+        let titleScreen[1099] = 127;
+        // 2: 0
+        let titleScreen[1100] = 2;
+        // -8: 65472,0,61440,65311,1,65408,1,4092
+        let titleScreen[1102] = -8;
+        let titleScreen[1103] = -64;
+        let titleScreen[1105] = -4096;
+        let titleScreen[1106] = -225;
+        let titleScreen[1107] = 1;
+        let titleScreen[1108] = -128;
+        let titleScreen[1109] = 1;
+        let titleScreen[1110] = 4092;
+        // 2: 0
+        let titleScreen[1111] = 2;
+        // -1: 16368
+        let titleScreen[1113] = -1;
+        let titleScreen[1114] = 16368;
+        // 2: 0
+        let titleScreen[1115] = 2;
+        // -10: 1023,49152,64639,7,65504,3,0,65024,63495,127
+        let titleScreen[1117] = -10;
+        let titleScreen[1118] = 1023;
+        let titleScreen[1119] = -16384;
+        let titleScreen[1120] = -897;
+        let titleScreen[1121] = 7;
+        let titleScreen[1122] = -32;
+        let titleScreen[1123] = 3;
+        let titleScreen[1125] = -512;
+        let titleScreen[1126] = -2041;
+        let titleScreen[1127] = 127;
+        // 5: 0
+        let titleScreen[1128] = 5;
+        // -2: 57344,127
+        let titleScreen[1130] = -2;
+        let titleScreen[1131] = -8192;
+        let titleScreen[1132] = 127;
+        // 2: 0
+        let titleScreen[1133] = 2;
+        // -8: 65472,0,61440,65311,1,65472,1,4092
+        let titleScreen[1135] = -8;
+        let titleScreen[1136] = -64;
+        let titleScreen[1138] = -4096;
+        let titleScreen[1139] = -225;
+        let titleScreen[1140] = 1;
+        let titleScreen[1141] = -64;
+        let titleScreen[1142] = 1;
+        let titleScreen[1143] = 4092;
+        // 2: 0
+        let titleScreen[1144] = 2;
+        // -1: 16376
+        let titleScreen[1146] = -1;
+        let titleScreen[1147] = 16376;
+        // 2: 0
+        let titleScreen[1148] = 2;
+        // -10: 1023,49152,64639,7,65504,1,0,65024,64519,63
+        let titleScreen[1150] = -10;
+        let titleScreen[1151] = 1023;
+        let titleScreen[1152] = -16384;
+        let titleScreen[1153] = -897;
+        let titleScreen[1154] = 7;
+        let titleScreen[1155] = -32;
+        let titleScreen[1156] = 1;
+        let titleScreen[1158] = -512;
+        let titleScreen[1159] = -1017;
+        let titleScreen[1160] = 63;
+        // 5: 0
+        let titleScreen[1161] = 5;
+        // -2: 57344,127
+        let titleScreen[1163] = -2;
+        let titleScreen[1164] = -8192;
+        let titleScreen[1165] = 127;
+        // 2: 0
+        let titleScreen[1166] = 2;
+        // -8: 65472,0,63488,65295,1,65472,1,4092
+        let titleScreen[1168] = -8;
+        let titleScreen[1169] = -64;
+        let titleScreen[1171] = -2048;
+        let titleScreen[1172] = -241;
+        let titleScreen[1173] = 1;
+        let titleScreen[1174] = -64;
+        let titleScreen[1175] = 1;
+        let titleScreen[1176] = 4092;
+        // 2: 0
+        let titleScreen[1177] = 2;
+        // -1: 8184
+        let titleScreen[1179] = -1;
+        let titleScreen[1180] = 8184;
+        // 2: 0
+        let titleScreen[1181] = 2;
+        // -10: 1023,57344,64575,7,65520,1,0,65024,65031,31
+        let titleScreen[1183] = -10;
+        let titleScreen[1184] = 1023;
+        let titleScreen[1185] = -8192;
+        let titleScreen[1186] = -961;
+        let titleScreen[1187] = 7;
+        let titleScreen[1188] = -16;
+        let titleScreen[1189] = 1;
+        let titleScreen[1191] = -512;
+        let titleScreen[1192] = -505;
+        let titleScreen[1193] = 31;
+        // 5: 0
+        let titleScreen[1194] = 5;
+        // -2: 57344,127
+        let titleScreen[1196] = -2;
+        let titleScreen[1197] = -8192;
+        let titleScreen[1198] = 127;
+        // 2: 0
+        let titleScreen[1199] = 2;
+        // -8: 65472,0,63488,65295,1,65472,0,4094
+        let titleScreen[1201] = -8;
+        let titleScreen[1202] = -64;
+        let titleScreen[1204] = -2048;
+        let titleScreen[1205] = -241;
+        let titleScreen[1206] = 1;
+        let titleScreen[1207] = -64;
+        let titleScreen[1209] = 4094;
+        // 2: 0
+        let titleScreen[1210] = 2;
+        // -8: 8184,0,32768,1023,57344,64575,7,65520
+        let titleScreen[1212] = -8;
+        let titleScreen[1213] = 8184;
+        let titleScreen[1215] = ~32767;
+        let titleScreen[1216] = 1023;
+        let titleScreen[1217] = -8192;
+        let titleScreen[1218] = -961;
+        let titleScreen[1219] = 7;
+        let titleScreen[1220] = -16;
+        // 2: 0
+        let titleScreen[1221] = 2;
+        // -3: 65024,65287,15
+        let titleScreen[1223] = -3;
+        let titleScreen[1224] = -512;
+        let titleScreen[1225] = -249;
+        let titleScreen[1226] = 15;
+        // 5: 0
+        let titleScreen[1227] = 5;
+        // -2: 57344,255
+        let titleScreen[1229] = -2;
+        let titleScreen[1230] = -8192;
+        let titleScreen[1231] = 255;
+        // 2: 0
+        let titleScreen[1232] = 2;
+        // -8: 65504,0,64512,65039,3,65472,0,4094
+        let titleScreen[1234] = -8;
+        let titleScreen[1235] = -32;
+        let titleScreen[1237] = -1024;
+        let titleScreen[1238] = -497;
+        let titleScreen[1239] = 3;
+        let titleScreen[1240] = -64;
+        let titleScreen[1242] = 4094;
+        // 2: 0
+        let titleScreen[1243] = 2;
+        // -8: 8184,0,32768,1023,61440,63551,15,32760
+        let titleScreen[1245] = -8;
+        let titleScreen[1246] = 8184;
+        let titleScreen[1248] = ~32767;
+        let titleScreen[1249] = 1023;
+        let titleScreen[1250] = -4096;
+        let titleScreen[1251] = -1985;
+        let titleScreen[1252] = 15;
+        let titleScreen[1253] = 32760;
+        // 2: 0
+        let titleScreen[1254] = 2;
+        // -3: 65024,65415,7
+        let titleScreen[1256] = -3;
+        let titleScreen[1257] = -512;
+        let titleScreen[1258] = -121;
+        let titleScreen[1259] = 7;
+        // 5: 0
+        let titleScreen[1260] = 5;
+        // -2: 57344,511
+        let titleScreen[1262] = -2;
+        let titleScreen[1263] = -8192;
+        let titleScreen[1264] = 511;
+        // 2: 0
+        let titleScreen[1265] = 2;
+        // -8: 32736,0,64512,65031,3,65472,0,4094
+        let titleScreen[1267] = -8;
+        let titleScreen[1268] = 32736;
+        let titleScreen[1270] = -1024;
+        let titleScreen[1271] = -505;
+        let titleScreen[1272] = 3;
+        let titleScreen[1273] = -64;
+        let titleScreen[1275] = 4094;
+        // 2: 0
+        let titleScreen[1276] = 2;
+        // -8: 8184,0,32768,511,61440,63519,15,16380
+        let titleScreen[1278] = -8;
+        let titleScreen[1279] = 8184;
+        let titleScreen[1281] = ~32767;
+        let titleScreen[1282] = 511;
+        let titleScreen[1283] = -4096;
+        let titleScreen[1284] = -2017;
+        let titleScreen[1285] = 15;
+        let titleScreen[1286] = 16380;
+        // 2: 0
+        let titleScreen[1287] = 2;
+        // -3: 65024,65475,3
+        let titleScreen[1289] = -3;
+        let titleScreen[1290] = -512;
+        let titleScreen[1291] = -61;
+        let titleScreen[1292] = 3;
+        // 5: 0
+        let titleScreen[1293] = 5;
+        // -2: 49152,511
+        let titleScreen[1295] = -2;
+        let titleScreen[1296] = -16384;
+        let titleScreen[1297] = 511;
+        // 2: 0
+        let titleScreen[1298] = 2;
+        // -8: 32736,0,65024,65031,3,65472,0,2047
+        let titleScreen[1300] = -8;
+        let titleScreen[1301] = 32736;
+        let titleScreen[1303] = -512;
+        let titleScreen[1304] = -505;
+        let titleScreen[1305] = 3;
+        let titleScreen[1306] = -64;
+        let titleScreen[1308] = 2047;
+        // 2: 0
+        let titleScreen[1309] = 2;
+        // -8: 8184,0,32768,511,63488,63519,15,16380
+        let titleScreen[1311] = -8;
+        let titleScreen[1312] = 8184;
+        let titleScreen[1314] = ~32767;
+        let titleScreen[1315] = 511;
+        let titleScreen[1316] = -2048;
+        let titleScreen[1317] = -2017;
+        let titleScreen[1318] = 15;
+        let titleScreen[1319] = 16380;
+        // 2: 0
+        let titleScreen[1320] = 2;
+        // -3: 65024,65507,1
+        let titleScreen[1322] = -3;
+        let titleScreen[1323] = -512;
+        let titleScreen[1324] = -29;
+        let titleScreen[1325] = 1;
+        // 5: 0
+        let titleScreen[1326] = 5;
+        // -2: 49152,1023
+        let titleScreen[1328] = -2;
+        let titleScreen[1329] = -16384;
+        let titleScreen[1330] = 1023;
+        // 2: 0
+        let titleScreen[1331] = 2;
+        // -8: 32736,0,65024,65027,3,65472,32768,2047
+        let titleScreen[1333] = -8;
+        let titleScreen[1334] = 32736;
+        let titleScreen[1336] = -512;
+        let titleScreen[1337] = -509;
+        let titleScreen[1338] = 3;
+        let titleScreen[1339] = -64;
+        let titleScreen[1340] = ~32767;
+        let titleScreen[1341] = 2047;
+        // 2: 0
+        let titleScreen[1342] = 2;
+        // -8: 8184,0,32768,511,63488,63503,15,8188
+        let titleScreen[1344] = -8;
+        let titleScreen[1345] = 8184;
+        let titleScreen[1347] = ~32767;
+        let titleScreen[1348] = 511;
+        let titleScreen[1349] = -2048;
+        let titleScreen[1350] = -2033;
+        let titleScreen[1351] = 15;
+        let titleScreen[1352] = 8188;
+        // 2: 0
+        let titleScreen[1353] = 2;
+        // -2: 65280,65523
+        let titleScreen[1355] = -2;
+        let titleScreen[1356] = -256;
+        let titleScreen[1357] = -13;
+        // 6: 0
+        let titleScreen[1358] = 6;
+        // -2: 49152,4095
+        let titleScreen[1360] = -2;
+        let titleScreen[1361] = -16384;
+        let titleScreen[1362] = 4095;
+        // 2: 0
+        let titleScreen[1363] = 2;
+        // -8: 32736,0,65024,65027,3,65472,49152,2047
+        let titleScreen[1365] = -8;
+        let titleScreen[1366] = 32736;
+        let titleScreen[1368] = -512;
+        let titleScreen[1369] = -509;
+        let titleScreen[1370] = 3;
+        let titleScreen[1371] = -64;
+        let titleScreen[1372] = -16384;
+        let titleScreen[1373] = 2047;
+        // 2: 0
+        let titleScreen[1374] = 2;
+        // -8: 8188,0,32768,511,63488,63503,15,8190
+        let titleScreen[1376] = -8;
+        let titleScreen[1377] = 8188;
+        let titleScreen[1379] = ~32767;
+        let titleScreen[1380] = 511;
+        let titleScreen[1381] = -2048;
+        let titleScreen[1382] = -2033;
+        let titleScreen[1383] = 15;
+        let titleScreen[1384] = 8190;
+        // 2: 0
+        let titleScreen[1385] = 2;
+        // -2: 65280,32763
+        let titleScreen[1387] = -2;
+        let titleScreen[1388] = -256;
+        let titleScreen[1389] = 32763;
+        // 6: 0
+        let titleScreen[1390] = 6;
+        // -2: 32768,8191
+        let titleScreen[1392] = -2;
+        let titleScreen[1393] = ~32767;
+        let titleScreen[1394] = 8191;
+        // 2: 0
+        let titleScreen[1395] = 2;
+        // -8: 32736,0,65280,65027,7,65504,57344,1023
+        let titleScreen[1397] = -8;
+        let titleScreen[1398] = 32736;
+        let titleScreen[1400] = -256;
+        let titleScreen[1401] = -509;
+        let titleScreen[1402] = 7;
+        let titleScreen[1403] = -32;
+        let titleScreen[1404] = -8192;
+        let titleScreen[1405] = 1023;
+        // 2: 0
+        let titleScreen[1406] = 2;
+        // -8: 4092,0,32768,511,64512,63503,31,4094
+        let titleScreen[1408] = -8;
+        let titleScreen[1409] = 4092;
+        let titleScreen[1411] = ~32767;
+        let titleScreen[1412] = 511;
+        let titleScreen[1413] = -1024;
+        let titleScreen[1414] = -2033;
+        let titleScreen[1415] = 31;
+        let titleScreen[1416] = 4094;
+        // 2: 0
+        let titleScreen[1417] = 2;
+        // -2: 65280,16383
+        let titleScreen[1419] = -2;
+        let titleScreen[1420] = -256;
+        let titleScreen[1421] = 16383;
+        // 7: 0
+        let titleScreen[1422] = 7;
+        // -1: 16383
+        let titleScreen[1424] = -1;
+        let titleScreen[1425] = 16383;
+        // 2: 0
+        let titleScreen[1426] = 2;
+        // -8: 32736,0,65280,64513,7,32736,64512,511
+        let titleScreen[1428] = -8;
+        let titleScreen[1429] = 32736;
+        let titleScreen[1431] = -256;
+        let titleScreen[1432] = -1023;
+        let titleScreen[1433] = 7;
+        let titleScreen[1434] = 32736;
+        let titleScreen[1435] = -1024;
+        let titleScreen[1436] = 511;
+        // 2: 0
+        let titleScreen[1437] = 2;
+        // -8: 4092,0,32768,511,64512,61447,31,4094
+        let titleScreen[1439] = -8;
+        let titleScreen[1440] = 4092;
+        let titleScreen[1442] = ~32767;
+        let titleScreen[1443] = 511;
+        let titleScreen[1444] = -1024;
+        let titleScreen[1445] = -4089;
+        let titleScreen[1446] = 31;
+        let titleScreen[1447] = 4094;
+        // 2: 0
+        let titleScreen[1448] = 2;
+        // -2: 65280,8191
+        let titleScreen[1450] = -2;
+        let titleScreen[1451] = -256;
+        let titleScreen[1452] = 8191;
+        // 7: 0
+        let titleScreen[1453] = 7;
+        // -1: 32767
+        let titleScreen[1455] = -1;
+        let titleScreen[1456] = 32767;
+        // 2: 0
+        let titleScreen[1457] = 2;
+        // -8: 32752,0,65408,64513,7,65504,65535,511
+        let titleScreen[1459] = -8;
+        let titleScreen[1460] = 32752;
+        let titleScreen[1462] = -128;
+        let titleScreen[1463] = -1023;
+        let titleScreen[1464] = 7;
+        let titleScreen[1465] = -32;
+        let titleScreen[1466] = -1;
+        let titleScreen[1467] = 511;
+        // 2: 0
+        let titleScreen[1468] = 2;
+        // -1: 65532
+        let titleScreen[1470] = -1;
+        let titleScreen[1471] = -4;
+        // 2: 65535
+        let titleScreen[1472] = 2;
+        let titleScreen[1473] = -1;
+        // -5: 511,65024,61447,31,2046
+        let titleScreen[1474] = -5;
+        let titleScreen[1475] = 511;
+        let titleScreen[1476] = -512;
+        let titleScreen[1477] = -4089;
+        let titleScreen[1478] = 31;
+        let titleScreen[1479] = 2046;
+        // 2: 0
+        let titleScreen[1480] = 2;
+        // -2: 65280,4095
+        let titleScreen[1482] = -2;
+        let titleScreen[1483] = -256;
+        let titleScreen[1484] = 4095;
+        // 7: 0
+        let titleScreen[1485] = 7;
+        // -1: 65534
+        let titleScreen[1487] = -1;
+        let titleScreen[1488] = -2;
+        // 2: 0
+        let titleScreen[1489] = 2;
+        // -8: 32752,0,65408,64512,7,65504,65535,127
+        let titleScreen[1491] = -8;
+        let titleScreen[1492] = 32752;
+        let titleScreen[1494] = -128;
+        let titleScreen[1495] = -1024;
+        let titleScreen[1496] = 7;
+        let titleScreen[1497] = -32;
+        let titleScreen[1498] = -1;
+        let titleScreen[1499] = 127;
+        // 2: 0
+        let titleScreen[1500] = 2;
+        // -1: 65532
+        let titleScreen[1502] = -1;
+        let titleScreen[1503] = -4;
+        // 2: 65535
+        let titleScreen[1504] = 2;
+        let titleScreen[1505] = -1;
+        // -5: 255,65024,61443,31,2047
+        let titleScreen[1506] = -5;
+        let titleScreen[1507] = 255;
+        let titleScreen[1508] = -512;
+        let titleScreen[1509] = -4093;
+        let titleScreen[1510] = 31;
+        let titleScreen[1511] = 2047;
+        // 2: 0
+        let titleScreen[1512] = 2;
+        // -2: 65280,2047
+        let titleScreen[1514] = -2;
+        let titleScreen[1515] = -256;
+        let titleScreen[1516] = 2047;
+        // 7: 0
+        let titleScreen[1517] = 7;
+        // -11: 65532,1,0,16368,0,65472,64512,7,65504,65535,63
+        let titleScreen[1519] = -11;
+        let titleScreen[1520] = -4;
+        let titleScreen[1521] = 1;
+        let titleScreen[1523] = 16368;
+        let titleScreen[1525] = -64;
+        let titleScreen[1526] = -1024;
+        let titleScreen[1527] = 7;
+        let titleScreen[1528] = -32;
+        let titleScreen[1529] = -1;
+        let titleScreen[1530] = 63;
+        // 2: 0
+        let titleScreen[1531] = 2;
+        // -1: 65532
+        let titleScreen[1533] = -1;
+        let titleScreen[1534] = -4;
+        // 2: 65535
+        let titleScreen[1535] = 2;
+        let titleScreen[1536] = -1;
+        // -5: 255,65280,61443,31,2047
+        let titleScreen[1537] = -5;
+        let titleScreen[1538] = 255;
+        let titleScreen[1539] = -256;
+        let titleScreen[1540] = -4093;
+        let titleScreen[1541] = 31;
+        let titleScreen[1542] = 2047;
+        // 2: 0
+        let titleScreen[1543] = 2;
+        // -2: 65280,1023
+        let titleScreen[1545] = -2;
+        let titleScreen[1546] = -256;
+        let titleScreen[1547] = 1023;
+        // 7: 0
+        let titleScreen[1548] = 7;
+        // -11: 65528,7,0,16368,0,32704,64512,15,65504,65535,31
+        let titleScreen[1550] = -11;
+        let titleScreen[1551] = -8;
+        let titleScreen[1552] = 7;
+        let titleScreen[1554] = 16368;
+        let titleScreen[1556] = 32704;
+        let titleScreen[1557] = -1024;
+        let titleScreen[1558] = 15;
+        let titleScreen[1559] = -32;
+        let titleScreen[1560] = -1;
+        let titleScreen[1561] = 31;
+        // 2: 0
+        let titleScreen[1562] = 2;
+        // -1: 65532
+        let titleScreen[1564] = -1;
+        let titleScreen[1565] = -4;
+        // 2: 65535
+        let titleScreen[1566] = 2;
+        let titleScreen[1567] = -1;
+        // -5: 255,65280,61441,63,2047
+        let titleScreen[1568] = -5;
+        let titleScreen[1569] = 255;
+        let titleScreen[1570] = -256;
+        let titleScreen[1571] = -4095;
+        let titleScreen[1572] = 63;
+        let titleScreen[1573] = 2047;
+        // 2: 0
+        let titleScreen[1574] = 2;
+        // -2: 65408,2047
+        let titleScreen[1576] = -2;
+        let titleScreen[1577] = -128;
+        let titleScreen[1578] = 2047;
+        // 7: 0
+        let titleScreen[1579] = 7;
+        // -11: 65520,15,0,16368,0,32704,63488,15,65504,65535,15
+        let titleScreen[1581] = -11;
+        let titleScreen[1582] = -16;
+        let titleScreen[1583] = 15;
+        let titleScreen[1585] = 16368;
+        let titleScreen[1587] = 32704;
+        let titleScreen[1588] = -2048;
+        let titleScreen[1589] = 15;
+        let titleScreen[1590] = -32;
+        let titleScreen[1591] = -1;
+        let titleScreen[1592] = 15;
+        // 2: 0
+        let titleScreen[1593] = 2;
+        // -1: 65534
+        let titleScreen[1595] = -1;
+        let titleScreen[1596] = -2;
+        // 2: 65535
+        let titleScreen[1597] = 2;
+        let titleScreen[1598] = -1;
+        // -5: 255,65280,57345,63,1023
+        let titleScreen[1599] = -5;
+        let titleScreen[1600] = 255;
+        let titleScreen[1601] = -256;
+        let titleScreen[1602] = -8191;
+        let titleScreen[1603] = 63;
+        let titleScreen[1604] = 1023;
+        // 2: 0
+        let titleScreen[1605] = 2;
+        // -2: 65408,2047
+        let titleScreen[1607] = -2;
+        let titleScreen[1608] = -128;
+        let titleScreen[1609] = 2047;
+        // 7: 0
+        let titleScreen[1610] = 7;
+        // -11: 65504,31,0,16368,0,32736,63488,15,65520,65535,1
+        let titleScreen[1612] = -11;
+        let titleScreen[1613] = -32;
+        let titleScreen[1614] = 31;
+        let titleScreen[1616] = 16368;
+        let titleScreen[1618] = 32736;
+        let titleScreen[1619] = -2048;
+        let titleScreen[1620] = 15;
+        let titleScreen[1621] = -16;
+        let titleScreen[1622] = -1;
+        let titleScreen[1623] = 1;
+        // 2: 0
+        let titleScreen[1624] = 2;
+        // -1: 65534
+        let titleScreen[1626] = -1;
+        let titleScreen[1627] = -2;
+        // 2: 65535
+        let titleScreen[1628] = 2;
+        let titleScreen[1629] = -1;
+        // -5: 255,65408,57345,63,1023
+        let titleScreen[1630] = -5;
+        let titleScreen[1631] = 255;
+        let titleScreen[1632] = -128;
+        let titleScreen[1633] = -8191;
+        let titleScreen[1634] = 63;
+        let titleScreen[1635] = 1023;
+        // 2: 0
+        let titleScreen[1636] = 2;
+        // -2: 65408,4093
+        let titleScreen[1638] = -2;
+        let titleScreen[1639] = -128;
+        let titleScreen[1640] = 4093;
+        // 7: 0
+        let titleScreen[1641] = 7;
+        // -10: 65472,63,0,16368,0,16352,63488,15,65520,65535
+        let titleScreen[1643] = -10;
+        let titleScreen[1644] = -64;
+        let titleScreen[1645] = 63;
+        let titleScreen[1647] = 16368;
+        let titleScreen[1649] = 16352;
+        let titleScreen[1650] = -2048;
+        let titleScreen[1651] = 15;
+        let titleScreen[1652] = -16;
+        let titleScreen[1653] = -1;
+        // 3: 0
+        let titleScreen[1654] = 3;
+        // -1: 65534
+        let titleScreen[1656] = -1;
+        let titleScreen[1657] = -2;
+        // 2: 65535
+        let titleScreen[1658] = 2;
+        let titleScreen[1659] = -1;
+        // -5: 255,65408,57344,63,1023
+        let titleScreen[1660] = -5;
+        let titleScreen[1661] = 255;
+        let titleScreen[1662] = -128;
+        let titleScreen[1663] = -8192;
+        let titleScreen[1664] = 63;
+        let titleScreen[1665] = 1023;
+        // 2: 0
+        let titleScreen[1666] = 2;
+        // -2: 65408,8189
+        let titleScreen[1668] = -2;
+        let titleScreen[1669] = -128;
+        let titleScreen[1670] = 8189;
+        // 7: 0
+        let titleScreen[1671] = 7;
+        // -11: 65408,127,0,16376,0,16368,63488,15,65520,65535,1
+        let titleScreen[1673] = -11;
+        let titleScreen[1674] = -128;
+        let titleScreen[1675] = 127;
+        let titleScreen[1677] = 16376;
+        let titleScreen[1679] = 16368;
+        let titleScreen[1680] = -2048;
+        let titleScreen[1681] = 15;
+        let titleScreen[1682] = -16;
+        let titleScreen[1683] = -1;
+        let titleScreen[1684] = 1;
+        // 2: 0
+        let titleScreen[1685] = 2;
+        // -1: 65534
+        let titleScreen[1687] = -1;
+        let titleScreen[1688] = -2;
+        // 2: 65535
+        let titleScreen[1689] = 2;
+        let titleScreen[1690] = -1;
+        // -5: 255,65472,57344,32831,1023
+        let titleScreen[1691] = -5;
+        let titleScreen[1692] = 255;
+        let titleScreen[1693] = -64;
+        let titleScreen[1694] = -8192;
+        let titleScreen[1695] = -32705;
+        let titleScreen[1696] = 1023;
+        // 2: 0
+        let titleScreen[1697] = 2;
+        // -2: 65408,16377
+        let titleScreen[1699] = -2;
+        let titleScreen[1700] = -128;
+        let titleScreen[1701] = 16377;
+        // 7: 0
+        let titleScreen[1702] = 7;
+        // -11: 65280,255,0,16376,0,8176,63488,31,65520,65535,3
+        let titleScreen[1704] = -11;
+        let titleScreen[1705] = -256;
+        let titleScreen[1706] = 255;
+        let titleScreen[1708] = 16376;
+        let titleScreen[1710] = 8176;
+        let titleScreen[1711] = -2048;
+        let titleScreen[1712] = 31;
+        let titleScreen[1713] = -16;
+        let titleScreen[1714] = -1;
+        let titleScreen[1715] = 3;
+        // 2: 0
+        let titleScreen[1716] = 2;
+        // -1: 65534
+        let titleScreen[1718] = -1;
+        let titleScreen[1719] = -2;
+        // 2: 65535
+        let titleScreen[1720] = 2;
+        let titleScreen[1721] = -1;
+        // -5: 127,32704,57344,32895,1023
+        let titleScreen[1722] = -5;
+        let titleScreen[1723] = 127;
+        let titleScreen[1724] = 32704;
+        let titleScreen[1725] = -8192;
+        let titleScreen[1726] = -32641;
+        let titleScreen[1727] = 1023;
+        // 2: 0
+        let titleScreen[1728] = 2;
+        // -2: 65408,32753
+        let titleScreen[1730] = -2;
+        let titleScreen[1731] = -128;
+        let titleScreen[1732] = 32753;
+        // 7: 0
+        let titleScreen[1733] = 7;
+        // -11: 65024,255,0,8184,0,8184,63488,31,16368,65534,3
+        let titleScreen[1735] = -11;
+        let titleScreen[1736] = -512;
+        let titleScreen[1737] = 255;
+        let titleScreen[1739] = 8184;
+        let titleScreen[1741] = 8184;
+        let titleScreen[1742] = -2048;
+        let titleScreen[1743] = 31;
+        let titleScreen[1744] = 16368;
+        let titleScreen[1745] = -2;
+        let titleScreen[1746] = 3;
+        // 2: 0
+        let titleScreen[1747] = 2;
+        // -8: 2046,0,57344,127,32736,57344,32895,1023
+        let titleScreen[1749] = -8;
+        let titleScreen[1750] = 2046;
+        let titleScreen[1752] = -8192;
+        let titleScreen[1753] = 127;
+        let titleScreen[1754] = 32736;
+        let titleScreen[1755] = -8192;
+        let titleScreen[1756] = -32641;
+        let titleScreen[1757] = 1023;
+        // 2: 0
+        let titleScreen[1758] = 2;
+        // -2: 65408,65505
+        let titleScreen[1760] = -2;
+        let titleScreen[1761] = -128;
+        let titleScreen[1762] = -31;
+        // 7: 0
+        let titleScreen[1763] = 7;
+        // -11: 64512,511,0,8184,0,65528,65535,31,16368,65472,7
+        let titleScreen[1765] = -11;
+        let titleScreen[1766] = -1024;
+        let titleScreen[1767] = 511;
+        let titleScreen[1769] = 8184;
+        let titleScreen[1771] = -8;
+        let titleScreen[1772] = -1;
+        let titleScreen[1773] = 31;
+        let titleScreen[1774] = 16368;
+        let titleScreen[1775] = -64;
+        let titleScreen[1776] = 7;
+        // 2: 0
+        let titleScreen[1777] = 2;
+        // -8: 2046,0,57344,127,65504,65535,32895,1023
+        let titleScreen[1779] = -8;
+        let titleScreen[1780] = 2046;
+        let titleScreen[1782] = -8192;
+        let titleScreen[1783] = 127;
+        let titleScreen[1784] = -32;
+        let titleScreen[1785] = -1;
+        let titleScreen[1786] = -32641;
+        let titleScreen[1787] = 1023;
+        // 2: 0
+        let titleScreen[1788] = 2;
+        // -2: 65408,65472
+        let titleScreen[1790] = -2;
+        let titleScreen[1791] = -128;
+        let titleScreen[1792] = -64;
+        // 7: 0
+        let titleScreen[1793] = 7;
+        // -11: 61440,1023,0,8184,0,65532,65535,31,16368,65408,15
+        let titleScreen[1795] = -11;
+        let titleScreen[1796] = -4096;
+        let titleScreen[1797] = 1023;
+        let titleScreen[1799] = 8184;
+        let titleScreen[1801] = -4;
+        let titleScreen[1802] = -1;
+        let titleScreen[1803] = 31;
+        let titleScreen[1804] = 16368;
+        let titleScreen[1805] = -128;
+        let titleScreen[1806] = 15;
+        // 2: 0
+        let titleScreen[1807] = 2;
+        // -8: 2047,0,57344,127,65520,65535,32895,1023
+        let titleScreen[1809] = -8;
+        let titleScreen[1810] = 2047;
+        let titleScreen[1812] = -8192;
+        let titleScreen[1813] = 127;
+        let titleScreen[1814] = -16;
+        let titleScreen[1815] = -1;
+        let titleScreen[1816] = -32641;
+        let titleScreen[1817] = 1023;
+        // 2: 0
+        let titleScreen[1818] = 2;
+        // 2: 65472
+        let titleScreen[1820] = 2;
+        let titleScreen[1821] = -64;
+        // -1: 1
+        let titleScreen[1822] = -1;
+        let titleScreen[1823] = 1;
+        // 6: 0
+        let titleScreen[1824] = 6;
+        // -11: 57344,1023,0,8184,0,65532,65535,31,16376,65280,15
+        let titleScreen[1826] = -11;
+        let titleScreen[1827] = -8192;
+        let titleScreen[1828] = 1023;
+        let titleScreen[1830] = 8184;
+        let titleScreen[1832] = -4;
+        let titleScreen[1833] = -1;
+        let titleScreen[1834] = 31;
+        let titleScreen[1835] = 16376;
+        let titleScreen[1836] = -256;
+        let titleScreen[1837] = 15;
+        // 2: 0
+        let titleScreen[1838] = 2;
+        // -8: 1023,0,57344,127,65520,65535,32895,1023
+        let titleScreen[1840] = -8;
+        let titleScreen[1841] = 1023;
+        let titleScreen[1843] = -8192;
+        let titleScreen[1844] = 127;
+        let titleScreen[1845] = -16;
+        let titleScreen[1846] = -1;
+        let titleScreen[1847] = -32641;
+        let titleScreen[1848] = 1023;
+        // 2: 0
+        let titleScreen[1849] = 2;
+        // -3: 65472,65408,3
+        let titleScreen[1851] = -3;
+        let titleScreen[1852] = -64;
+        let titleScreen[1853] = -128;
+        let titleScreen[1854] = 3;
+        // 6: 0
+        let titleScreen[1855] = 6;
+        // -11: 49152,2047,0,8184,0,65532,65535,31,8184,65024,31
+        let titleScreen[1857] = -11;
+        let titleScreen[1858] = -16384;
+        let titleScreen[1859] = 2047;
+        let titleScreen[1861] = 8184;
+        let titleScreen[1863] = -4;
+        let titleScreen[1864] = -1;
+        let titleScreen[1865] = 31;
+        let titleScreen[1866] = 8184;
+        let titleScreen[1867] = -512;
+        let titleScreen[1868] = 31;
+        // 2: 0
+        let titleScreen[1869] = 2;
+        // -8: 1023,0,57344,127,65520,65535,32895,1023
+        let titleScreen[1871] = -8;
+        let titleScreen[1872] = 1023;
+        let titleScreen[1874] = -8192;
+        let titleScreen[1875] = 127;
+        let titleScreen[1876] = -16;
+        let titleScreen[1877] = -1;
+        let titleScreen[1878] = -32641;
+        let titleScreen[1879] = 1023;
+        // 2: 0
+        let titleScreen[1880] = 2;
+        // -3: 65472,65280,7
+        let titleScreen[1882] = -3;
+        let titleScreen[1883] = -64;
+        let titleScreen[1884] = -256;
+        let titleScreen[1885] = 7;
+        // 6: 0
+        let titleScreen[1886] = 6;
+        // -11: 32768,2047,0,8188,0,65534,65535,63,8184,64512,31
+        let titleScreen[1888] = -11;
+        let titleScreen[1889] = ~32767;
+        let titleScreen[1890] = 2047;
+        let titleScreen[1892] = 8188;
+        let titleScreen[1894] = -2;
+        let titleScreen[1895] = -1;
+        let titleScreen[1896] = 63;
+        let titleScreen[1897] = 8184;
+        let titleScreen[1898] = -1024;
+        let titleScreen[1899] = 31;
+        // 2: 0
+        let titleScreen[1900] = 2;
+        // -8: 1023,0,61440,127,65528,65535,33023,1023
+        let titleScreen[1902] = -8;
+        let titleScreen[1903] = 1023;
+        let titleScreen[1905] = -4096;
+        let titleScreen[1906] = 127;
+        let titleScreen[1907] = -8;
+        let titleScreen[1908] = -1;
+        let titleScreen[1909] = -32513;
+        let titleScreen[1910] = 1023;
+        // 2: 0
+        let titleScreen[1911] = 2;
+        // -3: 65472,65024,15
+        let titleScreen[1913] = -3;
+        let titleScreen[1914] = -64;
+        let titleScreen[1915] = -512;
+        let titleScreen[1916] = 15;
+        // 7: 0
+        let titleScreen[1917] = 7;
+        // -10: 4095,0,8188,0,65534,65535,63,8184,64512,63
+        let titleScreen[1919] = -10;
+        let titleScreen[1920] = 4095;
+        let titleScreen[1922] = 8188;
+        let titleScreen[1924] = -2;
+        let titleScreen[1925] = -1;
+        let titleScreen[1926] = 63;
+        let titleScreen[1927] = 8184;
+        let titleScreen[1928] = -1024;
+        let titleScreen[1929] = 63;
+        // 2: 0
+        let titleScreen[1930] = 2;
+        // -8: 1023,0,61440,63,65528,65535,33023,1023
+        let titleScreen[1932] = -8;
+        let titleScreen[1933] = 1023;
+        let titleScreen[1935] = -4096;
+        let titleScreen[1936] = 63;
+        let titleScreen[1937] = -8;
+        let titleScreen[1938] = -1;
+        let titleScreen[1939] = -32513;
+        let titleScreen[1940] = 1023;
+        // 2: 0
+        let titleScreen[1941] = 2;
+        // -3: 65472,64512,31
+        let titleScreen[1943] = -3;
+        let titleScreen[1944] = -64;
+        let titleScreen[1945] = -1024;
+        let titleScreen[1946] = 31;
+        // 7: 0
+        let titleScreen[1947] = 7;
+        // -4: 4094,0,4092,0
+        let titleScreen[1949] = -4;
+        let titleScreen[1950] = 4094;
+        let titleScreen[1952] = 4092;
+        // 2: 65535
+        let titleScreen[1954] = 2;
+        let titleScreen[1955] = -1;
+        // -4: 63,8184,63488,63
+        let titleScreen[1956] = -4;
+        let titleScreen[1957] = 63;
+        let titleScreen[1958] = 8184;
+        let titleScreen[1959] = -2048;
+        let titleScreen[1960] = 63;
+        // 2: 0
+        let titleScreen[1961] = 2;
+        // -8: 1023,0,61440,63,65532,65535,255,1023
+        let titleScreen[1963] = -8;
+        let titleScreen[1964] = 1023;
+        let titleScreen[1966] = -4096;
+        let titleScreen[1967] = 63;
+        let titleScreen[1968] = -4;
+        let titleScreen[1969] = -1;
+        let titleScreen[1970] = 255;
+        let titleScreen[1971] = 1023;
+        // 2: 0
+        let titleScreen[1972] = 2;
+        // -3: 65472,64512,31
+        let titleScreen[1974] = -3;
+        let titleScreen[1975] = -64;
+        let titleScreen[1976] = -1024;
+        let titleScreen[1977] = 31;
+        // 7: 0
+        let titleScreen[1978] = 7;
+        // -4: 4094,0,4092,0
+        let titleScreen[1980] = -4;
+        let titleScreen[1981] = 4094;
+        let titleScreen[1983] = 4092;
+        // 2: 65535
+        let titleScreen[1985] = 2;
+        let titleScreen[1986] = -1;
+        // -4: 63,8184,63488,127
+        let titleScreen[1987] = -4;
+        let titleScreen[1988] = 63;
+        let titleScreen[1989] = 8184;
+        let titleScreen[1990] = -2048;
+        let titleScreen[1991] = 127;
+        // 2: 0
+        let titleScreen[1992] = 2;
+        // -8: 1023,0,61440,63,65532,65535,255,2047
+        let titleScreen[1994] = -8;
+        let titleScreen[1995] = 1023;
+        let titleScreen[1997] = -4096;
+        let titleScreen[1998] = 63;
+        let titleScreen[1999] = -4;
+        let titleScreen[2000] = -1;
+        let titleScreen[2001] = 255;
+        let titleScreen[2002] = 2047;
+        // 2: 0
+        let titleScreen[2003] = 2;
+        // -3: 65472,63488,63
+        let titleScreen[2005] = -3;
+        let titleScreen[2006] = -64;
+        let titleScreen[2007] = -2048;
+        let titleScreen[2008] = 63;
+        // 7: 0
+        let titleScreen[2009] = 7;
+        // -20: 4092,0,4092,32768,511,57344,63,8184,61440,127,0,32768,1023,0,61440,63,2046,32768,255,2047
+        let titleScreen[2011] = -20;
+        let titleScreen[2012] = 4092;
+        let titleScreen[2014] = 4092;
+        let titleScreen[2015] = ~32767;
+        let titleScreen[2016] = 511;
+        let titleScreen[2017] = -8192;
+        let titleScreen[2018] = 63;
+        let titleScreen[2019] = 8184;
+        let titleScreen[2020] = -4096;
+        let titleScreen[2021] = 127;
+        let titleScreen[2023] = ~32767;
+        let titleScreen[2024] = 1023;
+        let titleScreen[2026] = -4096;
+        let titleScreen[2027] = 63;
+        let titleScreen[2028] = 2046;
+        let titleScreen[2029] = ~32767;
+        let titleScreen[2030] = 255;
+        let titleScreen[2031] = 2047;
+        // 2: 0
+        let titleScreen[2032] = 2;
+        // -3: 32736,61440,127
+        let titleScreen[2034] = -3;
+        let titleScreen[2035] = 32736;
+        let titleScreen[2036] = -4096;
+        let titleScreen[2037] = 127;
+        // 7: 0
+        let titleScreen[2038] = 7;
+        // -20: 4092,0,4092,32768,511,57344,127,8188,57344,127,0,32768,511,0,61440,63,2046,32768,511,2047
+        let titleScreen[2040] = -20;
+        let titleScreen[2041] = 4092;
+        let titleScreen[2043] = 4092;
+        let titleScreen[2044] = ~32767;
+        let titleScreen[2045] = 511;
+        let titleScreen[2046] = -8192;
+        let titleScreen[2047] = 127;
+        let titleScreen[2048] = 8188;
+        let titleScreen[2049] = -8192;
+        let titleScreen[2050] = 127;
+        let titleScreen[2052] = ~32767;
+        let titleScreen[2053] = 511;
+        let titleScreen[2055] = -4096;
+        let titleScreen[2056] = 63;
+        let titleScreen[2057] = 2046;
+        let titleScreen[2058] = ~32767;
+        let titleScreen[2059] = 511;
+        let titleScreen[2060] = 2047;
+        // 2: 0
+        let titleScreen[2061] = 2;
+        // -3: 32736,57344,255
+        let titleScreen[2063] = -3;
+        let titleScreen[2064] = 32736;
+        let titleScreen[2065] = -8192;
+        let titleScreen[2066] = 255;
+        // 7: 0
+        let titleScreen[2067] = 7;
+        // -20: 8188,0,4092,49152,255,49152,127,4092,57344,255,0,32768,511,0,61440,63,1023,0,511,4095
+        let titleScreen[2069] = -20;
+        let titleScreen[2070] = 8188;
+        let titleScreen[2072] = 4092;
+        let titleScreen[2073] = -16384;
+        let titleScreen[2074] = 255;
+        let titleScreen[2075] = -16384;
+        let titleScreen[2076] = 127;
+        let titleScreen[2077] = 4092;
+        let titleScreen[2078] = -8192;
+        let titleScreen[2079] = 255;
+        let titleScreen[2081] = ~32767;
+        let titleScreen[2082] = 511;
+        let titleScreen[2084] = -4096;
+        let titleScreen[2085] = 63;
+        let titleScreen[2086] = 1023;
+        let titleScreen[2088] = 511;
+        let titleScreen[2089] = 4095;
+        // 2: 0
+        let titleScreen[2090] = 2;
+        // -3: 32736,49152,511
+        let titleScreen[2092] = -3;
+        let titleScreen[2093] = 32736;
+        let titleScreen[2094] = -16384;
+        let titleScreen[2095] = 511;
+        // 7: 0
+        let titleScreen[2096] = 7;
+        // -20: 8184,0,4094,49152,255,49152,127,4092,49152,255,0,32768,511,0,63488,63,1023,0,511,4094
+        let titleScreen[2098] = -20;
+        let titleScreen[2099] = 8184;
+        let titleScreen[2101] = 4094;
+        let titleScreen[2102] = -16384;
+        let titleScreen[2103] = 255;
+        let titleScreen[2104] = -16384;
+        let titleScreen[2105] = 127;
+        let titleScreen[2106] = 4092;
+        let titleScreen[2107] = -16384;
+        let titleScreen[2108] = 255;
+        let titleScreen[2110] = ~32767;
+        let titleScreen[2111] = 511;
+        let titleScreen[2113] = -2048;
+        let titleScreen[2114] = 63;
+        let titleScreen[2115] = 1023;
+        let titleScreen[2117] = 511;
+        let titleScreen[2118] = 4094;
+        // 2: 0
+        let titleScreen[2119] = 2;
+        // -3: 32736,49152,511
+        let titleScreen[2121] = -3;
+        let titleScreen[2122] = 32736;
+        let titleScreen[2123] = -16384;
+        let titleScreen[2124] = 511;
+        // 7: 0
+        let titleScreen[2125] = 7;
+        // -25: 4092,0,4094,49152,127,49152,127,4092,49152,511,0,32768,511,0,63488,31,511,0,511,8190,0,12288,32736,32768,1023
+        let titleScreen[2127] = -25;
+        let titleScreen[2128] = 4092;
+        let titleScreen[2130] = 4094;
+        let titleScreen[2131] = -16384;
+        let titleScreen[2132] = 127;
+        let titleScreen[2133] = -16384;
+        let titleScreen[2134] = 127;
+        let titleScreen[2135] = 4092;
+        let titleScreen[2136] = -16384;
+        let titleScreen[2137] = 511;
+        let titleScreen[2139] = ~32767;
+        let titleScreen[2140] = 511;
+        let titleScreen[2142] = -2048;
+        let titleScreen[2143] = 31;
+        let titleScreen[2144] = 511;
+        let titleScreen[2146] = 511;
+        let titleScreen[2147] = 8190;
+        let titleScreen[2149] = 12288;
+        let titleScreen[2150] = 32736;
+        let titleScreen[2151] = ~32767;
+        let titleScreen[2152] = 1023;
+        // 7: 0
+        let titleScreen[2153] = 7;
+        // -25: 4092,0,2046,57344,127,49152,127,4092,32768,511,0,32768,511,0,63488,32799,511,0,511,8190,0,14336,32736,0,2047
+        let titleScreen[2155] = -25;
+        let titleScreen[2156] = 4092;
+        let titleScreen[2158] = 2046;
+        let titleScreen[2159] = -8192;
+        let titleScreen[2160] = 127;
+        let titleScreen[2161] = -16384;
+        let titleScreen[2162] = 127;
+        let titleScreen[2163] = 4092;
+        let titleScreen[2164] = ~32767;
+        let titleScreen[2165] = 511;
+        let titleScreen[2167] = ~32767;
+        let titleScreen[2168] = 511;
+        let titleScreen[2170] = -2048;
+        let titleScreen[2171] = -32737;
+        let titleScreen[2172] = 511;
+        let titleScreen[2174] = 511;
+        let titleScreen[2175] = 8190;
+        let titleScreen[2177] = 14336;
+        let titleScreen[2178] = 32736;
+        let titleScreen[2180] = 2047;
+        // 5: 0
+        let titleScreen[2181] = 5;
+        // -27: 3072,0,4092,0,2046,57344,127,49152,255,4092,32768,1023,0,32768,511,0,63488,32799,511,0,1023,16380,0,15872,32736,0,4094
+        let titleScreen[2183] = -27;
+        let titleScreen[2184] = 3072;
+        let titleScreen[2186] = 4092;
+        let titleScreen[2188] = 2046;
+        let titleScreen[2189] = -8192;
+        let titleScreen[2190] = 127;
+        let titleScreen[2191] = -16384;
+        let titleScreen[2192] = 255;
+        let titleScreen[2193] = 4092;
+        let titleScreen[2194] = ~32767;
+        let titleScreen[2195] = 1023;
+        let titleScreen[2197] = ~32767;
+        let titleScreen[2198] = 511;
+        let titleScreen[2200] = -2048;
+        let titleScreen[2201] = -32737;
+        let titleScreen[2202] = 511;
+        let titleScreen[2204] = 1023;
+        let titleScreen[2205] = 16380;
+        let titleScreen[2207] = 15872;
+        let titleScreen[2208] = 32736;
+        let titleScreen[2210] = 4094;
+        // 5: 0
+        let titleScreen[2211] = 5;
+        // -27: 7680,0,4092,0,2046,61440,63,32768,255,4092,0,1023,0,49152,511,0,63488,49183,255,0,1022,32764,0,16128,16368,0,8190
+        let titleScreen[2213] = -27;
+        let titleScreen[2214] = 7680;
+        let titleScreen[2216] = 4092;
+        let titleScreen[2218] = 2046;
+        let titleScreen[2219] = -4096;
+        let titleScreen[2220] = 63;
+        let titleScreen[2221] = ~32767;
+        let titleScreen[2222] = 255;
+        let titleScreen[2223] = 4092;
+        let titleScreen[2225] = 1023;
+        let titleScreen[2227] = -16384;
+        let titleScreen[2228] = 511;
+        let titleScreen[2230] = -2048;
+        let titleScreen[2231] = -16353;
+        let titleScreen[2232] = 255;
+        let titleScreen[2234] = 1022;
+        let titleScreen[2235] = 32764;
+        let titleScreen[2237] = 16128;
+        let titleScreen[2238] = 16368;
+        let titleScreen[2240] = 8190;
+        // 5: 0
+        let titleScreen[2241] = 5;
+        // -27: 32256,0,4094,0,2046,61440,63,32768,255,4094,0,2047,0,49152,511,0,63488,49183,255,0,1022,65528,0,16320,16368,0,16380
+        let titleScreen[2243] = -27;
+        let titleScreen[2244] = 32256;
+        let titleScreen[2246] = 4094;
+        let titleScreen[2248] = 2046;
+        let titleScreen[2249] = -4096;
+        let titleScreen[2250] = 63;
+        let titleScreen[2251] = ~32767;
+        let titleScreen[2252] = 255;
+        let titleScreen[2253] = 4094;
+        let titleScreen[2255] = 2047;
+        let titleScreen[2257] = -16384;
+        let titleScreen[2258] = 511;
+        let titleScreen[2260] = -2048;
+        let titleScreen[2261] = -16353;
+        let titleScreen[2262] = 255;
+        let titleScreen[2264] = 1022;
+        let titleScreen[2265] = -8;
+        let titleScreen[2267] = 16320;
+        let titleScreen[2268] = 16368;
+        let titleScreen[2270] = 16380;
+        // 5: 0
+        let titleScreen[2271] = 5;
+        // -23: 65024,1,2047,0,2046,63488,31,32768,255,2046,0,2047,0,49152,255,0,63488,57375,127,0,1022,65528,3
+        let titleScreen[2273] = -23;
+        let titleScreen[2274] = -512;
+        let titleScreen[2275] = 1;
+        let titleScreen[2276] = 2047;
+        let titleScreen[2278] = 2046;
+        let titleScreen[2279] = -2048;
+        let titleScreen[2280] = 31;
+        let titleScreen[2281] = ~32767;
+        let titleScreen[2282] = 255;
+        let titleScreen[2283] = 2046;
+        let titleScreen[2285] = 2047;
+        let titleScreen[2287] = -16384;
+        let titleScreen[2288] = 255;
+        let titleScreen[2290] = -2048;
+        let titleScreen[2291] = -8161;
+        let titleScreen[2292] = 127;
+        let titleScreen[2294] = 1022;
+        let titleScreen[2295] = -8;
+        let titleScreen[2296] = 3;
+        // 2: 16368
+        let titleScreen[2297] = 2;
+        let titleScreen[2298] = 16368;
+        // -2: 0,16376
+        let titleScreen[2299] = -2;
+        let titleScreen[2301] = 16376;
+        // 5: 0
+        let titleScreen[2302] = 5;
+        // -27: 65024,49159,2047,0,2047,63488,31,32768,255,2046,0,4094,0,49152,255,0,64512,57375,127,0,1022,65520,15,16383,16368,0,32752
+        let titleScreen[2304] = -27;
+        let titleScreen[2305] = -512;
+        let titleScreen[2306] = -16377;
+        let titleScreen[2307] = 2047;
+        let titleScreen[2309] = 2047;
+        let titleScreen[2310] = -2048;
+        let titleScreen[2311] = 31;
+        let titleScreen[2312] = ~32767;
+        let titleScreen[2313] = 255;
+        let titleScreen[2314] = 2046;
+        let titleScreen[2316] = 4094;
+        let titleScreen[2318] = -16384;
+        let titleScreen[2319] = 255;
+        let titleScreen[2321] = -1024;
+        let titleScreen[2322] = -8161;
+        let titleScreen[2323] = 127;
+        let titleScreen[2325] = 1022;
+        let titleScreen[2326] = -16;
+        let titleScreen[2327] = 15;
+        let titleScreen[2328] = 16383;
+        let titleScreen[2329] = 16368;
+        let titleScreen[2331] = 32752;
+        // 5: 0
+        let titleScreen[2332] = 5;
+        // -27: 65024,61503,1023,0,2047,63488,31,32768,511,2046,0,4094,0,49152,255,0,64512,57359,127,0,2046,65504,61695,8191,16368,0,65504
+        let titleScreen[2334] = -27;
+        let titleScreen[2335] = -512;
+        let titleScreen[2336] = -4033;
+        let titleScreen[2337] = 1023;
+        let titleScreen[2339] = 2047;
+        let titleScreen[2340] = -2048;
+        let titleScreen[2341] = 31;
+        let titleScreen[2342] = ~32767;
+        let titleScreen[2343] = 511;
+        let titleScreen[2344] = 2046;
+        let titleScreen[2346] = 4094;
+        let titleScreen[2348] = -16384;
+        let titleScreen[2349] = 255;
+        let titleScreen[2351] = -1024;
+        let titleScreen[2352] = -8177;
+        let titleScreen[2353] = 127;
+        let titleScreen[2355] = 2046;
+        let titleScreen[2356] = -32;
+        let titleScreen[2357] = -3841;
+        let titleScreen[2358] = 8191;
+        let titleScreen[2359] = 16368;
+        let titleScreen[2361] = -32;
+        // 5: 0
+        let titleScreen[2362] = 5;
+        // -28: 65024,65535,1023,0,1023,64512,15,32768,511,2046,0,8188,0,49152,255,0,64512,61455,63,0,2046,65472,65535,8191,16368,0,65504,1
+        let titleScreen[2364] = -28;
+        let titleScreen[2365] = -512;
+        let titleScreen[2366] = -1;
+        let titleScreen[2367] = 1023;
+        let titleScreen[2369] = 1023;
+        let titleScreen[2370] = -1024;
+        let titleScreen[2371] = 15;
+        let titleScreen[2372] = ~32767;
+        let titleScreen[2373] = 511;
+        let titleScreen[2374] = 2046;
+        let titleScreen[2376] = 8188;
+        let titleScreen[2378] = -16384;
+        let titleScreen[2379] = 255;
+        let titleScreen[2381] = -1024;
+        let titleScreen[2382] = -4081;
+        let titleScreen[2383] = 63;
+        let titleScreen[2385] = 2046;
+        let titleScreen[2386] = -64;
+        let titleScreen[2387] = -1;
+        let titleScreen[2388] = 8191;
+        let titleScreen[2389] = 16368;
+        let titleScreen[2391] = -32;
+        let titleScreen[2392] = 1;
+        // 4: 0
+        let titleScreen[2393] = 4;
+        // -28: 65024,65535,511,0,1023,64512,15,0,511,2046,0,8188,0,49152,255,0,64512,61455,63,0,2044,65472,65535,8191,16368,0,65472,3
+        let titleScreen[2395] = -28;
+        let titleScreen[2396] = -512;
+        let titleScreen[2397] = -1;
+        let titleScreen[2398] = 511;
+        let titleScreen[2400] = 1023;
+        let titleScreen[2401] = -1024;
+        let titleScreen[2402] = 15;
+        let titleScreen[2404] = 511;
+        let titleScreen[2405] = 2046;
+        let titleScreen[2407] = 8188;
+        let titleScreen[2409] = -16384;
+        let titleScreen[2410] = 255;
+        let titleScreen[2412] = -1024;
+        let titleScreen[2413] = -4081;
+        let titleScreen[2414] = 63;
+        let titleScreen[2416] = 2044;
+        let titleScreen[2417] = -64;
+        let titleScreen[2418] = -1;
+        let titleScreen[2419] = 8191;
+        let titleScreen[2420] = 16368;
+        let titleScreen[2422] = -64;
+        let titleScreen[2423] = 3;
+        // 4: 0
+        let titleScreen[2424] = 4;
+        // -28: 65280,65535,255,0,1023,65024,7,0,511,2046,0,16376,0,49152,255,0,64512,63503,31,0,2044,65280,65535,8191,8184,0,65408,7
+        let titleScreen[2426] = -28;
+        let titleScreen[2427] = -256;
+        let titleScreen[2428] = -1;
+        let titleScreen[2429] = 255;
+        let titleScreen[2431] = 1023;
+        let titleScreen[2432] = -512;
+        let titleScreen[2433] = 7;
+        let titleScreen[2435] = 511;
+        let titleScreen[2436] = 2046;
+        let titleScreen[2438] = 16376;
+        let titleScreen[2440] = -16384;
+        let titleScreen[2441] = 255;
+        let titleScreen[2443] = -1024;
+        let titleScreen[2444] = -2033;
+        let titleScreen[2445] = 31;
+        let titleScreen[2447] = 2044;
+        let titleScreen[2448] = -256;
+        let titleScreen[2449] = -1;
+        let titleScreen[2450] = 8191;
+        let titleScreen[2451] = 8184;
+        let titleScreen[2453] = -128;
+        let titleScreen[2454] = 7;
+        // 4: 0
+        let titleScreen[2455] = 4;
+        // -28: 65280,65535,255,0,1023,65024,7,0,511,2047,0,16376,0,57344,255,0,64512,63503,31,0,2044,65024,65535,4095,8184,0,65280,7
+        let titleScreen[2457] = -28;
+        let titleScreen[2458] = -256;
+        let titleScreen[2459] = -1;
+        let titleScreen[2460] = 255;
+        let titleScreen[2462] = 1023;
+        let titleScreen[2463] = -512;
+        let titleScreen[2464] = 7;
+        let titleScreen[2466] = 511;
+        let titleScreen[2467] = 2047;
+        let titleScreen[2469] = 16376;
+        let titleScreen[2471] = -8192;
+        let titleScreen[2472] = 255;
+        let titleScreen[2474] = -1024;
+        let titleScreen[2475] = -2033;
+        let titleScreen[2476] = 31;
+        let titleScreen[2478] = 2044;
+        let titleScreen[2479] = -512;
+        let titleScreen[2480] = -1;
+        let titleScreen[2481] = 4095;
+        let titleScreen[2482] = 8184;
+        let titleScreen[2484] = -256;
+        let titleScreen[2485] = 7;
+        // 4: 0
+        let titleScreen[2486] = 4;
+        // -28: 65024,65535,63,0,1023,65280,3,0,1023,2047,0,32752,0,57344,127,0,64512,64527,15,0,4092,64512,65535,1023,8184,0,65024,15
+        let titleScreen[2488] = -28;
+        let titleScreen[2489] = -512;
+        let titleScreen[2490] = -1;
+        let titleScreen[2491] = 63;
+        let titleScreen[2493] = 1023;
+        let titleScreen[2494] = -256;
+        let titleScreen[2495] = 3;
+        let titleScreen[2497] = 1023;
+        let titleScreen[2498] = 2047;
+        let titleScreen[2500] = 32752;
+        let titleScreen[2502] = -8192;
+        let titleScreen[2503] = 127;
+        let titleScreen[2505] = -1024;
+        let titleScreen[2506] = -1009;
+        let titleScreen[2507] = 15;
+        let titleScreen[2509] = 4092;
+        let titleScreen[2510] = -1024;
+        let titleScreen[2511] = -1;
+        let titleScreen[2512] = 1023;
+        let titleScreen[2513] = 8184;
+        let titleScreen[2515] = -512;
+        let titleScreen[2516] = 15;
+        // 4: 0
+        let titleScreen[2517] = 4;
+        // -8: 63488,65535,31,32768,1023,65280,3,0
+        let titleScreen[2519] = -8;
+        let titleScreen[2520] = -2048;
+        let titleScreen[2521] = -1;
+        let titleScreen[2522] = 31;
+        let titleScreen[2523] = ~32767;
+        let titleScreen[2524] = 1023;
+        let titleScreen[2525] = -256;
+        let titleScreen[2526] = 3;
+        // 2: 1023
+        let titleScreen[2528] = 2;
+        let titleScreen[2529] = 1023;
+        // -18: 0,32752,0,57344,127,0,65024,64527,15,0,4092,61440,65535,255,8184,0,65024,31
+        let titleScreen[2530] = -18;
+        let titleScreen[2532] = 32752;
+        let titleScreen[2534] = -8192;
+        let titleScreen[2535] = 127;
+        let titleScreen[2537] = -512;
+        let titleScreen[2538] = -1009;
+        let titleScreen[2539] = 15;
+        let titleScreen[2541] = 4092;
+        let titleScreen[2542] = -4096;
+        let titleScreen[2543] = -1;
+        let titleScreen[2544] = 255;
+        let titleScreen[2545] = 8184;
+        let titleScreen[2547] = -512;
+        let titleScreen[2548] = 31;
+        // 4: 0
+        let titleScreen[2549] = 4;
+        // -28: 57344,65535,15,32768,1023,65408,3,0,1022,1023,0,65504,0,57344,127,0,65024,65031,15,0,4088,57344,65535,63,8184,0,64512,63
+        let titleScreen[2551] = -28;
+        let titleScreen[2552] = -8192;
+        let titleScreen[2553] = -1;
+        let titleScreen[2554] = 15;
+        let titleScreen[2555] = ~32767;
+        let titleScreen[2556] = 1023;
+        let titleScreen[2557] = -128;
+        let titleScreen[2558] = 3;
+        let titleScreen[2560] = 1022;
+        let titleScreen[2561] = 1023;
+        let titleScreen[2563] = -32;
+        let titleScreen[2565] = -8192;
+        let titleScreen[2566] = 127;
+        let titleScreen[2568] = -512;
+        let titleScreen[2569] = -505;
+        let titleScreen[2570] = 15;
+        let titleScreen[2572] = 4088;
+        let titleScreen[2573] = -8192;
+        let titleScreen[2574] = -1;
+        let titleScreen[2575] = 63;
+        let titleScreen[2576] = 8184;
+        let titleScreen[2578] = -1024;
+        let titleScreen[2579] = 63;
+        // 4: 0
+        let titleScreen[2580] = 4;
+        // -28: 32768,65535,3,32768,511,65408,1,0,1022,1023,0,65504,0,57344,127,0,65024,65031,7,0,4088,0,65535,7,8184,0,63488,127
+        let titleScreen[2582] = -28;
+        let titleScreen[2583] = ~32767;
+        let titleScreen[2584] = -1;
+        let titleScreen[2585] = 3;
+        let titleScreen[2586] = ~32767;
+        let titleScreen[2587] = 511;
+        let titleScreen[2588] = -128;
+        let titleScreen[2589] = 1;
+        let titleScreen[2591] = 1022;
+        let titleScreen[2592] = 1023;
+        let titleScreen[2594] = -32;
+        let titleScreen[2596] = -8192;
+        let titleScreen[2597] = 127;
+        let titleScreen[2599] = -512;
+        let titleScreen[2600] = -505;
+        let titleScreen[2601] = 7;
+        let titleScreen[2603] = 4088;
+        let titleScreen[2605] = -1;
+        let titleScreen[2606] = 7;
+        let titleScreen[2607] = 8184;
+        let titleScreen[2609] = -2048;
+        let titleScreen[2610] = 127;
+        // 5: 0
+        let titleScreen[2611] = 5;
+        // -1: 16376
+        let titleScreen[2613] = -1;
+        let titleScreen[2614] = 16376;
+        // 20: 0
+        let titleScreen[2615] = 20;
+        // -1: 32760
+        let titleScreen[2617] = -1;
+        let titleScreen[2618] = 32760;
+        // 167: 0
+        let titleScreen[2619] = 167;
+        // -1: 65528
+        let titleScreen[2621] = -1;
+        let titleScreen[2622] = -8;
+        // 30: 65535
+        let titleScreen[2623] = 30;
+        let titleScreen[2624] = -1;
+        // -2: 32767,65528
+        let titleScreen[2625] = -2;
+        let titleScreen[2626] = 32767;
+        let titleScreen[2627] = -8;
+        // 30: 65535
+        let titleScreen[2628] = 30;
+        let titleScreen[2629] = -1;
+        // -2: 32767,65528
+        let titleScreen[2630] = -2;
+        let titleScreen[2631] = 32767;
+        let titleScreen[2632] = -8;
+        // 30: 65535
+        let titleScreen[2633] = 30;
+        let titleScreen[2634] = -1;
+        // -1: 32767
+        let titleScreen[2635] = -1;
+        let titleScreen[2636] = 32767;
+        // 147: 0
+        let titleScreen[2637] = 147;
+        // -1: 4
+        let titleScreen[2639] = -1;
+        let titleScreen[2640] = 4;
+        // 31: 0
+        let titleScreen[2641] = 31;
+        // -1: 6
+        let titleScreen[2643] = -1;
+        let titleScreen[2644] = 6;
+        // 31: 0
+        let titleScreen[2645] = 31;
+        // -1: 7
+        let titleScreen[2647] = -1;
+        let titleScreen[2648] = 7;
+        // 30: 0
+        let titleScreen[2649] = 30;
+        // -2: 32768,3
+        let titleScreen[2651] = -2;
+        let titleScreen[2652] = ~32767;
+        let titleScreen[2653] = 3;
+        // 30: 0
+        let titleScreen[2654] = 30;
+        // -2: 49152,1
+        let titleScreen[2656] = -2;
+        let titleScreen[2657] = -16384;
+        let titleScreen[2658] = 1;
+        // 30: 0
+        let titleScreen[2659] = 30;
+        // -1: 57344
+        let titleScreen[2661] = -1;
+        let titleScreen[2662] = -8192;
+        // 22: 0
+        let titleScreen[2663] = 22;
+        // -1: 128
+        let titleScreen[2665] = -1;
+        let titleScreen[2666] = 128;
+        // 8: 0
+        let titleScreen[2667] = 8;
+        // -1: 28672
+        let titleScreen[2669] = -1;
+        let titleScreen[2670] = 28672;
+        // 22: 0
+        let titleScreen[2671] = 22;
+        // -1: 384
+        let titleScreen[2673] = -1;
+        let titleScreen[2674] = 384;
+        // 8: 0
+        let titleScreen[2675] = 8;
+        // -1: 6144
+        let titleScreen[2677] = -1;
+        let titleScreen[2678] = 6144;
+        // 22: 0
+        let titleScreen[2679] = 22;
+        // -1: 192
+        let titleScreen[2681] = -1;
+        let titleScreen[2682] = 192;
+        // 8: 0
+        let titleScreen[2683] = 8;
+        // -1: 3584
+        let titleScreen[2685] = -1;
+        let titleScreen[2686] = 3584;
+        // 22: 0
+        let titleScreen[2687] = 22;
+        // -1: 192
+        let titleScreen[2689] = -1;
+        let titleScreen[2690] = 192;
+        // 8: 0
+        let titleScreen[2691] = 8;
+        // -1: 1792
+        let titleScreen[2693] = -1;
+        let titleScreen[2694] = 1792;
+        // 22: 0
+        let titleScreen[2695] = 22;
+        // -1: 224
+        let titleScreen[2697] = -1;
+        let titleScreen[2698] = 224;
+        // 8: 0
+        let titleScreen[2699] = 8;
+        // -1: 896
+        let titleScreen[2701] = -1;
+        let titleScreen[2702] = 896;
+        // 22: 0
+        let titleScreen[2703] = 22;
+        // -1: 96
+        let titleScreen[2705] = -1;
+        let titleScreen[2706] = 96;
+        // 8: 0
+        let titleScreen[2707] = 8;
+        // -1: 448
+        let titleScreen[2709] = -1;
+        let titleScreen[2710] = 448;
+        // 22: 0
+        let titleScreen[2711] = 22;
+        // -1: 96
+        let titleScreen[2713] = -1;
+        let titleScreen[2714] = 96;
+        // 8: 0
+        let titleScreen[2715] = 8;
+        // -1: 224
+        let titleScreen[2717] = -1;
+        let titleScreen[2718] = 224;
+        // 22: 0
+        let titleScreen[2719] = 22;
+        // -1: 48
+        let titleScreen[2721] = -1;
+        let titleScreen[2722] = 48;
+        // 8: 0
+        let titleScreen[2723] = 8;
+        // -1: 112
+        let titleScreen[2725] = -1;
+        let titleScreen[2726] = 112;
+        // 22: 0
+        let titleScreen[2727] = 22;
+        // -1: 48
+        let titleScreen[2729] = -1;
+        let titleScreen[2730] = 48;
+        // 8: 0
+        let titleScreen[2731] = 8;
+        // -1: 56
+        let titleScreen[2733] = -1;
+        let titleScreen[2734] = 56;
+        // 22: 0
+        let titleScreen[2735] = 22;
+        // -1: 48
+        let titleScreen[2737] = -1;
+        let titleScreen[2738] = 48;
+        // 8: 0
+        let titleScreen[2739] = 8;
+        // -1: 28
+        let titleScreen[2741] = -1;
+        let titleScreen[2742] = 28;
+        // 22: 0
+        let titleScreen[2743] = 22;
+        // -1: 24
+        let titleScreen[2745] = -1;
+        let titleScreen[2746] = 24;
+        // 8: 0
+        let titleScreen[2747] = 8;
+        // -1: 14
+        let titleScreen[2749] = -1;
+        let titleScreen[2750] = 14;
+        // 22: 0
+        let titleScreen[2751] = 22;
+        // -1: 24
+        let titleScreen[2753] = -1;
+        let titleScreen[2754] = 24;
+        // 8: 0
+        let titleScreen[2755] = 8;
+        // -1: 7
+        let titleScreen[2757] = -1;
+        let titleScreen[2758] = 7;
+        // 22: 0
+        let titleScreen[2759] = 22;
+        // -1: 24
+        let titleScreen[2761] = -1;
+        let titleScreen[2762] = 24;
+        // 7: 0
+        let titleScreen[2763] = 7;
+        // -2: 32768,3
+        let titleScreen[2765] = -2;
+        let titleScreen[2766] = ~32767;
+        let titleScreen[2767] = 3;
+        // 22: 0
+        let titleScreen[2768] = 22;
+        // -1: 12
+        let titleScreen[2770] = -1;
+        let titleScreen[2771] = 12;
+        // 7: 0
+        let titleScreen[2772] = 7;
+        // -2: 49152,1
+        let titleScreen[2774] = -2;
+        let titleScreen[2775] = -16384;
+        let titleScreen[2776] = 1;
+        // 22: 0
+        let titleScreen[2777] = 22;
+        // -1: 12
+        let titleScreen[2779] = -1;
+        let titleScreen[2780] = 12;
+        // 7: 0
+        let titleScreen[2781] = 7;
+        // -1: 61440
+        let titleScreen[2783] = -1;
+        let titleScreen[2784] = -4096;
+        // 23: 0
+        let titleScreen[2785] = 23;
+        // -1: 12
+        let titleScreen[2787] = -1;
+        let titleScreen[2788] = 12;
+        // 7: 0
+        let titleScreen[2789] = 7;
+        // -1: 14336
+        let titleScreen[2791] = -1;
+        let titleScreen[2792] = 14336;
+        // 23: 0
+        let titleScreen[2793] = 23;
+        // -1: 14
+        let titleScreen[2795] = -1;
+        let titleScreen[2796] = 14;
+        // 7: 0
+        let titleScreen[2797] = 7;
+        // -1: 7168
+        let titleScreen[2799] = -1;
+        let titleScreen[2800] = 7168;
+        // 23: 0
+        let titleScreen[2801] = 23;
+        // -1: 6
+        let titleScreen[2803] = -1;
+        let titleScreen[2804] = 6;
+        // 7: 0
+        let titleScreen[2805] = 7;
+        // -1: 3584
+        let titleScreen[2807] = -1;
+        let titleScreen[2808] = 3584;
+        // 23: 0
+        let titleScreen[2809] = 23;
+        // -1: 6
+        let titleScreen[2811] = -1;
+        let titleScreen[2812] = 6;
+        // 7: 0
+        let titleScreen[2813] = 7;
+        // -1: 1792
+        let titleScreen[2815] = -1;
+        let titleScreen[2816] = 1792;
+        // 23: 0
+        let titleScreen[2817] = 23;
+        // -1: 6
+        let titleScreen[2819] = -1;
+        let titleScreen[2820] = 6;
+        // 7: 0
+        let titleScreen[2821] = 7;
+        // -1: 896
+        let titleScreen[2823] = -1;
+        let titleScreen[2824] = 896;
+        // 23: 0
+        let titleScreen[2825] = 23;
+        // -1: 7
+        let titleScreen[2827] = -1;
+        let titleScreen[2828] = 7;
+        // 7: 0
+        let titleScreen[2829] = 7;
+        // -1: 480
+        let titleScreen[2831] = -1;
+        let titleScreen[2832] = 480;
+        // 23: 0
+        let titleScreen[2833] = 23;
+        // -1: 3
+        let titleScreen[2835] = -1;
+        let titleScreen[2836] = 3;
+        // 7: 0
+        let titleScreen[2837] = 7;
+        // -1: 112
+        let titleScreen[2839] = -1;
+        let titleScreen[2840] = 112;
+        // 23: 0
+        let titleScreen[2841] = 23;
+        // -1: 3
+        let titleScreen[2843] = -1;
+        let titleScreen[2844] = 3;
+        // 7: 0
+        let titleScreen[2845] = 7;
+        // -1: 56
+        let titleScreen[2847] = -1;
+        let titleScreen[2848] = 56;
+        // 23: 0
+        let titleScreen[2849] = 23;
+        // -1: 3
+        let titleScreen[2851] = -1;
+        let titleScreen[2852] = 3;
+        // 7: 0
+        let titleScreen[2853] = 7;
+        // -1: 28
+        let titleScreen[2855] = -1;
+        let titleScreen[2856] = 28;
+        // 23: 0
+        let titleScreen[2857] = 23;
+        // -1: 3
+        let titleScreen[2859] = -1;
+        let titleScreen[2860] = 3;
+        // 7: 0
+        let titleScreen[2861] = 7;
+        // -1: 15
+        let titleScreen[2863] = -1;
+        let titleScreen[2864] = 15;
+        // 22: 0
+        let titleScreen[2865] = 22;
+        // -2: 32768,1
+        let titleScreen[2867] = -2;
+        let titleScreen[2868] = ~32767;
+        let titleScreen[2869] = 1;
+        // 6: 0
+        let titleScreen[2870] = 6;
+        // -2: 32768,3
+        let titleScreen[2872] = -2;
+        let titleScreen[2873] = ~32767;
+        let titleScreen[2874] = 3;
+        // 22: 0
+        let titleScreen[2875] = 22;
+        // -2: 32768,1
+        let titleScreen[2877] = -2;
+        let titleScreen[2878] = ~32767;
+        let titleScreen[2879] = 1;
+        // 6: 0
+        let titleScreen[2880] = 6;
+        // -2: 49152,1
+        let titleScreen[2882] = -2;
+        let titleScreen[2883] = -16384;
+        let titleScreen[2884] = 1;
+        // 22: 0
+        let titleScreen[2885] = 22;
+        // -2: 32768,1
+        let titleScreen[2887] = -2;
+        let titleScreen[2888] = ~32767;
+        let titleScreen[2889] = 1;
+        // 6: 0
+        let titleScreen[2890] = 6;
+        // -1: 57344
+        let titleScreen[2892] = -1;
+        let titleScreen[2893] = -8192;
+        // 23: 0
+        let titleScreen[2894] = 23;
+        // -2: 32768,1
+        let titleScreen[2896] = -2;
+        let titleScreen[2897] = ~32767;
+        let titleScreen[2898] = 1;
+        // 6: 0
+        let titleScreen[2899] = 6;
+        // -1: 30720
+        let titleScreen[2901] = -1;
+        let titleScreen[2902] = 30720;
+        // 23: 0
+        let titleScreen[2903] = 23;
+        // -2: 32768,1
+        let titleScreen[2905] = -2;
+        let titleScreen[2906] = ~32767;
+        let titleScreen[2907] = 1;
+        // 6: 0
+        let titleScreen[2908] = 6;
+        // -1: 7168
+        let titleScreen[2910] = -1;
+        let titleScreen[2911] = 7168;
+        // 23: 0
+        let titleScreen[2912] = 23;
+        // -2: 32768,1
+        let titleScreen[2914] = -2;
+        let titleScreen[2915] = ~32767;
+        let titleScreen[2916] = 1;
+        // 6: 0
+        let titleScreen[2917] = 6;
+        // -1: 3584
+        let titleScreen[2919] = -1;
+        let titleScreen[2920] = 3584;
+        // 23: 0
+        let titleScreen[2921] = 23;
+        // -2: 32768,1
+        let titleScreen[2923] = -2;
+        let titleScreen[2924] = ~32767;
+        let titleScreen[2925] = 1;
+        // 6: 0
+        let titleScreen[2926] = 6;
+        // -1: 1920
+        let titleScreen[2928] = -1;
+        let titleScreen[2929] = 1920;
+        // 23: 0
+        let titleScreen[2930] = 23;
+        // -1: 49152
+        let titleScreen[2932] = -1;
+        let titleScreen[2933] = -16384;
+        // 7: 0
+        let titleScreen[2934] = 7;
+        // -1: 448
+        let titleScreen[2936] = -1;
+        let titleScreen[2937] = 448;
+        // 23: 0
+        let titleScreen[2938] = 23;
+        // -1: 49152
+        let titleScreen[2940] = -1;
+        let titleScreen[2941] = -16384;
+        // 7: 0
+        let titleScreen[2942] = 7;
+        // -1: 224
+        let titleScreen[2944] = -1;
+        let titleScreen[2945] = 224;
+        // 23: 0
+        let titleScreen[2946] = 23;
+        // -1: 49152
+        let titleScreen[2948] = -1;
+        let titleScreen[2949] = -16384;
+        // 7: 0
+        let titleScreen[2950] = 7;
+        // -1: 120
+        let titleScreen[2952] = -1;
+        let titleScreen[2953] = 120;
+        // 23: 0
+        let titleScreen[2954] = 23;
+        // -1: 49152
+        let titleScreen[2956] = -1;
+        let titleScreen[2957] = -16384;
+        // 7: 0
+        let titleScreen[2958] = 7;
+        // -1: 28
+        let titleScreen[2960] = -1;
+        let titleScreen[2961] = 28;
+        // 23: 0
+        let titleScreen[2962] = 23;
+        // -1: 49152
+        let titleScreen[2964] = -1;
+        let titleScreen[2965] = -16384;
+        // 7: 0
+        let titleScreen[2966] = 7;
+        // -1: 14
+        let titleScreen[2968] = -1;
+        let titleScreen[2969] = 14;
+        // 23: 0
+        let titleScreen[2970] = 23;
+        // -1: 49152
+        let titleScreen[2972] = -1;
+        let titleScreen[2973] = -16384;
+        // 6: 0
+        let titleScreen[2974] = 6;
+        // -2: 32768,7
+        let titleScreen[2976] = -2;
+        let titleScreen[2977] = ~32767;
+        let titleScreen[2978] = 7;
+        // 23: 0
+        let titleScreen[2979] = 23;
+        // -1: 49152
+        let titleScreen[2981] = -1;
+        let titleScreen[2982] = -16384;
+        // 6: 0
+        let titleScreen[2983] = 6;
+        // -2: 49152,1
+        let titleScreen[2985] = -2;
+        let titleScreen[2986] = -16384;
+        let titleScreen[2987] = 1;
+        // 23: 0
+        let titleScreen[2988] = 23;
+        // -1: 49152
+        let titleScreen[2990] = -1;
+        let titleScreen[2991] = -16384;
+        // 6: 0
+        let titleScreen[2992] = 6;
+        // -1: 61440
+        let titleScreen[2994] = -1;
+        let titleScreen[2995] = -4096;
+        // 24: 0
+        let titleScreen[2996] = 24;
+        // -1: 49152
+        let titleScreen[2998] = -1;
+        let titleScreen[2999] = -16384;
+        // 6: 0
+        let titleScreen[3000] = 6;
+        // -1: 14336
+        let titleScreen[3002] = -1;
+        let titleScreen[3003] = 14336;
+        // 24: 0
+        let titleScreen[3004] = 24;
+        // -1: 49152
+        let titleScreen[3006] = -1;
+        let titleScreen[3007] = -16384;
+        // 6: 0
+        let titleScreen[3008] = 6;
+        // -1: 7680
+        let titleScreen[3010] = -1;
+        let titleScreen[3011] = 7680;
+        // 24: 0
+        let titleScreen[3012] = 24;
+        // -1: 49152
+        let titleScreen[3014] = -1;
+        let titleScreen[3015] = -16384;
+        // 6: 0
+        let titleScreen[3016] = 6;
+        // -1: 1792
+        let titleScreen[3018] = -1;
+        let titleScreen[3019] = 1792;
+        // 24: 0
+        let titleScreen[3020] = 24;
+        // -1: 49152
+        let titleScreen[3022] = -1;
+        let titleScreen[3023] = -16384;
+        // 6: 0
+        let titleScreen[3024] = 6;
+        // -1: 960
+        let titleScreen[3026] = -1;
+        let titleScreen[3027] = 960;
+        // 24: 0
+        let titleScreen[3028] = 24;
+        // -2: 49152,1
+        let titleScreen[3030] = -2;
+        let titleScreen[3031] = -16384;
+        let titleScreen[3032] = 1;
+        // 5: 0
+        let titleScreen[3033] = 5;
+        // -1: 224
+        let titleScreen[3035] = -1;
+        let titleScreen[3036] = 224;
+        // 24: 0
+        let titleScreen[3037] = 24;
+        // -2: 32768,1
+        let titleScreen[3039] = -2;
+        let titleScreen[3040] = ~32767;
+        let titleScreen[3041] = 1;
+        // 5: 0
+        let titleScreen[3042] = 5;
+        // -1: 120
+        let titleScreen[3044] = -1;
+        let titleScreen[3045] = 120;
+        // 24: 0
+        let titleScreen[3046] = 24;
+        // -2: 32768,1
+        let titleScreen[3048] = -2;
+        let titleScreen[3049] = ~32767;
+        let titleScreen[3050] = 1;
+        // 5: 0
+        let titleScreen[3051] = 5;
+        // -1: 30
+        let titleScreen[3053] = -1;
+        let titleScreen[3054] = 30;
+        // 24: 0
+        let titleScreen[3055] = 24;
+        // -2: 32768,1
+        let titleScreen[3057] = -2;
+        let titleScreen[3058] = ~32767;
+        let titleScreen[3059] = 1;
+        // 5: 0
+        let titleScreen[3060] = 5;
+        // -1: 15
+        let titleScreen[3062] = -1;
+        let titleScreen[3063] = 15;
+        // 24: 0
+        let titleScreen[3064] = 24;
+        // -2: 32768,1
+        let titleScreen[3066] = -2;
+        let titleScreen[3067] = ~32767;
+        let titleScreen[3068] = 1;
+        // 4: 0
+        let titleScreen[3069] = 4;
+        // -2: 49152,3
+        let titleScreen[3071] = -2;
+        let titleScreen[3072] = -16384;
+        let titleScreen[3073] = 3;
+        // 24: 0
+        let titleScreen[3074] = 24;
+        // -2: 32768,1
+        let titleScreen[3076] = -2;
+        let titleScreen[3077] = ~32767;
+        let titleScreen[3078] = 1;
+        // 4: 0
+        let titleScreen[3079] = 4;
+        // -1: 61440
+        let titleScreen[3081] = -1;
+        let titleScreen[3082] = -4096;
+        // 26: 0
+        let titleScreen[3083] = 26;
+        // -1: 3
+        let titleScreen[3085] = -1;
+        let titleScreen[3086] = 3;
+        // 4: 0
+        let titleScreen[3087] = 4;
+        // -1: 30720
+        let titleScreen[3089] = -1;
+        let titleScreen[3090] = 30720;
+        // 26: 0
+        let titleScreen[3091] = 26;
+        // -1: 3
+        let titleScreen[3093] = -1;
+        let titleScreen[3094] = 3;
+        // 4: 0
+        let titleScreen[3095] = 4;
+        // -1: 7680
+        let titleScreen[3097] = -1;
+        let titleScreen[3098] = 7680;
+        // 26: 0
+        let titleScreen[3099] = 26;
+        // -1: 3
+        let titleScreen[3101] = -1;
+        let titleScreen[3102] = 3;
+        // 4: 0
+        let titleScreen[3103] = 4;
+        // -1: 1920
+        let titleScreen[3105] = -1;
+        let titleScreen[3106] = 1920;
+        // 26: 0
+        let titleScreen[3107] = 26;
+        // -1: 6
+        let titleScreen[3109] = -1;
+        let titleScreen[3110] = 6;
+        // 4: 0
+        let titleScreen[3111] = 4;
+        // -1: 992
+        let titleScreen[3113] = -1;
+        let titleScreen[3114] = 992;
+        // 26: 0
+        let titleScreen[3115] = 26;
+        // -1: 6
+        let titleScreen[3117] = -1;
+        let titleScreen[3118] = 6;
+        // 4: 0
+        let titleScreen[3119] = 4;
+        // -1: 248
+        let titleScreen[3121] = -1;
+        let titleScreen[3122] = 248;
+        // 26: 0
+        let titleScreen[3123] = 26;
+        // -1: 14
+        let titleScreen[3125] = -1;
+        let titleScreen[3126] = 14;
+        // 4: 0
+        let titleScreen[3127] = 4;
+        // -1: 62
+        let titleScreen[3129] = -1;
+        let titleScreen[3130] = 62;
+        // 26: 0
+        let titleScreen[3131] = 26;
+        // -1: 12
+        let titleScreen[3133] = -1;
+        let titleScreen[3134] = 12;
+        // 4: 0
+        let titleScreen[3135] = 4;
+        // -1: 15
+        let titleScreen[3137] = -1;
+        let titleScreen[3138] = 15;
+        // 26: 0
+        let titleScreen[3139] = 26;
+        // -1: 28
+        let titleScreen[3141] = -1;
+        let titleScreen[3142] = 28;
+        // 3: 0
+        let titleScreen[3143] = 3;
+        // -2: 57344,3
+        let titleScreen[3145] = -2;
+        let titleScreen[3146] = -8192;
+        let titleScreen[3147] = 3;
+        // 26: 0
+        let titleScreen[3148] = 26;
+        // -1: 24
+        let titleScreen[3150] = -1;
+        let titleScreen[3151] = 24;
+        // 3: 0
+        let titleScreen[3152] = 3;
+        // -1: 63488
+        let titleScreen[3154] = -1;
+        let titleScreen[3155] = -2048;
+        // 27: 0
+        let titleScreen[3156] = 27;
+        // -1: 48
+        let titleScreen[3158] = -1;
+        let titleScreen[3159] = 48;
+        // 3: 0
+        let titleScreen[3160] = 3;
+        // -1: 15872
+        let titleScreen[3162] = -1;
+        let titleScreen[3163] = 15872;
+        // 27: 0
+        let titleScreen[3164] = 27;
+        // -1: 112
+        let titleScreen[3166] = -1;
+        let titleScreen[3167] = 112;
+        // 3: 0
+        let titleScreen[3168] = 3;
+        // -1: 3968
+        let titleScreen[3170] = -1;
+        let titleScreen[3171] = 3968;
+        // 27: 0
+        let titleScreen[3172] = 27;
+        // -1: 224
+        let titleScreen[3174] = -1;
+        let titleScreen[3175] = 224;
+        // 3: 0
+        let titleScreen[3176] = 3;
+        // -1: 992
+        let titleScreen[3178] = -1;
+        let titleScreen[3179] = 992;
+        // 27: 0
+        let titleScreen[3180] = 27;
+        // -1: 448
+        let titleScreen[3182] = -1;
+        let titleScreen[3183] = 448;
+        // 3: 0
+        let titleScreen[3184] = 3;
+        // -1: 252
+        let titleScreen[3186] = -1;
+        let titleScreen[3187] = 252;
+        // 27: 0
+        let titleScreen[3188] = 27;
+        // -1: 896
+        let titleScreen[3190] = -1;
+        let titleScreen[3191] = 896;
+        // 3: 0
+        let titleScreen[3192] = 3;
+        // -1: 31
+        let titleScreen[3194] = -1;
+        let titleScreen[3195] = 31;
+        // 27: 0
+        let titleScreen[3196] = 27;
+        // -1: 1792
+        let titleScreen[3198] = -1;
+        let titleScreen[3199] = 1792;
+        // 2: 0
+        let titleScreen[3200] = 2;
+        // -2: 57344,7
+        let titleScreen[3202] = -2;
+        let titleScreen[3203] = -8192;
+        let titleScreen[3204] = 7;
+        // 27: 0
+        let titleScreen[3205] = 27;
+        // -1: 3584
+        let titleScreen[3207] = -1;
+        let titleScreen[3208] = 3584;
+        // 2: 0
+        let titleScreen[3209] = 2;
+        // -1: 64512
+        let titleScreen[3211] = -1;
+        let titleScreen[3212] = -1024;
+        // 28: 0
+        let titleScreen[3213] = 28;
+        // -1: 15360
+        let titleScreen[3215] = -1;
+        let titleScreen[3216] = 15360;
+        // 2: 0
+        let titleScreen[3217] = 2;
+        // -1: 16256
+        let titleScreen[3219] = -1;
+        let titleScreen[3220] = 16256;
+        // 28: 0
+        let titleScreen[3221] = 28;
+        // -1: 61440
+        let titleScreen[3223] = -1;
+        let titleScreen[3224] = -4096;
+        // 2: 0
+        let titleScreen[3225] = 2;
+        // -1: 2032
+        let titleScreen[3227] = -1;
+        let titleScreen[3228] = 2032;
+        // 28: 0
+        let titleScreen[3229] = 28;
+        // -4: 57344,7,0,255
+        let titleScreen[3231] = -4;
+        let titleScreen[3232] = -8192;
+        let titleScreen[3233] = 7;
+        let titleScreen[3235] = 255;
+        // 28: 0
+        let titleScreen[3236] = 28;
+        // -4: 32768,63,61440,31
+        let titleScreen[3238] = -4;
+        let titleScreen[3239] = ~32767;
+        let titleScreen[3240] = 63;
+        let titleScreen[3241] = -4096;
+        let titleScreen[3242] = 31;
+        // 29: 0
+        let titleScreen[3243] = 29;
+        // -3: 4092,65520,1
+        let titleScreen[3245] = -3;
+        let titleScreen[3246] = 4092;
+        let titleScreen[3247] = -16;
+        let titleScreen[3248] = 1;
+        // 29: 0
+        let titleScreen[3249] = 29;
+        // -2: 65472,4095
+        let titleScreen[3251] = -2;
+        let titleScreen[3252] = -64;
+        let titleScreen[3253] = 4095;
+        // 30: 0
+        let titleScreen[3254] = 30;
+        // -2: 63488,31
+        let titleScreen[3256] = -2;
+        let titleScreen[3257] = -2048;
+        let titleScreen[3258] = 31;
+        // 84: 0
+        let titleScreen[3259] = 84;
+        return;
+    }
+    function Array titleScreen() {
+        return titleScreen;
+    }
+}

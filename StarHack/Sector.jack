@@ -1,0 +1,18 @@
+class Sector {
+
+    field String name;
+    field int habitats;
+    field int ships;
+    field int stars;
+
+    constructor Sector new(String sectorName) {
+        let name = sectorName;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+}
