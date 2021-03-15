@@ -41,8 +41,8 @@ def emit_sprite(image, fp):
     data = image.getdata()
     for chunk in chunker(map(bit, data), 16):
         word = bits2int(reversed(chunk))
-        fp.write(f'    let screen[offset] = {int2jack(word)};\n')
-        fp.write(f'    let offset = offset + 32;\n')
+        fp.write(f'        let screen[offset] = {int2jack(word)};\n')
+        fp.write(f'        let offset = offset + 32;\n')
 
 def emit_run(varname, offset, n, run, fp):
     if len(run) == 0:
@@ -170,7 +170,7 @@ if __name__ == "__main__":
         for spritename, filename in sprites.items():
             print(f'extracting sprite code for {filename}')
             out.write(f'    function void {spritename}(int x, int y) ' + '{\n')
-            out.write('        var int offset; let offset = (y * 32) + x;\n')
+            out.write('        var int offset; let offset = (y * 512) + x;\n')
             with Image.open(filename, 'r') as image:
                 emit_sprite(image, out)
             out.write('        return;\n')

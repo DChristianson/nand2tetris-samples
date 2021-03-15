@@ -52,9 +52,9 @@ class Main {
     }
 
     function void drawSectorMap(StarHackGame game, PlayerShip playerShip) {
-        do Sprites.star(3, 3);
-        do Sprites.ship(4, 4);
-        do Sprites.anomaly(5, 5);
+        do Sprites.star(1, 1);
+        do Sprites.ship(2, 2);
+        do Sprites.anomaly(3, 3);
         do Sprites.orbital(6, 6);
         do Sprites.planet(7, 7);
         do TextGraphics.drawTextAligned(Strings.sectorName(playerShip.sectorIndex()), 21, 16, 1);
