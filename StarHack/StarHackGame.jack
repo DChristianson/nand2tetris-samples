@@ -1,25 +1,53 @@
 class StarHackGame {
 
-    field int stardate;
-    field PlayerShip player;
+    field PlayerShip playerShip;
     field StarMap starMap;
+    field int timeLeft;
+    field int anomaliesLeft;
+    field int habitatsLeft;
 
     constructor StarHackGame new() {
-        let stardate = Random.randInt();
-        let player = PlayerShip.new(3, 3);
+        let playerShip = PlayerShip.new(3, 3);
         let starMap = StarMap.new();
+        let timeLeft = 400;
+        let anomaliesLeft = 8;
+        let habitatsLeft = 8;
         return this;
     }
 
     method void dispose() {
-        do player.dispose();
+        do playerShip.dispose();
         do starMap.dispose();
         do Memory.deAlloc(this);
         return;
     }
 
+    method int daysLeft() {
+        return timeLeft / 10;
+    }
+
+    method PlayerShip playerShip() {
+        return playerShip;
+    }
+
+    method int anomaliesLeft() {
+        return anomaliesLeft;
+    }
+
+    method int habitatsLeft() {
+        return habitatsLeft;
+    }
+
+    method boolean isRunning() {
+        return true;
+    }
+
     method void update() {
         do player.update();
+        return;
+    }
+
+    method void execute(String command) {
         return;
     }
 

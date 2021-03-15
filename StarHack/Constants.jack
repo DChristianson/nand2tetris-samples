@@ -1,0 +1,71 @@
+class Constants {
+    static String missionStatus;
+    static String divider;
+    static String galacticTime;
+    static String daysLeft;
+    static String sector;
+    static String anomalies;
+    static String habitats;
+    static String shipStatus;
+    static String weapons;
+    static String engines;
+    static String hull;
+    static String power;
+    static String shields;
+    static String missiles;
+    static String drones;
+    static String pressKey;
+    static String msg00;
+    static String msg01;
+    static String msg02;
+    static String msg03;
+    static String cmd;
+    static String conditionRed;
+    function void init() {
+        let missionStatus = "Mission Status";
+        let divider = "--------------";
+        let galacticTime = "Galactic Time";
+        let daysLeft = "Days Left";
+        let sector = "Sector";
+        let anomalies = "Anomalies";
+        let habitats = "Habitats";
+        let shipStatus = "Ship Status";
+        let weapons = "Weapons";
+        let engines = "Engines";
+        let hull = "Hull";
+        let power = "Power";
+        let shields = "Shields";
+        let missiles = "Missiles";
+        let drones = "Drones";
+        let pressKey = "Press any key...";
+        let msg00 = "Transmission received @t4.17.100.0010";
+        let msg01 = "Anomalous entities detected in nearby space...";
+        let msg02 = "Scans indicate presence of hostile Von Neumann probes.";
+        let msg03 = "You are tasked to eliminate all threats...";
+        let cmd = "Enter command (? for help)";
+        let conditionRed = "Condition: RED";
+        return;
+    }
+    function String missionStatus () { return missionStatus; }
+    function String divider () { return divider; }
+    function String galacticTime () { return galacticTime; }
+    function String daysLeft () { return daysLeft; }
+    function String sector () { return sector; }
+    function String anomalies () { return anomalies; }
+    function String habitats () { return habitats; }
+    function String shipStatus () { return shipStatus; }
+    function String weapons () { return weapons; }
+    function String engines () { return engines; }
+    function String hull () { return hull; }
+    function String power () { return power; }
+    function String shields () { return shields; }
+    function String missiles () { return missiles; }
+    function String drones () { return drones; }
+    function String pressKey () { return pressKey; }
+    function String msg00 () { return msg00; }
+    function String msg01 () { return msg01; }
+    function String msg02 () { return msg02; }
+    function String msg03 () { return msg03; }
+    function String cmd () { return cmd; }
+    function String conditionRed () { return conditionRed; }
+}

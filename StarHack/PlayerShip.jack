@@ -3,28 +3,29 @@ class PlayerShip {
     field int sectorIndex;
     field int subsectorIndex;
 
-    field int shields;
-    field int hull;
-    field int engines;
-    field int weapons;
-    field int repair;
-    field int missiles;
-    field int power;
+    field int shieldLevel;
+    field int hullIntegrity;
+    field int engineEfficiency;
+    field int weaponsStatus;
+    field int missileSupply;
+    field int powerReserve;
+    field int dronePopulation;
 
     constructor PlayerShip new(int sector, int subsector) {
 
         let sectorIndex = sector;
         let subsectorIndex = subsector;
 
-        let shields = 100;
-        let weapons = 100;
-        let missiles = 5;
-        let engines = 100;
-        let repair = 100;
-        let hull = 100;
-        let power = 100;
+        let shieldLevel = 0;
+        let hullIntegrity = 100;
+        let engineEfficiency = 100;
+        let weaponsStatus = 100;
+        let missileSupply = 5;
+        let powerReserve = 100;
+        let dronePopulation = 25;
 
         return this;
+
     }
 
     method void dispose() {
@@ -32,6 +33,37 @@ class PlayerShip {
         return;
     }
 
+    method int sectorIndex() {
+        return sectorIndex;
+    }
+    method int weaponsStatus() {
+        return weaponsStatus;
+    }
+
+    method int engineEfficiency() {
+        return engineEfficiency;
+    }
+
+    method int hullIntegrity() {
+        return hullIntegrity;
+    }
+
+    method int powerReserve() {
+        return powerReserve;
+    }
+
+    method int shieldLevel() {
+        return shieldLevel;
+    }
+
+    method int missileSupply() {
+        return missileSupply;
+    }
+
+    method int dronePopulation() {
+        return dronePopulation;
+    }
+   
     method void move(int x, int y) {
         let subsectorIndex = StarMap.subsectorIndex(x, y);
         // TODO: power usage

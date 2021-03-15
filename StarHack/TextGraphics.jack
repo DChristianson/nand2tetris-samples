@@ -1,4 +1,4 @@
-class Text {
+class TextGraphics {
 
     /**
      * Print text at the given row/col position. An alignment of 1 will center the 
@@ -18,6 +18,14 @@ class Text {
         do Output.moveCursor(row, col);
         do Output.printString(s);
         return;
+    }
+
+    function void drawLabelValue(String label, int value, int row, int col, int labelAlignment) {
+        do Text.drawTextAligned(label, row, col, labelAlignment);
+        do Output.printChar(58);
+        do Output.printChar(32);
+        do Output.printInt(value);
+        return;        
     }
 
 }

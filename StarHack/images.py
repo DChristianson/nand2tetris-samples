@@ -35,13 +35,14 @@ def int2jack(i):
     else:
         return str(i - 65536)
 
-def emit_sprite(image):
-    pixels = image.load() 
-    width, height = image.size
-    for y in range(height):
-        value = bits2int([bit(pixels[x, y]) for x in range(width)])
-        print(f'    let screen[offset] = {int2jack(value)};')
-        print(f'    let offset = offset + 32;')
+def emit_sprite(image, fp):
+    if not image.mode == 'RGBA':
+        image = image.convert(mode='RGBA')
+    data = image.getdata()
+    for chunk in chunker(map(bit, data), 16):
+        word = bits2int(reversed(chunk))
+        fp.write(f'    let screen[offset] = {int2jack(word)};\n')
+        fp.write(f'    let offset = offset + 32;\n')
 
 def emit_run(varname, offset, n, run, fp):
     if len(run) == 0:
@@ -71,8 +72,8 @@ def encode_rle(image):
     run = []
     copycount = 0
     offset = 0
-    if not image.mode == 'RGB':
-        image = image.convert(mode='RGB')
+    if not image.mode == 'RGBA':
+        image = image.convert(mode='RGBA')
     data = image.getdata()
     for chunk in chunker(map(bit, data), 16):
         word = bits2int(reversed(chunk))
@@ -110,41 +111,73 @@ def encode_rle(image):
 
 if __name__ == "__main__":
 
+    #
+    # screens
+    #
+
     screens = {}
     for filename in glob.glob('screens/*.*'):
         imagename, ext = os.path.splitext(path.basename(filename))
         screens[f'{imagename}Screen'] = filename
 
-    for screenName, filename in screens.items():
-        jackFileName = f'I{screenName}.jack'
-        with open(jackFileName, 'w') as out:
-            out.write(f'class I{screenName} ' + '{\n')
-            out.write(f'    #pragma optimizeArrayAssignment\n')
+    with open('Screens.jack', 'w') as out:
+        out.write(f'class Screens ' + '{\n')
+        out.write(f'    #pragma optimizeArrayAssignment\n')
+
+        for screenName in screens:
             out.write(f"    static Array {screenName};\n")    
-        
-            out.write("    function void init() {\n")
+    
+        out.write("    function void init() {\n")
 
-            # for filename in glob.glob('sprites/*.aseprite'):
-            #     basename = path.basename(filename)
-            #     tmp_imagefile = f'data/{basename}.png'
-            #     aseprite_save_as(filename, tmp_imagefile)
-            #     print(f'extracting sprite code for {tmp_imagefile}')
-            #     with Image.open(tmp_imagefile, 'r') as image:
-            #         emit_sprite(image)
-
+        for screenName, filename in screens.items():
             print(f'extracting screen code for {filename}')
             with Image.open(filename, 'r') as image:
                 runs = list(encode_rle(image))
                 emit_rle(runs, screenName, out)
 
-            out.write("        return;\n")
-            out.write("    }\n")
+        out.write("        return;\n")
+        out.write("    }\n")
 
+        for screenName in screens:
             out.write(f'    function Array {screenName}() ' + '{\n')
             out.write(f'        return {screenName};\n')
             out.write('    }\n')
 
-            out.write("}\n")
+        out.write("}\n")
+    
+    #
+    # sprites
+    #
+
+    sprites = {}
+    for filename in glob.glob('sprites/*.aseprite'):
+        spritename, ext = os.path.splitext(path.basename(filename))
+        tmp_imagefile = f'data/{spritename}.png'
+        aseprite_save_as(filename, tmp_imagefile)
+        print(f'extracting sprite code for {tmp_imagefile}')
+        sprites[spritename] = tmp_imagefile
+
+    with open('Sprites.jack', 'w') as out:
+
+        out.write('class Sprites {\n')
+        out.write('    #pragma optimizeArrayAssignment\n')
+        out.write('    static Array screen;\n')
+        out.write('    function void init() {\n')
+        out.write('        let screen = 16384;\n')
+        out.write('        return;\n')
+        out.write('    }\n')
+
+        for spritename, filename in sprites.items():
+            print(f'extracting sprite code for {filename}')
+            out.write(f'    function void {spritename}(int x, int y) ' + '{\n')
+            out.write('        var int offset; let offset = (y * 32) + x;\n')
+            with Image.open(filename, 'r') as image:
+                emit_sprite(image, out)
+            out.write('        return;\n')
+            out.write('    }\n')
+
+        out.write('}\n')
+
 
 
         

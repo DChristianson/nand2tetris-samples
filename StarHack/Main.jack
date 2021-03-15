@@ -3,72 +3,84 @@ class Main {
     static StarHackGame game;
 
     function void main() {
+        var String cmd;
 
+        do Constants.init();
         do Strings.init();
-        do ItitleScreen.init();
-        do IgameScreen.init();
+        do Sprites.init();
+        do Screens.init();
         do GameGraphics.init();
-
-        // attract loop
-        do GameGraphics.drawImageToScreen(ItitleScreen.titleScreen());
-        do Text.drawTextAligned("Press any key to start...", 19, 31, 1);
-        do Main.waitForKey();
-        do GameGraphics.wipeScreen();
-
-        // prep game
         do Random.seed();
-        let game = StarHackGame.new();
 
-        // intro
-        do Text.drawTextAligned("[message received @t4.17.100.0010+]", 2, 3, 0);
-        do Text.drawTextAligned("We have received reports of anomalies in sector {}", 4, 3, 0);
-        do Text.drawTextAligned("Scans indicate presence of hostile Von Neumann probes.", 5, 3, 0);
-        do Text.drawTextAligned("You are being dispatched immediately to investigate...", 7, 7, 0);
-        do Text.drawTextAligned("Press any key to continue...", 19, 31, 1);
-        do Main.waitForKey();
-        do GameGraphics.wipeScreen();
+        while (true) {
 
-        // main game loop 
-        do GameGraphics.drawImageToScreen(IgameScreen.gameScreen());
+            // attract loop
+            do GameGraphics.drawImageToScreen(Screens.titleScreen());
+            do InputDialog.setPosition(19, 25);
+            do InputDialog.waitForKey(Constants.pressKey());
+            do GameGraphics.wipeScreen();
 
+            // game start
+            let game = StarHackGame.new();
+
+            // intro
+            do TextGraphics.drawTextAligned(Constants.msg00(), 2, 3, 0);
+            do TextGraphics.drawTextAligned(Constants.msg01(), 4, 6, 0);
+            do TextGraphics.drawTextAligned(Constants.msg02(), 5, 6, 0);
+            do TextGraphics.drawTextAligned(Constants.msg03(), 7, 6, 0);
+            do TextGraphics.drawLabelValue(Constants.daysLeft(), game.daysLeft(), 10, 32, 0);
+            do InputDialog.setPosition(19, 25);
+            do InputDialog.waitForKey(Constants.pressKey());
+            do GameGraphics.wipeScreen();
+
+            // main game loop 
+            do GameGraphics.drawImageToScreen(Screens.gameScreen());
+            do Main.drawSectorMap(game, game.playerShip());
+            do Main.drawGameStatus(game, game.playerShip());
+            do InputDialog.setPosition(19, 32);
+            while (game.isRunning()) {
+                let cmd = InputDialog.readInput(Constants.cmd());
+                do game.execute(cmd);
+                do cmd.dispose();
+                do Main.drawSectorMap(game, game.playerShip());
+                do Main.drawGameStatus(game, game.playerShip());
+            }
+            do game.dispose();
+
+        }
         return;
     }
 
-    function void waitForKey() {
-        while (Keyboard.keyPressed() = 0) {
-            // TODO: animate
-        }
-        while (Keyboard.keyPressed() > 0) {
-            // TODO: animate
-        }
+    function void drawSectorMap(StarHackGame game, PlayerShip playerShip) {
+        do Sprites.star(3, 3);
+        do Sprites.ship(4, 4);
+        do Sprites.anomaly(5, 5);
+        do Sprites.orbital(6, 6);
+        do Sprites.planet(7, 7);
+        do TextGraphics.drawTextAligned(Strings.sectorName(playerShip.sectorIndex()), 21, 16, 1);
+        do TextGraphics.drawTextAligned(Constants.conditionRed(), 22, 16, 1);
+        return;        
+    }
+
+    function void drawGameStatus(StarHackGame game, PlayerShip playerShip) {
+        do TextGraphics.drawTextAligned(Constants.missionStatus(), 3, 29, 0);
+        do TextGraphics.drawTextAligned(Constants.divider(), 4, 29, 0);
+        do TextGraphics.drawLabelValue(Constants.daysLeft(), game.daysLeft(), 5, 29, 0);
+        do TextGraphics.drawLabelValue(Constants.anomalies(), game.anomaliesLeft(), 6, 29, 0);
+        do TextGraphics.drawLabelValue(Constants.habitats(), game.habitatsLeft(), 7, 29, 0);
+        do TextGraphics.drawTextAligned(Constants.shipStatus(), 3, 47, 0);
+        do TextGraphics.drawTextAligned(Constants.divider(), 4, 47, 0);
+        do TextGraphics.drawLabelValue(Constants.weapons(), playerShip.weaponsStatus(), 5, 47, 0);
+        do TextGraphics.drawLabelValue(Constants.engines(), playerShip.engineEfficiency(), 6, 47, 0);
+        do TextGraphics.drawLabelValue(Constants.hull(), playerShip.hullIntegrity(), 7, 47, 0);
+        do TextGraphics.drawLabelValue(Constants.power(), playerShip.powerReserve(), 8, 47, 0);
+        do TextGraphics.drawLabelValue(Constants.shields(), playerShip.shieldLevel(), 9, 47, 0);
+        do TextGraphics.drawLabelValue(Constants.missiles(), playerShip.missileSupply(), 10, 47, 0);
+        do TextGraphics.drawLabelValue(Constants.drones(), playerShip.dronePopulation(), 11, 47, 0);
         return;
     }
 
-    function void drawMap() {
-        var int i;
-        do Screen.drawRectangle(32, 32, 223, 223);
-        let i = 48;
-        while (i < 223) {
-            do Screen.drawLine(i, 32, i, 223);
-            do Screen.drawLine(32, i, 223, i);
-            let i = i + 16;
-        }
 
-        do Text.drawTextAligned("LRS = long range scan", 11, 35, 0);
-        do Text.drawTextAligned("SRS = short range scan", 12, 35, 0);
-
-        do Text.drawTextAligned("MAN = maneuver", 13, 35, 0);
-        do Text.drawTextAligned("WRP = warp drive", 14, 35, 0);
-
-        do Text.drawTextAligned("SIG = communicator", 15, 35, 0);
-
-        do Text.drawTextAligned("LAS = laser cannon", 16, 35, 0);
-        do Text.drawTextAligned("MIS = missiles", 17, 35, 0);        
-
-        do Text.drawTextAligned("DEF = shield", 18, 35, 0);
-        do Text.drawTextAligned("REP = repair", 18, 35, 0);
-
-        return;
-    }
+    
 
 }
