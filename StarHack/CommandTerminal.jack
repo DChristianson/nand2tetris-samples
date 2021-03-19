@@ -1,0 +1,227 @@
+/**
+ * Simple input. 
+ */
+class CommandTerminal {
+
+    static int inputTop;
+    static int inputLeft;
+    static int inputBottom;
+    static int inputRight;
+
+    static int startRow;
+    static int startCol;
+    static int lastRow;
+
+    static int currentRow;
+    static int currentCol;
+
+    static Array commandString;
+
+    function void init() {
+        let commandString = Array.new(3);
+        return;
+    }
+            
+    function void setPosition(int left, int top, int width, int height) {
+        let inputTop = top;
+        let inputLeft = left;
+        let inputRight = left + width;
+        let inputBottom = top + height;
+        let startRow = (top / 11) + 1;
+        let startCol = (left / 8) + 1;
+        let lastRow = startRow + (height / 11);
+        return;
+    }
+
+    function void clear() {
+        do Screen.setColor(0);
+        do Screen.drawRectangle(inputLeft, inputTop, inputRight, inputBottom);
+        let currentRow = startRow;
+        let currentCol = startCol;
+        return;
+    }
+
+    function void advance() {
+        let currentRow = currentRow + 1;
+        if (currentRow > lastRow) {
+            let currentRow = startRow;
+        }
+        let currentCol = startCol;
+        return;
+    }
+
+    // 0 -> LRS : Long Range Scan
+    // 1 -> MJD : Micro Jump Drive in sector
+    // 2 -> JMP : JuMP to a nearby sector
+    // 3 -> PAC : Fire Particle Cannon
+    // 4 -> AMM : Fire AntiMatter Missiles
+    // 5 -> SDN : Shields DowN
+    // 6 -> SUP : Shields UP
+    // 7 -> RST : ReStore ship
+    function int readCommand(String message) {
+        var int i;
+        var char c;
+        do Output.moveCursor(currentRow, currentCol);
+        do Output.printString(message);
+        do Output.printChar(32);
+        while (true) {
+            let c = CommandInput.readChar();
+            if (c = 128) {
+                do CommandTerminal.advance();
+                return parseCommandCode();
+            }
+            if (c = 129) {
+                if (i > 0) {
+                    let i = i - 1;
+                    let commandString[i] = 0;
+                    do Output.backSpace();
+                }
+            } else {
+                if (i < 3) {
+                    let commandString[i] = c;
+                    let i = i + 1;
+                    do Output.printChar(c);
+                }
+            }
+        }
+        do CommandTerminal.advance();
+        return -1;
+    }
+
+
+    function int readDigit(String message, int min, int max) {
+        var int i, v, result;
+        var char c;
+        do Output.moveCursor(currentRow, currentCol);
+        do Output.printString(message);
+        do Output.printChar(32);
+        let result = -1;
+        while (true) {
+            let c = CommandInput.readChar();
+            if (c = 128) {
+                do CommandTerminal.advance();
+                return result;
+            }
+            if (c = 129) {
+                if (i > 0) {
+                    let i = i - 1;
+                    do Output.backSpace();
+                }
+            } else {
+                if (i < 1) {
+                    if ((c > 47) & (c < 58)) {
+                        let v = c - 48;
+                    } else {
+                        if ((c = 65) | (c = 66)) {
+                            let v = c - 55;
+                        } else {
+                            let v = -1;
+                        }
+                    }
+                    if (v > (min - 1) & v < (max + 1)) {
+                        let result = v;
+                        do Output.printChar(c);
+                    } 
+                    let i = i + 1;
+                }
+            }
+        }
+        do CommandTerminal.advance();
+        return -1;
+    }
+
+    function boolean printMessage(String message) {
+        do Output.moveCursor(currentRow, currentCol);
+        do Output.printString(message);
+        do CommandTerminal.advance();
+        return;
+    }
+
+    function boolean readYesNo(String message) {
+        var boolean result;
+        var int i;
+        var char c;
+        do Output.moveCursor(currentRow, currentCol);
+        do Output.printString(message);
+        do Output.printChar(32);
+        let result = false;
+        while (true) {
+            let c = CommandInput.readChar();
+            if (c = 128) {
+                do CommandTerminal.advance();
+                return result;
+            }
+            if (i > 0) {
+                let i = i - 1;
+                do Output.backSpace();
+            }
+            let result = c = 89;
+            if (result) {
+                do Output.printChar(89);
+            } else {
+                do Output.printChar(78);
+            }
+            let i = i + 1;
+        }
+        do CommandTerminal.advance();
+        return false;
+    }
+
+    function char readChar() {
+        var char c;
+        while (c = 0) {
+            let c = Keyboard.keyPressed();
+            // TODO: animate
+        }
+        while (Keyboard.keyPressed() = c) {
+            // TODO: animate
+        }
+        return c;
+    }
+
+    function void waitForKey(String message) {
+        do Output.moveCursor(19, 25);
+        do Output.printString(message);
+        do CommandInput.readChar();
+        return;
+    }
+
+    function int parseCommandCode() {
+        var int commandCode;
+        let commandCode = commandString[0] * commandString[1] * commandString[2];
+        // LRS -> 241 : Long Range Scan
+        if (commandCode = 241) {
+            return 0;
+        }
+        // MJD -> 219 : Micro Jump Drive in sector
+        if (commandCode = 219) {
+            return 1;
+        }
+        // JMP -> 231 : JuMP to a nearby sector
+        if (commandCode = 231) {
+            return 2;
+        }
+        // PAC -> 212 : Fire Particle Cannon
+        if (commandCode = 212) {
+            return 3;
+        }
+        // AMM -> 219 : Fire AntiMatter Missiles
+        if (commandCode = 219) {
+            return 4;
+        }
+        // SDN -> 229 : Shields DowN
+        if (commandCode = 229) {
+            return 5;
+        }
+        // SUP -> 248 : Shields UP
+        if (commandCode = 248) {
+            return 6;
+        }
+        // RST -> 249 : ReSTore ship
+        if (commandCode = 249) {
+            return 7;
+        }
+        return commandCode;
+    }
+
+}

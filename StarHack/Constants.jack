@@ -21,6 +21,17 @@ class Constants {
     static String msg03;
     static String cmd;
     static String conditionRed;
+    static String conditionGreen;
+    static String coordX;
+    static String coordY;
+    static String confirm;
+    static String fireLasers;
+    static String fireMissiles;
+    static String shieldsUp;
+    static String shieldsDown;
+    static String microJumpTravel;
+    static String jumpTravel;
+    static String repair;
     function void init() {
         let missionStatus = "Mission Status";
         let divider = "--------------";
@@ -44,6 +55,17 @@ class Constants {
         let msg03 = "You are tasked to eliminate all threats...";
         let cmd = "Enter command (? for help)";
         let conditionRed = "Condition: RED";
+        let conditionGreen = "Condition: GREEN";
+        let coordX = "Enter x-coordinate";
+        let coordY = "Enter y-coordinate";
+        let confirm = "Confirm (Y/N)?";
+        let fireLasers = "Firing particle cannon";
+        let fireMissiles = "Firing antimatter missiles";
+        let shieldsUp = "Raising shields";
+        let shieldsDown = "Lowering shields";
+        let microJumpTravel = "Preparing for micro jump";
+        let jumpTravel = "Preparing jump drive";
+        let repair = "Directing crew to repair ship";
         return;
     }
     function String missionStatus () { return missionStatus; }
@@ -68,4 +90,15 @@ class Constants {
     function String msg03 () { return msg03; }
     function String cmd () { return cmd; }
     function String conditionRed () { return conditionRed; }
+    function String conditionGreen () { return conditionGreen; }
+    function String coordX () { return coordX; }
+    function String coordY () { return coordY; }
+    function String confirm () { return confirm; }
+    function String fireLasers () { return fireLasers; }
+    function String fireMissiles () { return fireMissiles; }
+    function String shieldsUp () { return shieldsUp; }
+    function String shieldsDown () { return shieldsDown; }
+    function String microJumpTravel () { return microJumpTravel; }
+    function String jumpTravel () { return jumpTravel; }
+    function String repair () { return repair; }
 }

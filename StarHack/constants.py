@@ -24,6 +24,17 @@ stringConstants = {
     'msg03': 'You are tasked to eliminate all threats...',
     'cmd': 'Enter command (? for help)',
     'conditionRed': 'Condition: RED',
+    'conditionGreen': 'Condition: GREEN',
+    'coordX': 'Enter x-coordinate',
+    'coordY': 'Enter y-coordinate',
+    'confirm': 'Confirm (Y/N)?',
+    'fireLasers': 'Firing particle cannon',
+    'fireMissiles': 'Firing antimatter missiles',
+    'shieldsUp': 'Raising shields',
+    'shieldsDown': 'Lowering shields',
+    'microJumpTravel': 'Preparing for micro jump',
+    'jumpTravel': 'Preparing jump drive',
+    'repair': 'Directing crew to repair ship',
 }
 
 with open('Constants.jack', 'w') as fp:

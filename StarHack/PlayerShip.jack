@@ -36,6 +36,11 @@ class PlayerShip {
     method int sectorIndex() {
         return sectorIndex;
     }
+
+    method int subsectorIndex() {
+        return subsectorIndex;
+    }
+
     method int weaponsStatus() {
         return weaponsStatus;
     }
@@ -70,13 +75,25 @@ class PlayerShip {
         return;
     }
 
-    method void warp(int x, int y) {
+    method void jump(int x, int y) {
         let sectorIndex = StarMap.sectorIndex(x, y);
         // TODO: power usage
         return;
     }
 
-    method void update() {
+    method void fireLasers(int x, int y) {
+        return;
+    }
+    
+    method void fireMissiles(int x, int y) {
+        return;
+    }
+
+    method void setShields(boolean up) {
+        return;
+    }
+    
+    method void repair() {
         return;
     }
 

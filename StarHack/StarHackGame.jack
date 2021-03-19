@@ -1,14 +1,12 @@
 class StarHackGame {
 
     field PlayerShip playerShip;
-    field StarMap starMap;
     field int timeLeft;
     field int anomaliesLeft;
     field int habitatsLeft;
 
     constructor StarHackGame new() {
         let playerShip = PlayerShip.new(3, 3);
-        let starMap = StarMap.new();
         let timeLeft = 400;
         let anomaliesLeft = 8;
         let habitatsLeft = 8;
@@ -17,7 +15,6 @@ class StarHackGame {
 
     method void dispose() {
         do playerShip.dispose();
-        do starMap.dispose();
         do Memory.deAlloc(this);
         return;
     }
@@ -42,12 +39,106 @@ class StarHackGame {
         return true;
     }
 
-    method void update() {
-        do player.update();
+    method void start() {
+        // intro
+        do TextGraphics.drawTextAligned(Constants.msg00(), 2, 3, 0);
+        do TextGraphics.drawTextAligned(Constants.msg01(), 4, 6, 0);
+        do TextGraphics.drawTextAligned(Constants.msg02(), 5, 6, 0);
+        do TextGraphics.drawTextAligned(Constants.msg03(), 7, 6, 0);
+        do TextGraphics.drawLabelValue(Constants.daysLeft(), daysLeft(), 10, 32, 0);
+        do CommandTerminal.waitForKey(Constants.pressKey());
+        do GameGraphics.wipeScreen();
+
+        // main game loop 
+        do GameGraphics.drawImageToScreen(Screens.gameScreen());
+        do CommandTerminal.setPosition(228, 177, 281, 76);
+        do Main.drawSectorMap(this, playerShip);
+        do Main.drawGameStatus(this, playerShip);
+
         return;
     }
 
-    method void execute(String command) {
+    method void update() {
+        // player's turn
+        do CommandTerminal.clear();
+        do processCommand(CommandTerminal.readCommand(Constants.cmd()));
+        // redraw
+        do Main.drawSectorMap(this, playerShip);
+        do Main.drawGameStatus(this, playerShip);
+
+        return;
+    }
+
+    method void processCommand(int commandCode) {
+        var int x, y;
+        // 0 -> LRS : Long Range Scan
+        if (commandCode = 0) {
+            do Output.printString("LRS");
+            // TODO: implement
+            return;
+        } 
+        // 1 -> MJD : Micro Jump Drive in sector
+        if (commandCode = 1) {
+            do CommandTerminal.printMessage(Constants.microJumpTravel());
+            let x = CommandTerminal.readDigit(Constants.coordX(), 0, 12);
+            let y = CommandTerminal.readDigit(Constants.coordY(), 0, 12);
+            if (CommandTerminal.readYesNo(Constants.confirm())) {
+                do playerShip.move(x, y);
+            }
+            return;
+        }
+        // 2 -> JMP : JuMP to a nearby sector
+        if (commandCode = 2) {
+            do CommandTerminal.printMessage(Constants.jumpTravel());
+            let x = CommandTerminal.readDigit(Constants.coordX(), 0, 8);
+            let y = CommandTerminal.readDigit(Constants.coordY(), 0, 8);
+            if (CommandTerminal.readYesNo(Constants.confirm())) {
+                do playerShip.jump(x, y);
+            }
+            return;
+        }
+        // 3 -> PAC : Fire Particle Cannon
+        if (commandCode = 3) {
+            do CommandTerminal.printMessage(Constants.fireLasers());
+            let x = CommandTerminal.readDigit(Constants.coordX(), 0, 12);
+            let y = CommandTerminal.readDigit(Constants.coordY(), 0, 12);
+            if (CommandTerminal.readYesNo(Constants.confirm())) {
+                do playerShip.fireLasers(x, y);
+            }
+            return;
+        }
+        // 4 -> AMM : Fire AntiMatter Missiles
+        if (commandCode = 4) {
+            do CommandTerminal.printMessage(Constants.fireMissiles());
+            let x = CommandTerminal.readDigit(Constants.coordX(), 0, 12);
+            let y = CommandTerminal.readDigit(Constants.coordY(), 0, 12);
+            if (CommandTerminal.readYesNo(Constants.confirm())) {
+                do playerShip.fireMissiles(x, y);
+            }
+            return;
+        }
+        // 5 -> SDN : Shields DowN
+        if (commandCode = 5) {
+            do CommandTerminal.printMessage(Constants.shieldsDown());
+            if (CommandTerminal.readYesNo(Constants.confirm())) {
+                do playerShip.setShields(false);
+            }
+            return;
+        }
+        // 6 -> SUP : Shields UP
+        if (commandCode = 6) {
+            do CommandTerminal.printMessage(Constants.shieldsUp());
+            if (CommandTerminal.readYesNo(Constants.confirm())) {
+                do playerShip.setShields(true);
+            }
+            return;
+        }
+        // 7 -> REP : REPair ship
+        if (commandCode = 7) {
+            do CommandTerminal.printMessage(Constants.repair());
+            // TODO: implement
+            return;
+        }
         return;
     }
 
