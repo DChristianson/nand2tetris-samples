@@ -3,6 +3,7 @@ class PlayerShip {
     field int sectorIndex;
     field int subsectorIndex;
 
+    field boolean shieldsUp;
     field int shieldLevel;
     field int hullIntegrity;
     field int engineEfficiency;
@@ -16,6 +17,7 @@ class PlayerShip {
         let sectorIndex = sector;
         let subsectorIndex = subsector;
 
+        let shieldsUp = false;
         let shieldLevel = 0;
         let hullIntegrity = 100;
         let engineEfficiency = 100;
@@ -61,6 +63,10 @@ class PlayerShip {
         return shieldLevel;
     }
 
+    method boolean shieldsUp() {
+        return shieldsUp;
+    }
+
     method int missileSupply() {
         return missileSupply;
     }
@@ -70,26 +76,54 @@ class PlayerShip {
     }
    
     method void move(int x, int y) {
+        var int d;
+        let d = StarMap.distance(
+            x, y, 
+            StarMap.subsectorX(subsectorIndex), StarMap.subsectorY(subsectorIndex)
+        );
+        if (powerReserve < d) {
+            return;
+        }
+        let powerReserve = powerReserve - d;
         let subsectorIndex = StarMap.subsectorIndex(x, y);
         // TODO: power usage
         return;
     }
 
     method void jump(int x, int y) {
+        var int d;
+        let d = StarMap.distance(
+            x, y, 
+            StarMap.sectorX(sectorIndex), StarMap.sectorY(sectorIndex)
+        );
+        if (powerReserve < d) {
+            return;
+        }
+        let powerReserve = powerReserve - d;
         let sectorIndex = StarMap.sectorIndex(x, y);
+        let subsectorIndex = Random.randInt(144);
         // TODO: power usage
         return;
     }
 
-    method void fireLasers(int x, int y) {
+    method void fireLasers(int x, int y, int p) {
+        if (powerReserve < p) {
+            return;
+        }
+        let powerReserve = powerReserve - p;
         return;
     }
     
     method void fireMissiles(int x, int y) {
+        if (missileSupply = 0) {
+            return;
+        }
+        let missileSupply = missileSupply - 1;
         return;
     }
 
     method void setShields(boolean up) {
+        let shieldsUp = up;
         return;
     }
     

@@ -1,0 +1,28 @@
+class ObjectArray {
+
+    field int count;
+    field int step;
+    field Array array;
+
+    constructor ObjectArray new(int numObjects, int sizeOfObject) {
+        let count = numObjects;
+        let step = sizeOfObject;
+        let array = Array.new(numObjects * sizeOfObject);
+        return this;
+    }
+
+    method int count() {
+        return count;
+    }
+
+    method Array get(int i) {
+        return array + (i * step);
+    }
+
+    method void dispose() {
+        do array.dispose();
+        do Memory.deAlloc();
+        return;
+    }
+
+}

@@ -41,29 +41,13 @@ class Main {
         return;
     }
 
-    function void drawSectorMap(StarHackGame game) {
-        var PlayerShip playerShip;
-        var int sectorIndex;
-        var int subsectorIndex;
-        let playerShip = game.playerShip();
-        let sectorIndex = playerShip.sectorIndex();
-        let subsectorIndex = playerShip.subsectorIndex();
-        
-        do Screen.setColor(0);
-        do Screen.drawRectangle(32, 32, 222, 222);
-        do Sprites.ship(2 + StarMap.subsectorX(subsectorIndex), 2 + StarMap.subsectorY(subsectorIndex));
-        // TODO: other ships
-
-        do TextGraphics.drawTextAligned(Strings.sectorName(playerShip.sectorIndex()), 21, 16, 1);
-        do TextGraphics.drawTextAligned(Constants.conditionRed(), 22, 16, 1);
-        return;        
-    }
+ 
 
     function void drawGameStatus(StarHackGame game, PlayerShip playerShip) {
         // game status
         do TextGraphics.drawTextAligned(Constants.missionStatus(), 3, 29, 0);
         do TextGraphics.drawTextAligned(Constants.divider(), 4, 29, 0);
-        do TextGraphics.drawLabelValue(Constants.daysLeft(), game.daysLeft(), 5, 29, 0);
+        do TextGraphics.drawLabelValue(Constants.daysLeft(), game.timeLeft(), 5, 29, 0);
         do TextGraphics.drawLabelValue(Constants.anomalies(), game.anomaliesLeft(), 6, 29, 0);
         do TextGraphics.drawLabelValue(Constants.habitats(), game.habitatsLeft(), 7, 29, 0);
         // ship status

@@ -1,4 +1,20 @@
 class Star {
 
+    field int sectorIndex;
+    field int subsectorIndex;
+
+    method void init(int sector, int subsector) {
+        let sectorIndex = sector;
+        let subsectorIndex = subsector;
+        return;
+    }
+
+    method int sectorIndex() {
+        return sectorIndex;
+    }
+
+    method int subsectorIndex() {
+        return subsectorIndex;
+    }
     
 }

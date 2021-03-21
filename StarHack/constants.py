@@ -35,6 +35,8 @@ stringConstants = {
     'microJumpTravel': 'Preparing for micro jump',
     'jumpTravel': 'Preparing jump drive',
     'repair': 'Directing crew to repair ship',
+    'up': 'UP',
+    'down': "DOWN"
 }
 
 with open('Constants.jack', 'w') as fp:

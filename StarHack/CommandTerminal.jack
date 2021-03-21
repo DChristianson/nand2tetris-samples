@@ -57,7 +57,7 @@ class CommandTerminal {
     // 4 -> AMM : Fire AntiMatter Missiles
     // 5 -> SDN : Shields DowN
     // 6 -> SUP : Shields UP
-    // 7 -> RST : ReStore ship
+    // 7 -> RST : Restore ship function
     function int readCommand(String message) {
         var int i;
         var char c;
@@ -105,6 +105,7 @@ class CommandTerminal {
             if (c = 129) {
                 if (i > 0) {
                     let i = i - 1;
+                    let result = -1;
                     do Output.backSpace();
                 }
             } else {
@@ -118,7 +119,7 @@ class CommandTerminal {
                             let v = -1;
                         }
                     }
-                    if (v > (min - 1) & v < (max + 1)) {
+                    if ((v > (min - 1)) & (v < (max + 1))) {
                         let result = v;
                         do Output.printChar(c);
                     } 
@@ -188,37 +189,45 @@ class CommandTerminal {
 
     function int parseCommandCode() {
         var int commandCode;
-        let commandCode = commandString[0] * commandString[1] * commandString[2];
-        // LRS -> 241 : Long Range Scan
-        if (commandCode = 241) {
+        let commandCode = ((((commandString[0] - 65) * 32) + (commandString[1] - 65)) * 32) + (commandString[2] - 65);
+        // 0 -> LRS : Long Range Scan
+        // 1 -> MJD : Micro Jump Drive in sector
+        // 2 -> JMP : JuMP to a nearby sector
+        // 3 -> PAC : Fire Particle Cannon
+        // 4 -> AMM : Fire AntiMatter Missiles
+        // 5 -> SDN : Shields DowN
+        // 6 -> SUP : Shields UP
+        // 7 -> RST : Restore ship function
+        // LRS -> 11826 : Long Range Scan
+        if (commandCode = 11826) {
             return 0;
         }
-        // MJD -> 219 : Micro Jump Drive in sector
-        if (commandCode = 219) {
+        // MJD -> 12579 : Micro Jump Drive in sector
+        if (commandCode = 12579) {
             return 1;
         }
-        // JMP -> 231 : JuMP to a nearby sector
-        if (commandCode = 231) {
+        // JMP -> 9615 : JuMP to a nearby sector
+        if (commandCode = 9615) {
             return 2;
         }
-        // PAC -> 212 : Fire Particle Cannon
-        if (commandCode = 212) {
+        // PAC -> 15362 : Fire Particle Cannon
+        if (commandCode = 15362) {
             return 3;
         }
-        // AMM -> 219 : Fire AntiMatter Missiles
-        if (commandCode = 219) {
+        // AMM -> 396 : Fire AntiMatter Missiles
+        if (commandCode = 396) {
             return 4;
         }
-        // SDN -> 229 : Shields DowN
-        if (commandCode = 229) {
+        // SDN -> 18541 : Shields DowN
+        if (commandCode = 18541) {
             return 5;
         }
-        // SUP -> 248 : Shields UP
-        if (commandCode = 248) {
+        // SUP -> 19087 : Shields UP
+        if (commandCode = 19087) {
             return 6;
         }
-        // RST -> 249 : ReSTore ship
-        if (commandCode = 249) {
+        // RST -> 18003 : Restore ship function
+        if (commandCode = 18003) {
             return 7;
         }
         return commandCode;
