@@ -20,6 +20,46 @@ class GameGraphics {
         return;
     }
 
+    function void invertTile(int x, int y) {
+        var int offset; let offset = (y * 512) + x;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        let screen[offset] = ~screen[offset];
+        let offset = offset + 32;
+        return;
+    }
+
+    /**
+     * Draw RLE-encoded image on screen
+     */ 
     function void drawImageToScreen(Array image) {
         var int run;
         var int value;

@@ -7,7 +7,8 @@ commands = [
     ('AMM', 'Fire AntiMatter Missiles'),
     ('SDN', 'Shields DowN'),
     ('SUP', 'Shields UP'),
-    ('RST', 'Restore ship function'),
+    ('RST', 'ReSTore ship function'),
+    ('STA', 'STAtus report'),
 ]
 
 

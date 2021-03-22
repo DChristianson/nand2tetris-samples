@@ -1,8 +1,43 @@
 class Sprites {
     #pragma optimizeArrayAssignment
-    static Array screen;
-    function void init() {
+    static Array screen;    function void init() {
         let screen = 16384;
+        return;
+    }
+    function void debris(int x, int y) {
+        var int offset; let offset = (y * 512) + x;
+        let screen[offset] = 0;
+        let offset = offset + 32;
+        let screen[offset] = 0;
+        let offset = offset + 32;
+        let screen[offset] = 0;
+        let offset = offset + 32;
+        let screen[offset] = 2052;
+        let offset = offset + 32;
+        let screen[offset] = 320;
+        let offset = offset + 32;
+        let screen[offset] = 384;
+        let offset = offset + 32;
+        let screen[offset] = 4228;
+        let offset = offset + 32;
+        let screen[offset] = 48;
+        let offset = offset + 32;
+        let screen[offset] = 176;
+        let offset = offset + 32;
+        let screen[offset] = 8200;
+        let offset = offset + 32;
+        let screen[offset] = 0;
+        let offset = offset + 32;
+        let screen[offset] = 1568;
+        let offset = offset + 32;
+        let screen[offset] = 3072;
+        let offset = offset + 32;
+        let screen[offset] = 68;
+        let offset = offset + 32;
+        let screen[offset] = 0;
+        let offset = offset + 32;
+        let screen[offset] = 0;
+        let offset = offset + 32;
         return;
     }
     function void star(int x, int y) {

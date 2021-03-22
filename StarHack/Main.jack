@@ -17,8 +17,8 @@ class Main {
         while (true) {
 
             // attract loop
-            do GameGraphics.drawImageToScreen(Screens.titleScreen());
-            do CommandTerminal.waitForKey(Constants.pressKey());
+            do Screens.titleScreen();
+            do CommandTerminal.readAnyKeyScreen(Constants.pressKey());
             do GameGraphics.wipeScreen();
 
             // game start
@@ -29,37 +29,15 @@ class Main {
             }
             do GameGraphics.wipeScreen();
 
-            // final scoe
-            do Main.drawGameReport(game, game.playerShip());
-            do CommandTerminal.waitForKey(Constants.pressKey());
+            // final score
+            do Main.drawGameReport(game);
+            do CommandTerminal.readAnyKeyScreen(Constants.pressKey());
             do GameGraphics.wipeScreen();
 
             // end
             do game.dispose();
 
         }
-        return;
-    }
-
- 
-
-    function void drawGameStatus(StarHackGame game, PlayerShip playerShip) {
-        // game status
-        do TextGraphics.drawTextAligned(Constants.missionStatus(), 3, 29, 0);
-        do TextGraphics.drawTextAligned(Constants.divider(), 4, 29, 0);
-        do TextGraphics.drawLabelValue(Constants.daysLeft(), game.timeLeft(), 5, 29, 0);
-        do TextGraphics.drawLabelValue(Constants.anomalies(), game.anomaliesLeft(), 6, 29, 0);
-        do TextGraphics.drawLabelValue(Constants.habitats(), game.habitatsLeft(), 7, 29, 0);
-        // ship status
-        do TextGraphics.drawTextAligned(Constants.shipStatus(), 3, 47, 0);
-        do TextGraphics.drawTextAligned(Constants.divider(), 4, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.weapons(), playerShip.weaponsStatus(), 5, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.engines(), playerShip.engineEfficiency(), 6, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.hull(), playerShip.hullIntegrity(), 7, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.power(), playerShip.powerReserve(), 8, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.shields(), playerShip.shieldLevel(), 9, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.missiles(), playerShip.missileSupply(), 10, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.drones(), playerShip.dronePopulation(), 11, 47, 0);
         return;
     }
 

@@ -51,22 +51,26 @@ def emit_run(varname, offset, n, run, fp):
         n = -len(run)
     return offset
 
-def emit_rle(runs, varname, fp):
-    final_offset = runs[-1][0]
-    fp.write(f'        let {varname} = Array.new({final_offset + 1});\n')
+def emit_rle(runs, fp):
+    fp.write('        var int i;\n')
     offset = 0
     for n, run in runs:
-        if len(run) == 0:
-            if explicit_zero:
-                fp.write(f'        let {varname}[{offset}] = 0;\n')
-        else:
+        if len(run) > 0:
             fp.write(f'        // {n}: {",".join(map(str, run))}\n')
-            fp.write(f'        let {varname}[{offset}] = {int2jack(n)};\n')
-            offset += 1
-            for r in run:
+            if n > 1:
+                r = run[0]
                 if explicit_zero or (not r == 0):
-                    fp.write(f'        let {varname}[{offset}] = {int2jack(r)};\n')
-                offset += 1
+                    fp.write(f'        let i = {offset};\n')
+                    fp.write(f'        while (i < {offset + n})' + ' {\n')
+                    fp.write(f'            let screen[i] = {int2jack(r)};\n')
+                    fp.write(f'            let i = i + 1;\n')
+                    fp.write('        }\n')
+                offset = offset + n
+            else:
+                for r in run:
+                    if explicit_zero or (not r == 0):
+                        fp.write(f'        let screen[{offset}] = {int2jack(r)};\n')
+                    offset += 1
     
 def encode_rle(image):
     run = []
@@ -123,25 +127,20 @@ if __name__ == "__main__":
     with open('Screens.jack', 'w') as out:
         out.write(f'class Screens ' + '{\n')
         out.write(f'    #pragma optimizeArrayAssignment\n')
-
-        for screenName in screens:
-            out.write(f"    static Array {screenName};\n")    
-    
-        out.write("    function void init() {\n")
+        out.write('    static Array screen;')
+        out.write('    function void init() {\n')
+        out.write('        let screen = 16384;\n')
+        out.write('        return;\n')
+        out.write('    }\n')
 
         for screenName, filename in screens.items():
             print(f'extracting screen code for {filename}')
+            out.write(f'    function void {screenName}() ' + '{\n')
             with Image.open(filename, 'r') as image:
                 runs = list(encode_rle(image))
-                emit_rle(runs, screenName, out)
-
-        out.write("        return;\n")
-        out.write("    }\n")
-
-        for screenName in screens:
-            out.write(f'    function Array {screenName}() ' + '{\n')
-            out.write(f'        return {screenName};\n')
-            out.write('    }\n')
+                emit_rle(runs, out)
+            out.write("        return;\n")
+            out.write("    }\n")
 
         out.write("}\n")
     
@@ -161,7 +160,7 @@ if __name__ == "__main__":
 
         out.write('class Sprites {\n')
         out.write('    #pragma optimizeArrayAssignment\n')
-        out.write('    static Array screen;\n')
+        out.write('    static Array screen;')
         out.write('    function void init() {\n')
         out.write('        let screen = 16384;\n')
         out.write('        return;\n')

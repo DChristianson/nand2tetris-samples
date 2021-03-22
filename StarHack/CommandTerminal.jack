@@ -17,8 +17,20 @@ class CommandTerminal {
 
     static Array commandString;
 
+    static Array commandHelp;
+
     function void init() {
         let commandString = Array.new(3);
+        let commandHelp = Array.new(9);
+        let commandHelp[0] = "LRS: Long Range Scan";
+        let commandHelp[1] = "MJD: Micro Jump Drive in sector";
+        let commandHelp[2] = "JMP: JuMP to a nearby sector";
+        let commandHelp[3] = "PAC: Fire Particle Cannon";
+        let commandHelp[4] = "AMM: Fire AntiMatter Missiles";
+        let commandHelp[5] = "SDN: Shields DowN";
+        let commandHelp[6] = "SUP: Shields UP";
+        let commandHelp[7] = "RST: ReSTore ship function";
+        let commandHelp[8] = "STA: STAtus report";
         return;
     }
             
@@ -29,7 +41,7 @@ class CommandTerminal {
         let inputBottom = top + height;
         let startRow = (top / 11) + 1;
         let startCol = (left / 8) + 1;
-        let lastRow = startRow + (height / 11);
+        let lastRow = startRow + (height / 11) - 1;
         return;
     }
 
@@ -57,7 +69,8 @@ class CommandTerminal {
     // 4 -> AMM : Fire AntiMatter Missiles
     // 5 -> SDN : Shields DowN
     // 6 -> SUP : Shields UP
-    // 7 -> RST : Restore ship function
+    // 7 -> RST : ReSTore ship function
+    // 8 -> STA : STAtus report
     function int readCommand(String message) {
         var int i;
         var char c;
@@ -87,7 +100,6 @@ class CommandTerminal {
         do CommandTerminal.advance();
         return -1;
     }
-
 
     function int readDigit(String message, int min, int max) {
         var int i, v, result;
@@ -168,19 +180,25 @@ class CommandTerminal {
         return false;
     }
 
+    function void readAnyKey(String message) {
+        do Output.moveCursor(currentRow, currentCol);
+        do Output.printString(message);
+        do CommandInput.readChar();
+        do CommandTerminal.advance();
+        return;
+    }
+
     function char readChar() {
         var char c;
         while (c = 0) {
             let c = Keyboard.keyPressed();
-            // TODO: animate
         }
         while (Keyboard.keyPressed() = c) {
-            // TODO: animate
         }
         return c;
     }
 
-    function void waitForKey(String message) {
+    function void readAnyKeyScreen(String message) {
         do Output.moveCursor(19, 25);
         do Output.printString(message);
         do CommandInput.readChar();
@@ -190,14 +208,6 @@ class CommandTerminal {
     function int parseCommandCode() {
         var int commandCode;
         let commandCode = ((((commandString[0] - 65) * 32) + (commandString[1] - 65)) * 32) + (commandString[2] - 65);
-        // 0 -> LRS : Long Range Scan
-        // 1 -> MJD : Micro Jump Drive in sector
-        // 2 -> JMP : JuMP to a nearby sector
-        // 3 -> PAC : Fire Particle Cannon
-        // 4 -> AMM : Fire AntiMatter Missiles
-        // 5 -> SDN : Shields DowN
-        // 6 -> SUP : Shields UP
-        // 7 -> RST : Restore ship function
         // LRS -> 11826 : Long Range Scan
         if (commandCode = 11826) {
             return 0;
@@ -226,11 +236,19 @@ class CommandTerminal {
         if (commandCode = 19087) {
             return 6;
         }
-        // RST -> 18003 : Restore ship function
+        // RST -> 18003 : ReSTore ship function
         if (commandCode = 18003) {
             return 7;
         }
-        return commandCode;
+        // STA -> 19040 : STAtus report
+        if (commandCode = 19040) {
+            return 8;
+        }
+        return -1;
+    }
+
+    function String commandHelp(int cmd) {
+        return commandHelp[cmd];
     }
 
 }

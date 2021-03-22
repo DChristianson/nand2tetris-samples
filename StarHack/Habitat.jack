@@ -2,11 +2,14 @@ class Habitat {
 
     field int sectorIndex;
     field int subsectorIndex;
+    field int shields;
+    field int type;
     field int population;
 
-    method void init(int sector, int subsector, int pop) {
+    method void init(int sector, int subsector, int shld, int typ, int pop) {
         let sectorIndex = sector;
         let subsectorIndex = subsector;
+        let shields = shld;
         let population = pop;
         return;
     }
@@ -18,5 +21,28 @@ class Habitat {
     method int subsectorIndex() {
         return subsectorIndex;
     }
-    
+
+    method int type() {
+        return type;
+    }
+
+    method boolean isDestroyed() {
+        return ~(population > 0);
+    }
+
+    method void hit(int p) {
+        if (shields > 0) {
+            let shields = shields - p;
+            if (shields < 0) {
+                let p = -shields;
+            } else {
+                let p = 0;
+            }
+        }
+        if (p > 0) {
+            let population = population - p * 10;
+        }
+        return;
+    }
+
 }

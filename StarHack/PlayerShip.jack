@@ -24,7 +24,7 @@ class PlayerShip {
         let weaponsStatus = 100;
         let missileSupply = 5;
         let powerReserve = 100;
-        let dronePopulation = 25;
+        let dronePopulation = 100;
 
         return this;
 
@@ -74,52 +74,51 @@ class PlayerShip {
     method int dronePopulation() {
         return dronePopulation;
     }
-   
-    method void move(int x, int y) {
+
+    method int move(int x, int y) {
         var int d;
         let d = StarMap.distance(
             x, y, 
             StarMap.subsectorX(subsectorIndex), StarMap.subsectorY(subsectorIndex)
         );
         if (powerReserve < d) {
-            return;
+            return 0;
         }
         let powerReserve = powerReserve - d;
         let subsectorIndex = StarMap.subsectorIndex(x, y);
-        // TODO: power usage
-        return;
+        return d;
     }
 
-    method void jump(int x, int y) {
+    method int jump(int x, int y) {
         var int d;
         let d = StarMap.distance(
             x, y, 
             StarMap.sectorX(sectorIndex), StarMap.sectorY(sectorIndex)
         );
+        let d = d * 10;
         if (powerReserve < d) {
-            return;
+            return 0;
         }
         let powerReserve = powerReserve - d;
         let sectorIndex = StarMap.sectorIndex(x, y);
         let subsectorIndex = Random.randInt(144);
-        // TODO: power usage
-        return;
+        return d;
     }
 
-    method void fireLasers(int x, int y, int p) {
+    method int fireLasers(int x, int y, int p) {
         if (powerReserve < p) {
-            return;
+            return 0;
         }
         let powerReserve = powerReserve - p;
-        return;
+        return p;
     }
     
-    method void fireMissiles(int x, int y) {
+    method int fireMissiles(int x, int y) {
         if (missileSupply = 0) {
-            return;
+            return 0;
         }
         let missileSupply = missileSupply - 1;
-        return;
+        return 50;
     }
 
     method void setShields(boolean up) {
@@ -128,6 +127,41 @@ class PlayerShip {
     }
     
     method void repair() {
+        var int repairRate;
+        let repairRate = dronePopulation / 25;
+        if (hullIntegrity < 100) {
+            let hullIntegrity = hullIntegrity + repairRate;
+            if (hullIntegrity > 100) {
+                let hullIntegrity = 100;
+            }
+        }
+        if (engineEfficiency < 100) {
+            let engineEfficiency = engineEfficiency + repairRate;
+            if (engineEfficiency > 100) {
+                let engineEfficiency = 100;
+            }
+        }
+        if (weaponsStatus < 100) {
+            let weaponsStatus = weaponsStatus + repairRate;
+            if (weaponsStatus > 100) {
+                let weaponsStatus = 100;
+            }
+        }
+        return;
+    }
+
+    method void update() {
+        if (shieldsUp) {
+            let powerReserve = powerReserve - 5;
+        } else {
+            if (powerReserve < 100) {
+                let powerReserve = powerReserve + 10;
+            }
+        }
+        if (powerReserve < 0) {
+            let powerReserve = 0;
+            let shieldsUp = false;
+        }
         return;
     }
 

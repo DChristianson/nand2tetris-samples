@@ -3,13 +3,11 @@ class Anomaly {
     field int sectorIndex;
     field int subsectorIndex;
     field int strength;
-    field int disposition;
 
-    method void init(int sector, int subsector, int str, int dis) {
+    method void init(int sector, int subsector, int str) {
         let sectorIndex = sector;
         let subsectorIndex = subsector;
         let strength = str;
-        let disposition = dis;
         return;
     }
 
@@ -20,5 +18,18 @@ class Anomaly {
     method int subsectorIndex() {
         return subsectorIndex;
     }
-    
+
+    method boolean isDestroyed() {
+        return ~(strength > 0);
+    }
+
+    method void hit(int p) {
+        let strength = strength - p;
+        return;
+    }
+
+    method void update() {
+        return;
+    }
+
 }

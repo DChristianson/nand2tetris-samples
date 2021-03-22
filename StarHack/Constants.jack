@@ -32,6 +32,15 @@ class Constants {
     static String microJumpTravel;
     static String jumpTravel;
     static String repair;
+    static String up;
+    static String down;
+    static String longRangeScan;
+    static String help;
+    static String anomalyHit;
+    static String anomalyDestroyed;
+    static String friendlyFire;
+    static String habitatDestroyed;
+    static String noPower;
     function void init() {
         let missionStatus = "Mission Status";
         let divider = "--------------";
@@ -66,6 +75,15 @@ class Constants {
         let microJumpTravel = "Preparing for micro jump";
         let jumpTravel = "Preparing jump drive";
         let repair = "Directing crew to repair ship";
+        let up = "UP";
+        let down = "DOWN";
+        let longRangeScan = "Long Range Scan";
+        let help = "Help";
+        let anomalyHit = "Direct hit on anomaly!";
+        let anomalyDestroyed = "Anomaly destroyed!";
+        let friendlyFire = "You are firing on a habitat!";
+        let habitatDestroyed = "Habitat destroyed!";
+        let noPower = "Not enough power!";
         return;
     }
     function String missionStatus () { return missionStatus; }
@@ -101,4 +119,13 @@ class Constants {
     function String microJumpTravel () { return microJumpTravel; }
     function String jumpTravel () { return jumpTravel; }
     function String repair () { return repair; }
+    function String up () { return up; }
+    function String down () { return down; }
+    function String longRangeScan () { return longRangeScan; }
+    function String help () { return help; }
+    function String anomalyHit () { return anomalyHit; }
+    function String anomalyDestroyed () { return anomalyDestroyed; }
+    function String friendlyFire () { return friendlyFire; }
+    function String habitatDestroyed () { return habitatDestroyed; }
+    function String noPower () { return noPower; }
 }

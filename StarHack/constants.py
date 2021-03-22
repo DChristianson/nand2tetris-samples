@@ -36,7 +36,14 @@ stringConstants = {
     'jumpTravel': 'Preparing jump drive',
     'repair': 'Directing crew to repair ship',
     'up': 'UP',
-    'down': "DOWN"
+    'down': 'DOWN',
+    'longRangeScan': 'Long Range Scan',
+    'help': 'Help',
+    'anomalyHit': 'Direct hit on anomaly!',
+    'anomalyDestroyed': 'Anomaly destroyed!',
+    'friendlyFire': 'You are firing on a habitat!',
+    'habitatDestroyed': 'Habitat destroyed!',
+    'noPower': 'Not enough power!',
 }
 
 with open('Constants.jack', 'w') as fp:
