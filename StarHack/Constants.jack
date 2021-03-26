@@ -1,4 +1,5 @@
 class Constants {
+    static Array sectorNames;
     static String missionStatus;
     static String divider;
     static String galacticTime;
@@ -41,6 +42,10 @@ class Constants {
     static String friendlyFire;
     static String habitatDestroyed;
     static String noPower;
+    static String messageIncoming;
+    static String habitatDistress;
+    static String shipDestroyed;
+    static String shipHit;
     function void init() {
         let missionStatus = "Mission Status";
         let divider = "--------------";
@@ -84,48 +89,122 @@ class Constants {
         let friendlyFire = "You are firing on a habitat!";
         let habitatDestroyed = "Habitat destroyed!";
         let noPower = "Not enough power!";
+        let messageIncoming = "Incoming message:";
+        let habitatDistress = "Habitat under attach!";
+        let shipDestroyed = "Ship destroyed!";
+        let shipHit = "Ship has been hit!";
+        let sectorNames = Array.new(64);
+        let sectorNames[0]= "Sector 0-0";
+        let sectorNames[8]= "Sector 0-1";
+        let sectorNames[16]= "Sector 0-2";
+        let sectorNames[24]= "Sector 0-3";
+        let sectorNames[32]= "Sector 0-4";
+        let sectorNames[40]= "Sector 0-5";
+        let sectorNames[48]= "Sector 0-6";
+        let sectorNames[56]= "Sector 0-7";
+        let sectorNames[1]= "Sector 1-0";
+        let sectorNames[9]= "Sector 1-1";
+        let sectorNames[17]= "Sector 1-2";
+        let sectorNames[25]= "Sector 1-3";
+        let sectorNames[33]= "Sector 1-4";
+        let sectorNames[41]= "Sector 1-5";
+        let sectorNames[49]= "Sector 1-6";
+        let sectorNames[57]= "Sector 1-7";
+        let sectorNames[2]= "Sector 2-0";
+        let sectorNames[10]= "Sector 2-1";
+        let sectorNames[18]= "Sector 2-2";
+        let sectorNames[26]= "Sector 2-3";
+        let sectorNames[34]= "Sector 2-4";
+        let sectorNames[42]= "Sector 2-5";
+        let sectorNames[50]= "Sector 2-6";
+        let sectorNames[58]= "Sector 2-7";
+        let sectorNames[3]= "Sector 3-0";
+        let sectorNames[11]= "Sector 3-1";
+        let sectorNames[19]= "Sector 3-2";
+        let sectorNames[27]= "Sector 3-3";
+        let sectorNames[35]= "Sector 3-4";
+        let sectorNames[43]= "Sector 3-5";
+        let sectorNames[51]= "Sector 3-6";
+        let sectorNames[59]= "Sector 3-7";
+        let sectorNames[4]= "Sector 4-0";
+        let sectorNames[12]= "Sector 4-1";
+        let sectorNames[20]= "Sector 4-2";
+        let sectorNames[28]= "Sector 4-3";
+        let sectorNames[36]= "Sector 4-4";
+        let sectorNames[44]= "Sector 4-5";
+        let sectorNames[52]= "Sector 4-6";
+        let sectorNames[60]= "Sector 4-7";
+        let sectorNames[5]= "Sector 5-0";
+        let sectorNames[13]= "Sector 5-1";
+        let sectorNames[21]= "Sector 5-2";
+        let sectorNames[29]= "Sector 5-3";
+        let sectorNames[37]= "Sector 5-4";
+        let sectorNames[45]= "Sector 5-5";
+        let sectorNames[53]= "Sector 5-6";
+        let sectorNames[61]= "Sector 5-7";
+        let sectorNames[6]= "Sector 6-0";
+        let sectorNames[14]= "Sector 6-1";
+        let sectorNames[22]= "Sector 6-2";
+        let sectorNames[30]= "Sector 6-3";
+        let sectorNames[38]= "Sector 6-4";
+        let sectorNames[46]= "Sector 6-5";
+        let sectorNames[54]= "Sector 6-6";
+        let sectorNames[62]= "Sector 6-7";
+        let sectorNames[7]= "Sector 7-0";
+        let sectorNames[15]= "Sector 7-1";
+        let sectorNames[23]= "Sector 7-2";
+        let sectorNames[31]= "Sector 7-3";
+        let sectorNames[39]= "Sector 7-4";
+        let sectorNames[47]= "Sector 7-5";
+        let sectorNames[55]= "Sector 7-6";
+        let sectorNames[63]= "Sector 7-7";
         return;
     }
-    function String missionStatus () { return missionStatus; }
-    function String divider () { return divider; }
-    function String galacticTime () { return galacticTime; }
-    function String daysLeft () { return daysLeft; }
-    function String sector () { return sector; }
-    function String anomalies () { return anomalies; }
-    function String habitats () { return habitats; }
-    function String shipStatus () { return shipStatus; }
-    function String weapons () { return weapons; }
-    function String engines () { return engines; }
-    function String hull () { return hull; }
-    function String power () { return power; }
-    function String shields () { return shields; }
-    function String missiles () { return missiles; }
-    function String drones () { return drones; }
-    function String pressKey () { return pressKey; }
-    function String msg00 () { return msg00; }
-    function String msg01 () { return msg01; }
-    function String msg02 () { return msg02; }
-    function String msg03 () { return msg03; }
-    function String cmd () { return cmd; }
-    function String conditionRed () { return conditionRed; }
-    function String conditionGreen () { return conditionGreen; }
-    function String coordX () { return coordX; }
-    function String coordY () { return coordY; }
-    function String confirm () { return confirm; }
-    function String fireLasers () { return fireLasers; }
-    function String fireMissiles () { return fireMissiles; }
-    function String shieldsUp () { return shieldsUp; }
-    function String shieldsDown () { return shieldsDown; }
-    function String microJumpTravel () { return microJumpTravel; }
-    function String jumpTravel () { return jumpTravel; }
-    function String repair () { return repair; }
-    function String up () { return up; }
-    function String down () { return down; }
-    function String longRangeScan () { return longRangeScan; }
-    function String help () { return help; }
-    function String anomalyHit () { return anomalyHit; }
-    function String anomalyDestroyed () { return anomalyDestroyed; }
-    function String friendlyFire () { return friendlyFire; }
-    function String habitatDestroyed () { return habitatDestroyed; }
-    function String noPower () { return noPower; }
+    function String missionStatus() { return missionStatus; }
+    function String divider() { return divider; }
+    function String galacticTime() { return galacticTime; }
+    function String daysLeft() { return daysLeft; }
+    function String sector() { return sector; }
+    function String anomalies() { return anomalies; }
+    function String habitats() { return habitats; }
+    function String shipStatus() { return shipStatus; }
+    function String weapons() { return weapons; }
+    function String engines() { return engines; }
+    function String hull() { return hull; }
+    function String power() { return power; }
+    function String shields() { return shields; }
+    function String missiles() { return missiles; }
+    function String drones() { return drones; }
+    function String pressKey() { return pressKey; }
+    function String msg00() { return msg00; }
+    function String msg01() { return msg01; }
+    function String msg02() { return msg02; }
+    function String msg03() { return msg03; }
+    function String cmd() { return cmd; }
+    function String conditionRed() { return conditionRed; }
+    function String conditionGreen() { return conditionGreen; }
+    function String coordX() { return coordX; }
+    function String coordY() { return coordY; }
+    function String confirm() { return confirm; }
+    function String fireLasers() { return fireLasers; }
+    function String fireMissiles() { return fireMissiles; }
+    function String shieldsUp() { return shieldsUp; }
+    function String shieldsDown() { return shieldsDown; }
+    function String microJumpTravel() { return microJumpTravel; }
+    function String jumpTravel() { return jumpTravel; }
+    function String repair() { return repair; }
+    function String up() { return up; }
+    function String down() { return down; }
+    function String longRangeScan() { return longRangeScan; }
+    function String help() { return help; }
+    function String anomalyHit() { return anomalyHit; }
+    function String anomalyDestroyed() { return anomalyDestroyed; }
+    function String friendlyFire() { return friendlyFire; }
+    function String habitatDestroyed() { return habitatDestroyed; }
+    function String noPower() { return noPower; }
+    function String messageIncoming() { return messageIncoming; }
+    function String habitatDistress() { return habitatDistress; }
+    function String shipDestroyed() { return shipDestroyed; }
+    function String shipHit() { return shipHit; }
+    function String sectorName(int i) { return sectorNames[i]; }
 }

@@ -11,7 +11,6 @@ commands = [
     ('STA', 'STAtus report'),
 ]
 
-
 for count, cmd in enumerate(commands):
     print(f'        // {count} -> {cmd[0]} : {cmd[1]}')
 

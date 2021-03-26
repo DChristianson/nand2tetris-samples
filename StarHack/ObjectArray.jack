@@ -2,13 +2,13 @@ class ObjectArray {
 
     field int count;
     field int step;
-    field Array array;
 
-    constructor ObjectArray new(int numObjects, int sizeOfObject) {
-        let count = numObjects;
-        let step = sizeOfObject;
-        let array = Array.new(numObjects * sizeOfObject);
-        return this;
+    function ObjectArray new(int numObjects, int sizeOfObject) {
+        var Array array;
+        let array = Memory.alloc(2 + (numObjects * sizeOfObject));
+        let array[0] = numObjects;
+        let array[1] = sizeOfObject;
+        return array;
     }
 
     method int count() {
@@ -16,12 +16,11 @@ class ObjectArray {
     }
 
     method Array get(int i) {
-        return array + (i * step);
+        return this + 2 + (i * step);
     }
 
     method void dispose() {
-        do array.dispose();
-        do Memory.deAlloc();
+        do Memory.deAlloc(this);
         return;
     }
 

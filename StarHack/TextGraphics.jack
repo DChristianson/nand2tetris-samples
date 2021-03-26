@@ -21,7 +21,7 @@ class TextGraphics {
     }
 
     function void drawLabelValue(String label, int value, int row, int col, int labelAlignment) {
-        do Text.drawTextAligned(label, row, col, labelAlignment);
+        do TextGraphics.drawTextAligned(label, row, col, labelAlignment);
         do Output.printChar(58);
         do Output.printChar(32);
         do Output.printInt(value);

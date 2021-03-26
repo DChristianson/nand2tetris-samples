@@ -75,6 +75,10 @@ class PlayerShip {
         return dronePopulation;
     }
 
+    method boolean isDestroyed() {
+        return ~(hullIntegrity > 0);
+    }
+
     method int move(int x, int y) {
         var int d;
         let d = StarMap.distance(
@@ -102,6 +106,7 @@ class PlayerShip {
         let powerReserve = powerReserve - d;
         let sectorIndex = StarMap.sectorIndex(x, y);
         let subsectorIndex = Random.randInt(144);
+        do setShields(false);
         return d;
     }
 
@@ -150,7 +155,7 @@ class PlayerShip {
         return;
     }
 
-    method void update() {
+    method void update(StarHackGame game) {
         if (shieldsUp) {
             let powerReserve = powerReserve - 5;
         } else {

@@ -7,7 +7,6 @@ class Main {
         var int commandCoordinates;
 
         do Constants.init();
-        do Strings.init();
         do Sprites.init();
         do Screens.init();
         do CommandTerminal.init();

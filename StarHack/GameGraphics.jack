@@ -20,6 +20,12 @@ class GameGraphics {
         return;
     }
 
+    function void clearRectangle(int x1, int y1, int x2, int y2) {
+        do Screen.setColor(0);
+        do Screen.drawRectangle(x1, y1, x2, y2);
+        return;
+    }
+
     function void invertTile(int x, int y) {
         var int offset; let offset = (y * 512) + x;
         let screen[offset] = ~screen[offset];

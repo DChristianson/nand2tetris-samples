@@ -44,19 +44,30 @@ stringConstants = {
     'friendlyFire': 'You are firing on a habitat!',
     'habitatDestroyed': 'Habitat destroyed!',
     'noPower': 'Not enough power!',
+    'messageIncoming': 'Incoming message:',
+    'habitatDistress': 'Habitat under attach!',
+    'shipDestroyed': 'Ship destroyed!',
+    'shipHit': 'Ship has been hit!',
 }
 
 with open('Constants.jack', 'w') as fp:
     fp.write('class Constants {\n')
+    fp.write(f'    static Array sectorNames;\n')
     for var in stringConstants:
         fp.write(f'    static String {var};\n')
     fp.write('    function void init() {\n')
     for var, value in stringConstants.items():
         fp.write(f'        let {var} = "{value}";\n')
+    fp.write(f'        let sectorNames = Array.new(64);\n')
+    for i in range(0, 8):
+        for j in range(0, 8):
+            sectorIndex = j * 8 + i
+            fp.write(f'        let sectorNames[{sectorIndex}]= "Sector {i}-{j}";\n')
     fp.write('        return;\n')
     fp.write('    }\n')
     for var in stringConstants:
-        fp.write(f'    function String {var} () ' + '{ return ' + var + '; }\n')
+        fp.write(f'    function String {var}() ' + '{ return ' + var + '; }\n')
+    fp.write(f'    function String sectorName(int i) ' + '{ return sectorNames[i]; }\n')
     fp.write('}\n')
     
      
