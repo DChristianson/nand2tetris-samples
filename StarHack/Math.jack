@@ -1,0 +1,128 @@
+// This file is adapted from www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+
+class Math {
+
+    static Array roots;
+
+    /** Initializes the library. */
+    function void init() {
+        if (roots = 0) {
+            let roots = Array.new(16);
+            let roots[0] = 1;
+            let roots[1] = 2;
+            let roots[2] = 4;
+            let roots[3] = 8;
+            let roots[4] = 16;
+            let roots[5] = 32;
+            let roots[6] = 64;
+            let roots[7] = 128;
+            let roots[8] = 256;
+            let roots[9] = 512;
+            let roots[10] = 1024;
+            let roots[11] = 2048;
+            let roots[12] = 4096;
+            let roots[13] = 8192;
+            let roots[14] = 16384;
+            let roots[15] = ~(32767);
+        }
+        return;
+    }
+
+    function int multiply(int x, int y) {
+        var boolean isNegative;
+        var int i, z;
+        if ((x = 0) | (y = 0)) {
+            return 0;
+        }
+        if (x < 0) {
+            let x = -x;
+            if (y > 0) {
+                let isNegative = true;
+            } else {
+                let y = -y;
+            }
+        } else {
+            if (y < 0) {
+                let isNegative = true;
+                let y = -y;
+            }
+        }
+        let i = 1;
+        while (x > 0) {
+            if ((x & i) > 0) {
+                let z = z + y;
+                let x = x - i;
+            }
+            let y = y + y;
+            let i = i + i;
+        }
+        if (isNegative) {
+            let z = -z;
+        }
+        return z;
+    }
+
+    function int divide(int x, int y) {
+        var boolean isNegative;
+        var int q, yy;
+
+        if ((x = 0) | (y = 0)) {
+            return 0;
+        }
+
+        if (x < 0) {
+            let x = -x;
+            if (y > 0) {
+                let isNegative = true;
+            } else {
+                let y = -y;
+            }
+        } else {
+            if (y < 0) {
+                let isNegative = true;
+                let y = -y;
+            }
+        }
+
+        if (y > x) {
+            return 0;
+        }
+        let yy = y + y;
+        if (yy < 0) {
+            return 1;
+        }
+
+        let q = Math.divide(x, yy);
+        let q = q + q;
+        if ((x - Math.multiply(q, y)) < y) {
+            if (isNegative) {
+                return -q;
+            }
+            return q;
+        } else {
+            if (isNegative) {
+                return -(q + 1);
+            }
+            return q + 1;
+        }
+    }
+
+    function int sqrt(int x) {
+        var int y, j, z, zz;
+        let j = 8;
+        while (j > 0) {
+            let j = j - 1;
+            // reuse the candidate term
+            let z = y + roots[j];
+            let zz = Math.multiply(z, z);
+            // check for overflow
+            if ((zz > 0) & (~(zz > x))) {
+                let y = z;
+            }
+        }
+        return y;
+    }
+
+}
