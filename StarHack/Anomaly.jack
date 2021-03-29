@@ -22,7 +22,7 @@ class Anomaly {
     }
 
     method boolean isDestroyed() {
-        return ~(strength > 0);
+        return strength < 1;
     }
 
     method void hit(int p) {
@@ -40,16 +40,14 @@ class Anomaly {
         }
         let playerShip = game.playerShip();
         if (sectorIndex = playerShip.sectorIndex()) {
-            do anomalyFireUpon(sectorIndex, playerShip.subsectorIndex(), 10);
+            do game.anomalyFireUpon(sectorIndex, playerShip.subsectorIndex(), 25);
+            let cooldown = cooldown + 1;
             return;
         }
-        let i = 0;
-        while (i < 8) {
-            let habitat = game.habitat(i);
-            if ((~(habitat.isDestroyed())) & (habitat.sectorIndex() = sectorIndex) & (habitat.subsectorIndex() = subsectorIndex)) {
-                do anomalyFireUpon(sectorIndex, habitat.subsectorIndex(), 10);
-                let cooldown = cooldown + 2;
-            }
+        let habitat = game.findHabitat(sectorIndex, subsectorIndex, 20);
+        if (habitat > 0) {
+            do game.anomalyFireUpon(sectorIndex, habitat.subsectorIndex(), 25);
+            let cooldown = cooldown + 2;
         }
         return;
     }

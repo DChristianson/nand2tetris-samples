@@ -27,7 +27,7 @@ class Habitat {
     }
 
     method boolean isDestroyed() {
-        return ~(population > 0);
+        return population < 1;
     }
 
     method void hit(int p) {

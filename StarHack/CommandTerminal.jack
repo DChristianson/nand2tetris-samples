@@ -3,14 +3,12 @@
  */
 class CommandTerminal {
 
-    static int inputTop;
-    static int inputLeft;
-    static int inputBottom;
-    static int inputRight;
+    static Array keyboard;
 
     static int startRow;
     static int startCol;
     static int lastRow;
+    static int lastCol;
 
     static int currentRow;
     static int currentCol;
@@ -20,33 +18,30 @@ class CommandTerminal {
     static Array commandHelp;
 
     function void init() {
+        let keyboard = 24576;
+
+        let startRow = 16;
+        let startCol = 29;
+        let lastCol = 63;
+        let lastRow = 22;
+
         let commandString = Array.new(3);
-        let commandHelp = Array.new(9);
+        let commandHelp = Array.new(10);
         let commandHelp[0] = "LRS: Long Range Scan";
-        let commandHelp[1] = "MJD: Micro Jump Drive in sector";
+        let commandHelp[1] = "MOV: Micro Jump in sector";
         let commandHelp[2] = "JMP: JuMP to a nearby sector";
         let commandHelp[3] = "PAC: Fire Particle Cannon";
         let commandHelp[4] = "AMM: Fire AntiMatter Missiles";
         let commandHelp[5] = "SDN: Shields DowN";
         let commandHelp[6] = "SUP: Shields UP";
-        let commandHelp[7] = "RST: ReSTore ship function";
-        let commandHelp[8] = "STA: STAtus report";
-        return;
-    }
-            
-    function void setPosition(int left, int top, int width, int height) {
-        let inputTop = top;
-        let inputLeft = left;
-        let inputRight = left + width;
-        let inputBottom = top + height;
-        let startRow = (top / 11) + 1;
-        let startCol = (left / 8) + 1;
-        let lastRow = startRow + (height / 11) - 1;
+        let commandHelp[7] = "RPR: RePaiR damage";
+        let commandHelp[8] = "RSP: ReSuPply ship";
+        let commandHelp[9] = "STA: STAtus report";
         return;
     }
 
     function void clear() {
-        do GameGraphics.clearRectangle(inputLeft, inputTop, inputRight, inputBottom);
+        do GameGraphics.clearRectangle(startCol / 2, startRow * 11, lastCol / 2, (lastRow * 11));
         let currentRow = startRow;
         let currentCol = startCol;
         return;
@@ -62,14 +57,15 @@ class CommandTerminal {
     }
 
     // 0 -> LRS : Long Range Scan
-    // 1 -> MJD : Micro Jump Drive in sector
+    // 1 -> MOV : Micro Jump Drive in sector
     // 2 -> JMP : JuMP to a nearby sector
     // 3 -> PAC : Fire Particle Cannon
     // 4 -> AMM : Fire AntiMatter Missiles
     // 5 -> SDN : Shields DowN
     // 6 -> SUP : Shields UP
-    // 7 -> RST : ReSTore ship function
-    // 8 -> STA : STAtus report
+    // 7 -> RPR : RePaiR damage
+    // 8 -> RSP : ReSuPply
+    // 9 -> STA : STAtus report
     function int readCommand(String message) {
         var int i;
         var char c;
@@ -187,21 +183,36 @@ class CommandTerminal {
         return;
     }
 
+    function char keyPressed() {
+        return keyboard[0];
+    }
+
     function char readChar() {
         var char c;
         while (c = 0) {
-            let c = Keyboard.keyPressed();
+            let c = keyPressed();
         }
-        while (Keyboard.keyPressed() = c) {
+        while (keyPressed() = c) {
         }
         return c;
     }
 
-    function void readAnyKeyScreen(String message) {
+    /**
+     * Wait to advance screen
+     */ 
+    function int awaitScreen(String message) {
+        var int i;
+        var char c;
         do Output.moveCursor(19, 25);
         do Output.printString(message);
-        do CommandTerminal.readChar();
-        return;
+        while (c = 0) {
+            let i = i + 1;
+            let c = keyPressed();
+        }
+        while (keyPressed() = c) {
+            let i = i + 1;
+        }
+        return i;
     }
 
     function int parseCommandCode() {
@@ -211,8 +222,8 @@ class CommandTerminal {
         if (commandCode = 11826) {
             return 0;
         }
-        // MJD -> 12579 : Micro Jump Drive in sector
-        if (commandCode = 12579) {
+        // MOV -> 12757 : Micro Jump Drive in sector
+        if (commandCode = 12757) {
             return 1;
         }
         // JMP -> 9615 : JuMP to a nearby sector
@@ -235,13 +246,29 @@ class CommandTerminal {
         if (commandCode = 19087) {
             return 6;
         }
-        // RST -> 18003 : ReSTore ship function
-        if (commandCode = 18003) {
+        // RPR -> 17905 : RePaiR damage
+        if (commandCode = 17905) {
             return 7;
+        }
+        // RSP -> 17999 : ReSuPply
+        if (commandCode = 17999) {
+            return 8;
         }
         // STA -> 19040 : STAtus report
         if (commandCode = 19040) {
-            return 8;
+            return 9;
+        }
+        // YLO -> 24942 : Cheat code - self destruct
+        if (commandCode = 24942) {
+            return 10;
+        }
+        // BNK -> 1450 : Cheat code - destroy all habitats
+        if (commandCode = 1450) {
+            return 11;
+        }
+        // LSF -> 11845 : Cheat code - destroy anomalies
+        if (commandCode = 11845) {
+            return 12;
         }
         return -1;
     }

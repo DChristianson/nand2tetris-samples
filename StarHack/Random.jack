@@ -2,8 +2,8 @@ class Random {
 
     static int x, w, s;
 
-    function void seed() {
-        let s = -681;
+    function void seed(int seed) {
+        let s = seed;
         return;
     }
 
@@ -19,6 +19,5 @@ class Random {
         }
         return i - (mod * (i / mod));
     }
-
 
 }

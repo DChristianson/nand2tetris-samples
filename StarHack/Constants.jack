@@ -12,7 +12,8 @@ class Constants {
     static String engines;
     static String hull;
     static String power;
-    static String shields;
+    static String shieldsStatUp;
+    static String shieldsStatDown;
     static String missiles;
     static String drones;
     static String pressKey;
@@ -46,6 +47,18 @@ class Constants {
     static String habitatDistress;
     static String shipDestroyed;
     static String shipHit;
+    static String missionAborted;
+    static String missionCompleted;
+    static String timeExpired;
+    static String initiatingSpatialCollapse;
+    static String habitatsDestroyed;
+    static String anomaliesEliminated;
+    static String huntersDispatched;
+    static String noAmmo;
+    static String resupply;
+    static String tooFar;
+    static String resupplySuccess;
+    static String resupplyRefuse;
     function void init() {
         let missionStatus = "Mission Status";
         let divider = "--------------";
@@ -59,16 +72,17 @@ class Constants {
         let engines = "Engines";
         let hull = "Hull";
         let power = "Power";
-        let shields = "Shields";
+        let shieldsStatUp = "Shields (UP)";
+        let shieldsStatDown = "Shields (DOWN)";
         let missiles = "Missiles";
         let drones = "Drones";
         let pressKey = "Press any key...";
         let msg00 = "Transmission received @t4.17.100.0010";
         let msg01 = "Anomalous entities detected in nearby space...";
         let msg02 = "Scans indicate presence of hostile Von Neumann probes.";
-        let msg03 = "You are tasked to eliminate all threats...";
+        let msg03 = "You are tasked to resolve all anomalies...";
         let cmd = "Enter command (? for help)";
-        let conditionRed = "Condition: RED";
+        let conditionRed = "Condition:  RED ";
         let conditionGreen = "Condition: GREEN";
         let coordX = "Enter x-coordinate";
         let coordY = "Enter y-coordinate";
@@ -86,13 +100,25 @@ class Constants {
         let help = "Help";
         let anomalyHit = "Direct hit on anomaly!";
         let anomalyDestroyed = "Anomaly destroyed!";
-        let friendlyFire = "You are firing on a habitat!";
+        let friendlyFire = "Records show you fired on civilian population";
         let habitatDestroyed = "Habitat destroyed!";
         let noPower = "Not enough power!";
         let messageIncoming = "Incoming message:";
-        let habitatDistress = "Habitat under attach!";
+        let habitatDistress = "Habitat under attack!";
         let shipDestroyed = "Ship destroyed!";
         let shipHit = "Ship has been hit!";
+        let missionAborted = "Mission aborted.";
+        let missionCompleted = "Mission complete.";
+        let timeExpired = "Time limit has been exceeded";
+        let initiatingSpatialCollapse = "We are initiating a purge of the entire quadrant";
+        let habitatsDestroyed = "All civilian population lost";
+        let anomaliesEliminated = "All anomalies resolved";
+        let huntersDispatched = "You are to be relieved of command";
+        let noAmmo = "You are to be relieved of command";
+        let resupply = "Resupply ship";
+        let tooFar = "You are too far away!";
+        let resupplySuccess = "Missiles and drone crew resupplied.";
+        let resupplyRefuse = "Resupply denied. Stop shooting us!";
         let sectorNames = Array.new(64);
         let sectorNames[0]= "Sector 0-0";
         let sectorNames[8]= "Sector 0-1";
@@ -172,7 +198,8 @@ class Constants {
     function String engines() { return engines; }
     function String hull() { return hull; }
     function String power() { return power; }
-    function String shields() { return shields; }
+    function String shieldsStatUp() { return shieldsStatUp; }
+    function String shieldsStatDown() { return shieldsStatDown; }
     function String missiles() { return missiles; }
     function String drones() { return drones; }
     function String pressKey() { return pressKey; }
@@ -206,5 +233,17 @@ class Constants {
     function String habitatDistress() { return habitatDistress; }
     function String shipDestroyed() { return shipDestroyed; }
     function String shipHit() { return shipHit; }
+    function String missionAborted() { return missionAborted; }
+    function String missionCompleted() { return missionCompleted; }
+    function String timeExpired() { return timeExpired; }
+    function String initiatingSpatialCollapse() { return initiatingSpatialCollapse; }
+    function String habitatsDestroyed() { return habitatsDestroyed; }
+    function String anomaliesEliminated() { return anomaliesEliminated; }
+    function String huntersDispatched() { return huntersDispatched; }
+    function String noAmmo() { return noAmmo; }
+    function String resupply() { return resupply; }
+    function String tooFar() { return tooFar; }
+    function String resupplySuccess() { return resupplySuccess; }
+    function String resupplyRefuse() { return resupplyRefuse; }
     function String sectorName(int i) { return sectorNames[i]; }
 }

@@ -10,13 +10,14 @@ class StarHackGame {
 
     field ObjectArray habitats;
     field int habitatsLeft;
+    field boolean friendlyFire;
 
     field ObjectArray stars;
 
     field ObjectArray sectorScans;
 
     constructor StarHackGame new() {
-        var int i;
+        var int i, sectorIndex;
         var Anomaly anomaly;
         var Habitat habitat;
         var Star star;
@@ -24,17 +25,17 @@ class StarHackGame {
 
         let timeLeft = 4000;
 
-        let playerShip = PlayerShip.new(
-            Random.randInt(64),
-            71);
-
         let sectorScans = ObjectArray.new(64, 4);
+
+        let sectorIndex = randomSector();
+        let playerShip = PlayerShip.new(sectorIndex, randomSubsector(sectorIndex));
 
         let stars = ObjectArray.new(32, 2);
         let i = 0;
         while (i < 32) {
             let star = stars.get(i);
-            do star.init(Random.randInt(64), Random.randInt(144));
+            let sectorIndex = randomSector();
+            do star.init(sectorIndex, randomSubsector(sectorIndex));
             let sectorScan = sectorScan(star.sectorIndex());
             do sectorScan.incStars(1);
             let i = i + 1;
@@ -45,18 +46,20 @@ class StarHackGame {
         let i = 0;
         while (i < habitatsLeft) {
             let habitat = habitats.get(i);
-            do habitat.init(Random.randInt(64), Random.randInt(144), 50 + Random.randInt(100), Random.randInt(2), 10000);
+            let sectorIndex = randomSector();
+            do habitat.init(sectorIndex, randomSubsector(sectorIndex), 50 + Random.randInt(100), Random.randInt(2), 10000);
             let sectorScan = sectorScan(habitat.sectorIndex());
             do sectorScan.incHabitats(1);
             let i = i + 1;
         }
 
         let anomaliesLeft = 8;
-        let anomalies = ObjectArray.new(anomaliesLeft, 3);
+        let anomalies = ObjectArray.new(anomaliesLeft, 4);
         let i = 0;
         while (i < anomaliesLeft) {
             let anomaly = anomalies.get(i);
-            do anomaly.init(Random.randInt(64), Random.randInt(144), 100);
+            let sectorIndex = randomSector();
+            do anomaly.init(sectorIndex, randomSubsector(sectorIndex), 100);
             let sectorScan = sectorScan(anomaly.sectorIndex());
             do sectorScan.incAnomalies(1);
             let i = i + 1;
@@ -65,12 +68,82 @@ class StarHackGame {
         return this;
     }
 
-    method SectorScan sectorScan(int sectorIndex) {
-        return sectorScans.get(sectorIndex);
+    method int randomSector() {
+        return Random.randInt(64);
     }
 
-    method Habitat habitat(int i) {
-        return habitats.get(i);
+    method int randomSubsector(int sectorIndex) {
+        var int subsectorIndex;
+        while (true) {
+            let subsectorIndex = Random.randInt(144);
+            if (~occupied(sectorIndex, subsectorIndex)) {
+                return subsectorIndex;
+            }
+        }
+    }
+
+    method boolean occupied(int sectorIndex, int subsectorIndex) {
+        var int i;
+        var Habitat habitat;
+        var Anomaly anomaly;
+        var Star star;
+        var SectorScan sectorScan;
+        let sectorScan = sectorScans.get(sectorIndex);
+        if (sectorScan.stars() > 0) {
+            while (i < 32) {
+                let star = stars.get(i);
+                if ((star.sectorIndex() = sectorIndex) & (star.subsectorIndex() = subsectorIndex)) {
+                    return true;
+                }
+                let i = i + 1;
+            }
+        }
+        if (sectorScan.habitats() > 0) {
+            let i = 0;
+            while (i < 8) {
+                let habitat = habitats.get(i);
+                if ((habitat.sectorIndex() = sectorIndex) & (habitat.subsectorIndex() = subsectorIndex)) {
+                    return true;
+                }
+                let i = i + 1;
+            }
+        }
+        if (sectorScan.anomalies() > 0) {
+            let i = 0;
+            while (i < 8) {
+                let anomaly = anomalies.get(i);
+                if ((anomaly.sectorIndex() = sectorIndex) & (anomaly.subsectorIndex() = subsectorIndex)) {
+                    return true;
+                }
+                let i = i + 1;
+            }
+        }
+        return false;
+    }
+
+    method Habitat findHabitat(int sectorIndex, int subsectorIndex, int d) {
+        var int c, i;
+        var Habitat habitat;
+        let i = 0;
+        while (i < 8) {
+            let habitat = habitats.get(i);
+            if ((~(habitat.isDestroyed())) & (habitat.sectorIndex() = sectorIndex)) {
+                let c = StarMap.distance(
+                    StarMap.subsectorX(subsectorIndex),
+                    StarMap.subsectorY(subsectorIndex),
+                    StarMap.subsectorX(habitat.subsectorIndex()),
+                    StarMap.subsectorY(habitat.subsectorIndex()));
+                if (c < d) {
+                    return habitat;
+                }
+            }
+            let i = i + 1;
+        }
+        return 0;
+    }
+
+    method SectorScan sectorScan(int sectorIndex) {
+        return sectorScans.get(sectorIndex);
     }
 
     method PlayerShip playerShip() {
@@ -87,10 +160,6 @@ class StarHackGame {
         return;
     }
 
-    method int timeLeft() {
-        return timeLeft;
-    }
-
     method boolean isRunning() {
         return (timeLeft > 0) & (anomaliesLeft > 0) & (~(playerShip.isDestroyed())) & (habitatsLeft > 0);
     }
@@ -101,16 +170,23 @@ class StarHackGame {
         do TextGraphics.drawTextAligned(Constants.msg01(), 4, 6, 0);
         do TextGraphics.drawTextAligned(Constants.msg02(), 5, 6, 0);
         do TextGraphics.drawTextAligned(Constants.msg03(), 7, 6, 0);
-        do TextGraphics.drawLabelValue(Constants.daysLeft(), timeLeft(), 10, 32, 0);
-        do CommandTerminal.readAnyKeyScreen(Constants.pressKey());
+        do TextGraphics.drawLabelValue(Constants.daysLeft(), (timeLeft / 100), 10, 32, 0);
+        do CommandTerminal.awaitScreen(Constants.pressKey());
         do GameGraphics.wipeScreen();
 
         // main game loop 
         do Screens.gameScreen();
-        do CommandTerminal.setPosition(228, 177, 281, 76);
         do drawSectorMap(this, playerShip);
         do drawGameStatus(this, playerShip);
         
+        return;
+    }
+
+    method void end() {
+        do GameGraphics.wipeScreen();
+        do drawEndGameReport();
+        do CommandTerminal.awaitScreen(Constants.pressKey());
+        do GameGraphics.wipeScreen();
         return;
     }
 
@@ -136,7 +212,7 @@ class StarHackGame {
     }
 
     function void clearStatusDisplay() {
-        do GameGraphics.clearRectangle(225, 19, 511, 170);
+        do GameGraphics.clearRectangle(15, 19, 31, 170);
         return;
     }
 
@@ -159,19 +235,23 @@ class StarHackGame {
         // game status
         do TextGraphics.drawTextAligned(Constants.missionStatus(), 3, 29, 0);
         do TextGraphics.drawTextAligned(Constants.divider(), 4, 29, 0);
-        do TextGraphics.drawLabelValue(Constants.daysLeft(), timeLeft, 5, 29, 0);
+        do TextGraphics.drawLabelValue(Constants.daysLeft(), (timeLeft / 100), 5, 29, 0);
         do TextGraphics.drawLabelValue(Constants.anomalies(), anomaliesLeft, 6, 29, 0);
         do TextGraphics.drawLabelValue(Constants.habitats(), habitatsLeft, 7, 29, 0);
         // ship status
-        do TextGraphics.drawTextAligned(Constants.shipStatus(), 3, 47, 0);
-        do TextGraphics.drawTextAligned(Constants.divider(), 4, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.weapons(), playerShip.weaponsStatus(), 5, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.engines(), playerShip.engineEfficiency(), 6, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.hull(), playerShip.hullIntegrity(), 7, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.power(), playerShip.powerReserve(), 8, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.shields(), playerShip.shieldLevel(), 9, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.missiles(), playerShip.missileSupply(), 10, 47, 0);
-        do TextGraphics.drawLabelValue(Constants.drones(), playerShip.dronePopulation(), 11, 47, 0);
+        do TextGraphics.drawTextAligned(Constants.shipStatus(), 3, 44, 0);
+        do TextGraphics.drawTextAligned(Constants.divider(), 4, 44, 0);
+        do TextGraphics.drawLabelValue(Constants.weapons(), playerShip.weaponsStatus(), 5, 44, 0);
+        do TextGraphics.drawLabelValue(Constants.engines(), playerShip.engineEfficiency(), 6, 44, 0);
+        do TextGraphics.drawLabelValue(Constants.hull(), playerShip.hullIntegrity(), 7, 44, 0);
+        do TextGraphics.drawLabelValue(Constants.power(), playerShip.powerReserve(), 8, 44, 0);
+        if (playerShip.shieldsUp()) {
+            do TextGraphics.drawLabelValue(Constants.shieldsStatUp(), playerShip.shieldLevel(), 9, 44, 0);
+        } else {
+            do TextGraphics.drawLabelValue(Constants.shieldsStatDown(), playerShip.shieldLevel(), 9, 44, 0);
+        }
+        do TextGraphics.drawLabelValue(Constants.missiles(), playerShip.missileSupply(), 10, 44, 0);
+        do TextGraphics.drawLabelValue(Constants.drones(), playerShip.dronePopulation(), 11, 44, 0);
         return;
     }
 
@@ -238,7 +318,7 @@ class StarHackGame {
         let sectorIndex = playerShip.sectorIndex();
         let subsectorIndex = playerShip.subsectorIndex();
         
-        do GameGraphics.clearRectangle(32, 32, 222, 222);
+        do GameGraphics.clearRectangle(2, 32, 13, 224);
         do Sprites.ship(2 + StarMap.subsectorX(subsectorIndex), 2 + StarMap.subsectorY(subsectorIndex));
 
         let i = 0;
@@ -296,8 +376,57 @@ class StarHackGame {
         return;        
     }
 
+    method int endingState() {
+        if (timeLeft < 1) {
+            return 0;
+        }
+        if (habitatsLeft < 1) {
+            return 1;
+        }
+        if (anomaliesLeft < 1) {
+            return 2;
+        }
+        return 3;
+    }   
+
+    method void drawEndGameReport() {
+        var int gameStatus;
+        let gameStatus = endingState();
+        if (gameStatus = 0) {
+            do TextGraphics.drawTextAligned(Constants.missionAborted(), 5, 32, 1);
+            do TextGraphics.drawTextAligned(Constants.timeExpired(), 6, 32, 1);
+            do TextGraphics.drawTextAligned(Constants.initiatingSpatialCollapse(), 6, 32, 1);
+        }
+        if (gameStatus = 1) {
+            do TextGraphics.drawTextAligned(Constants.missionAborted(), 5, 32, 1);
+            do TextGraphics.drawTextAligned(Constants.habitatsDestroyed(), 6, 32, 1);
+            do TextGraphics.drawTextAligned(Constants.initiatingSpatialCollapse(), 6, 32, 1);
+        }
+        if (gameStatus = 2) {
+            do TextGraphics.drawTextAligned(Constants.missionCompleted(), 5, 32, 1);
+            do TextGraphics.drawTextAligned(Constants.anomaliesEliminated(), 6, 32, 1);
+            if (friendlyFire) {
+                do TextGraphics.drawTextAligned(Constants.friendlyFire(), 7, 32, 1);
+                do TextGraphics.drawTextAligned(Constants.huntersDispatched(), 8, 32, 1);
+            }
+        }
+        if (gameStatus = 3) {
+            do TextGraphics.drawTextAligned(Constants.missionAborted(), 5, 32, 1);
+            do TextGraphics.drawTextAligned(Constants.shipDestroyed(), 6, 32, 1);
+        }
+
+        do TextGraphics.drawTextAligned(Constants.divider(), 9, 32, 1);
+        do TextGraphics.drawLabelValue(Constants.daysLeft(), (timeLeft / 100), 10, 20, 0);
+        do TextGraphics.drawLabelValue(Constants.anomalies(), anomaliesLeft, 11, 20, 0);
+        do TextGraphics.drawLabelValue(Constants.habitats(), habitatsLeft, 12, 20, 0);
+
+        return;
+    }
+
     method void processCommand(int commandCode) {
         var int x, y, xi, yj, i, j, d;
+        var Anomaly anomaly;
+        var Habitat habitat;
         var SectorScan sectorScan;
         // 0 -> LRS : Long Range Scan
         if (commandCode = 0) {
@@ -336,7 +465,7 @@ class StarHackGame {
                     do CommandTerminal.printMessage(Constants.noPower());
                     do CommandTerminal.readAnyKey(Constants.pressKey());
                 } else {
-                    do useTime(d);
+                    do useTime(d, false);
                 }
             }
             let displayMode = 0;
@@ -359,7 +488,7 @@ class StarHackGame {
                     do CommandTerminal.printMessage(Constants.noPower());
                     do CommandTerminal.readAnyKey(Constants.pressKey());
                 } else {
-                    do useTime(d);
+                    do useTime(d, true);
                 }
             }
             let displayMode = 0;
@@ -380,7 +509,7 @@ class StarHackGame {
                 let d = playerShip.fireLasers(x, y, 10);
                 if (d > 0) {
                     do playerFireUpon(x, y, d);
-                    do useTime(10);
+                    do useTime(10, false);
                 } else {
                     do CommandTerminal.printMessage(Constants.noPower());
                     do CommandTerminal.readAnyKey(Constants.pressKey());
@@ -403,9 +532,9 @@ class StarHackGame {
                 let d = playerShip.fireMissiles(x, y);
                 if (d > 0) {
                     do playerFireUpon(x, y, d);
-                    do useTime(10);
+                    do useTime(10, false);
                 } else {
-                    // TODO: print no ammo
+                    do CommandTerminal.printMessage(Constants.noAmmo());
                 }
             }
             return;
@@ -426,16 +555,67 @@ class StarHackGame {
             }
             return;
         }
-        // 7 -> REP : REPair ship
+        // 7 -> RPR : RePaiR damage
         if (commandCode = 7) {
             do CommandTerminal.printMessage(Constants.repair());
-            do playerShip.repair();
-            do useTime(10);
+            if (CommandTerminal.readYesNo(Constants.confirm())) {
+                do playerShip.repair();
+                do CommandTerminal.readAnyKey(Constants.pressKey());
+                do useTime(10, false);
+            }
             return;
         }
-        // 8 -> STA : STAtus report
+        // 8 -> RSP : ReSuPply
         if (commandCode = 8) {
+            do CommandTerminal.printMessage(Constants.resupply());
+            if (CommandTerminal.readYesNo(Constants.confirm())) {
+                if (findHabitat(playerShip.sectorIndex(), playerShip.subsectorIndex(), 3) > 0) {
+                    if (friendlyFire) {
+                        do CommandTerminal.printMessage(Constants.resupplyRefuse());
+                    } else {
+                        do CommandTerminal.printMessage(Constants.resupplySuccess());
+                        do playerShip.resupply();
+                    }
+                } else {
+                    do CommandTerminal.printMessage(Constants.tooFar());
+                }
+                do CommandTerminal.readAnyKey(Constants.pressKey());
+                do useTime(10, false);
+            }
+            return;
+        }
+        // 9 -> STA : STAtus report
+        if (commandCode = 9) {
             let displayMode = 0;
+            return;
+        }
+        // cheat codes
+        if (commandCode = 10) {
+            if (CommandTerminal.readYesNo(Constants.confirm())) {
+                do playerShip.hit(1000);
+            }
+            return;
+        }
+        if (commandCode = 11) {
+            if (CommandTerminal.readYesNo(Constants.confirm())) {
+                let i = 0;
+                while (i < 8) {
+                    let habitat = habitats.get(i);
+                    do playerFireUpon(habitat.sectorIndex(), habitat.subsectorIndex(), 1000);
+                    let i = i + 1;
+                }
+            }
+            return;
+        }
+        if (commandCode = 12) {
+            if (CommandTerminal.readYesNo(Constants.confirm())) {
+                let i = 0;
+                while (i < 8) {
+                    let anomaly = anomalies.get(i);
+                    do playerFireUpon(anomaly.sectorIndex(), anomaly.subsectorIndex(), 1000);
+                    let i = i + 1;
+                }
+            }
             return;
         }
         // else
@@ -446,7 +626,7 @@ class StarHackGame {
     method void anomalyFireUpon(int sectorIndex, int subsectorIndex, int p) {
         var int i, x, y;
         var Habitat habitat;
-        var PlayerShip playerShip;
+        var SectorScan sectorScan;
         let x = StarMap.subsectorX(subsectorIndex);
         let y = StarMap.subsectorY(subsectorIndex);
         // animate strike
@@ -461,10 +641,14 @@ class StarHackGame {
             let habitat = habitats.get(i);
             if ((~(habitat.isDestroyed())) & (habitat.sectorIndex() = sectorIndex) & (habitat.subsectorIndex() = subsectorIndex)) {
                 do habitat.hit(p);
+                let sectorScan = sectorScan(sectorIndex);
+                do sectorScan.setScanned(true);
+                do CommandTerminal.clear();
                 do CommandTerminal.printMessage(Constants.messageIncoming());
                 do CommandTerminal.printMessage(Constants.sectorName(sectorIndex));
                 if (habitat.isDestroyed()) {
                     let habitatsLeft = habitatsLeft - 1;
+                    do sectorScan.incHabitats(-1);
                     do CommandTerminal.printMessage(Constants.habitatDestroyed());
                 } else {
                     do CommandTerminal.printMessage(Constants.habitatDistress());
@@ -475,9 +659,8 @@ class StarHackGame {
             let i = i + 1;
         }
         if ((~(playerShip.isDestroyed())) & (playerShip.sectorIndex() = sectorIndex) & (playerShip.subsectorIndex() = subsectorIndex)) {
-            do playerShip.hit(p); 
-            do CommandTerminal.printMessage(Constants.messageIncoming());
-            do CommandTerminal.printMessage(Constants.sectorName(sectorIndex));
+            do playerShip.hit(p);
+            do CommandTerminal.clear();
             if (playerShip.isDestroyed()) {
                 do CommandTerminal.printMessage(Constants.shipDestroyed());
             } else {
@@ -490,6 +673,7 @@ class StarHackGame {
 
     method void playerFireUpon(int x, int y, int p) {
         var int i, sectorIndex, subsectorIndex;
+        var SectorScan sectorScan;
         var Habitat habitat;
         var Anomaly anomaly;
         do CommandTerminal.clear();
@@ -509,6 +693,9 @@ class StarHackGame {
                 do habitat.hit(p);
                 if (habitat.isDestroyed()) {
                     let habitatsLeft = habitatsLeft - 1;
+                    let friendlyFire = true;
+                    let sectorScan = sectorScan(sectorIndex);
+                    do sectorScan.incHabitats(-1);
                     do CommandTerminal.printMessage(Constants.habitatDestroyed());
                 } else {
                     do CommandTerminal.printMessage(Constants.friendlyFire());
@@ -526,6 +713,8 @@ class StarHackGame {
                 do anomaly.hit(p);
                 if (anomaly.isDestroyed()) {
                     let anomaliesLeft = anomaliesLeft - 1;
+                    let sectorScan = sectorScan(sectorIndex);
+                    do sectorScan.incAnomalies(-1);
                     do CommandTerminal.printMessage(Constants.anomalyDestroyed());
                 } else {
                     do CommandTerminal.printMessage(Constants.anomalyHit());
@@ -538,16 +727,20 @@ class StarHackGame {
         return;
     }
 
-    method void useTime(int t) {
+    method void useTime(int t, boolean inJump) {
         var int i;
         var Anomaly anomaly;
         let timeLeft = timeLeft - t;
-        while (i < 8) {
-            let anomaly = anomalies.get(i);
-            do anomaly.update(this);
-            let i = i + 1;
+        if (~inJump) {
+            while (i < 8) {
+                let anomaly = anomalies.get(i);
+                if (~(anomaly.isDestroyed())) {
+                    do anomaly.update(this);
+                }
+                let i = i + 1;
+            }
+            do playerShip.update(this);
         }
-        do playerShip.update(this);
         return;
     }
 

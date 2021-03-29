@@ -18,7 +18,7 @@ class PlayerShip {
         let subsectorIndex = subsector;
 
         let shieldsUp = false;
-        let shieldLevel = 0;
+        let shieldLevel = 100;
         let hullIntegrity = 100;
         let engineEfficiency = 100;
         let weaponsStatus = 100;
@@ -76,7 +76,7 @@ class PlayerShip {
     }
 
     method boolean isDestroyed() {
-        return ~(hullIntegrity > 0);
+        return hullIntegrity < 1;
     }
 
     method int move(int x, int y) {
@@ -111,11 +111,25 @@ class PlayerShip {
     }
 
     method int fireLasers(int x, int y, int p) {
+        var int d;
         if (powerReserve < p) {
             return 0;
-        }
+        } 
         let powerReserve = powerReserve - p;
-        return p;
+        let d = StarMap.distance(
+            x, y, 
+            StarMap.sectorX(sectorIndex), StarMap.sectorY(sectorIndex)
+        );
+        if (d < 2) {
+            return p * 3;
+        }
+        if (d < 4) {
+            return p * 2;
+        }
+        if (d < 6) {
+            return p;
+        }
+        return p / 2;
     }
     
     method int fireMissiles(int x, int y) {
@@ -131,6 +145,43 @@ class PlayerShip {
         return;
     }
     
+    method void hit(int p) {
+        var int r;
+        if (shieldsUp) {
+            if (p < shieldLevel) {
+                let shieldLevel = shieldLevel - p;
+                return;
+            }
+            let p = p - shieldLevel;
+            let shieldLevel = 0;
+            let shieldsUp = false;
+        }
+        let p = p / 2;
+        let hullIntegrity = hullIntegrity - p;
+        if (Random.randInt(10) < 3) {
+            let engineEfficiency = engineEfficiency - p;
+        }
+        if (Random.randInt(10) < 3) {
+            let weaponsStatus = weaponsStatus - p;
+        }
+        if (Random.randInt(10) < 3) {
+            let dronePopulation = dronePopulation - p;
+        }
+        // critical hit: missile detonation
+        if ((missileSupply > 0) & (Random.randInt(100) < 5)) {
+            let missileSupply = missileSupply - 1;
+            let hullIntegrity = hullIntegrity - 50;
+        }
+        return;
+    }
+
+    method void resupply() {
+        let missileSupply = 10;
+        let powerReserve = 100;
+        let dronePopulation = 100;
+        return;
+    }
+
     method void repair() {
         var int repairRate;
         let repairRate = dronePopulation / 25;
@@ -158,7 +209,14 @@ class PlayerShip {
     method void update(StarHackGame game) {
         if (shieldsUp) {
             let powerReserve = powerReserve - 5;
+            if (shieldLevel < 100) {
+                let powerReserve = powerReserve - 5;
+                let shieldLevel = shieldLevel + 10;
+            }
         } else {
+            if (shieldLevel < 100) {
+                let shieldLevel = shieldLevel + 5;
+            }
             if (powerReserve < 100) {
                 let powerReserve = powerReserve + 10;
             }

@@ -21,8 +21,17 @@ class GameGraphics {
     }
 
     function void clearRectangle(int x1, int y1, int x2, int y2) {
-        do Screen.setColor(0);
-        do Screen.drawRectangle(x1, y1, x2, y2);
+        var int s, e, w;
+        let w = x2 - x1;
+        while (y1 < y2) {
+            let s = (y1 * 32) + x1;
+            let e = s + w;
+            while (s < e) {
+                let screen[s] = 0;
+                let s = s + 1;
+            }
+            let y1 = y1 + 1;
+        } 
         return;
     }
 

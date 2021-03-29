@@ -1,14 +1,18 @@
 
 commands = [
     ('LRS', 'Long Range Scan'),
-    ('MJD', 'Micro Jump Drive in sector'),
+    ('MOV', 'Micro Jump Drive in sector'),
     ('JMP', 'JuMP to a nearby sector'),
     ('PAC', 'Fire Particle Cannon'),
     ('AMM', 'Fire AntiMatter Missiles'),
     ('SDN', 'Shields DowN'),
     ('SUP', 'Shields UP'),
-    ('RST', 'ReSTore ship function'),
+    ('RPR', 'RePaiR damage'),
+    ('RSP', 'ReSuPply'),
     ('STA', 'STAtus report'),
+    ('YLO', 'Cheat code - self destruct'),
+    ('BNK', 'Cheat code - destroy all habitats'),
+    ('LSF', 'Cheat code - destroy anomalies'),
 ]
 
 for count, cmd in enumerate(commands):

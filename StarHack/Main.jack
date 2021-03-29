@@ -3,6 +3,7 @@ class Main {
     static StarHackGame game;
 
     function void main() {
+        var int waitTime;
         var int commandCode;
         var int commandCoordinates;
 
@@ -11,36 +12,27 @@ class Main {
         do Screens.init();
         do CommandTerminal.init();
         do GameGraphics.init();
-        do Random.seed();
 
         while (true) {
 
             // attract loop
             do Screens.titleScreen();
-            do CommandTerminal.readAnyKeyScreen(Constants.pressKey());
+            let waitTime = CommandTerminal.awaitScreen(Constants.pressKey());
             do GameGraphics.wipeScreen();
 
-            // game start
+            // run game
+            do Random.seed(waitTime);
             let game = StarHackGame.new();
             do game.start();
             while (game.isRunning()) {
                 do game.update();
             }
-            do GameGraphics.wipeScreen();
-
-            // final score
-            do Main.drawGameReport(game);
-            do CommandTerminal.readAnyKeyScreen(Constants.pressKey());
-            do GameGraphics.wipeScreen();
+            do game.end();
 
             // end
             do game.dispose();
 
         }
-        return;
-    }
-
-    function void drawGameReport(StarHackGame game) {
         return;
     }
 
