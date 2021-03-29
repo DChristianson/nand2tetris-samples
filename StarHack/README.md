@@ -22,7 +22,7 @@ Right now Star Hack ... is too big to run on the Hack computer. In fact without 
 
 In order to get around this first hurdle the Jack compiler found in the nand2tetris-samples project implements a few extensions and optimizations that enable the code to "fit" on a VM emulator, and several of the provided OS libraries have been heavily modified to aid in this effort.
 
-Note that if you want to try the OS code and compiler to shortcut the Nand2Tetris course... well, you're only cheating yourself... 
+Note that if you want to use the provided OS code and compiler to shortcut the Nand2Tetris course... well, you're only cheating yourself... 
 
 # Links
  * https://www.nand2tetris.org/
