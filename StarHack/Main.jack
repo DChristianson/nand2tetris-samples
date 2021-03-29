@@ -7,11 +7,11 @@ class Main {
         var int commandCode;
         var int commandCoordinates;
 
+        do GameGraphics.init();
         do Constants.init();
         do Sprites.init();
         do Screens.init();
         do CommandTerminal.init();
-        do GameGraphics.init();
 
         while (true) {
 

@@ -118,7 +118,7 @@ class PlayerShip {
         let powerReserve = powerReserve - p;
         let d = StarMap.distance(
             x, y, 
-            StarMap.sectorX(sectorIndex), StarMap.sectorY(sectorIndex)
+            StarMap.subsectorX(subsectorIndex), StarMap.subsectorY(subsectorIndex)
         );
         if (d < 2) {
             return p * 3;

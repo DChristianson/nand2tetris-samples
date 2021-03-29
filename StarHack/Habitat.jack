@@ -40,7 +40,7 @@ class Habitat {
             }
         }
         if (p > 0) {
-            let population = population - p * 10;
+            let population = population - (p * 100);
         }
         return;
     }

@@ -20,9 +20,11 @@ class GameGraphics {
         return;
     }
 
-    function void clearRectangle(int x1, int y1, int x2, int y2) {
+    function void clearTiles(int x1, int y1, int x2, int y2) {
         var int s, e, w;
         let w = x2 - x1;
+        let y1 = y1 * 16;
+        let y2 = y2 * 16;
         while (y1 < y2) {
             let s = (y1 * 32) + x1;
             let e = s + w;
