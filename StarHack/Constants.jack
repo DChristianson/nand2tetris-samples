@@ -80,7 +80,7 @@ class Constants {
         let msg00 = "Transmission received @t4.17.100.0010";
         let msg01 = "Anomalous entities detected in nearby space...";
         let msg02 = "Scans indicate presence of hostile Von Neumann probes.";
-        let msg03 = "You are tasked to resolve all anomalies...";
+        let msg03 = "You are tasked to investigate...";
         let cmd = "Enter command (? for help)";
         let conditionRed = "Condition:  RED ";
         let conditionGreen = "Condition: GREEN";
@@ -100,7 +100,7 @@ class Constants {
         let help = "Help";
         let anomalyHit = "Direct hit on anomaly!";
         let anomalyDestroyed = "Anomaly destroyed!";
-        let friendlyFire = "Records show you fired on civilian population";
+        let friendlyFire = "You fired on civilian population...";
         let habitatDestroyed = "Habitat destroyed!";
         let noPower = "Not enough power!";
         let messageIncoming = "Incoming message:";
@@ -110,11 +110,11 @@ class Constants {
         let missionAborted = "Mission aborted.";
         let missionCompleted = "Mission complete.";
         let timeExpired = "Time limit has been exceeded";
-        let initiatingSpatialCollapse = "We are initiating a purge of the entire quadrant";
-        let habitatsDestroyed = "All civilian population lost";
-        let anomaliesEliminated = "All anomalies resolved";
-        let huntersDispatched = "You are to be relieved of command";
-        let noAmmo = "You are to be relieved of command";
+        let initiatingSpatialCollapse = "Initiating complete spatial collapse to purge threat.";
+        let habitatsDestroyed = "All civilian population lost...";
+        let anomaliesEliminated = "All anomalies ...resolved...";
+        let huntersDispatched = "You are relieved of your command.";
+        let noAmmo = "No ammunition left!";
         let resupply = "Resupply ship";
         let tooFar = "You are too far away!";
         let resupplySuccess = "Missiles and drone crew resupplied.";
