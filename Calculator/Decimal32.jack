@@ -328,7 +328,7 @@ class Decimal32 {
      */ 
     function void mul(Decimal32 a, Decimal32 b, Decimal32 out) {
         var boolean signA, signB;
-        var UInt32 significandA, significandB, out;
+        var UInt32 significandA, significandB;
         var int exponentA, exponentB;
 
         if (a.isZero() | b.isZero()) {
