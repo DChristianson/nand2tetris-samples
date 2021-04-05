@@ -16,7 +16,7 @@ class Decimal32 {
         let i1 = significand[1];
         // if significand is too big we need to shrink it down
         while (~((i1 & (~127)) = 0)) {
-            let exponent = exponent + 1;
+            inc exponent;
             do UInt32.div32x8(this, 10, this);
         }
         let i1 = i1 + (128 * (127 + exponent));
@@ -75,8 +75,8 @@ class Decimal32 {
      * Note this modifies the Decimal32 in place.
      */
     method void normalize() {
-        var boolean sign;
-        var int exponent;
+        register boolean sign;
+        register int exponent;
         if (isZero()) {
             return;
         }
@@ -113,10 +113,10 @@ class Decimal32 {
      */
     method void format(String output) {
 
-        var UInt32 x; // temp var 
-        var Array s; // space to build integer
-        var boolean sn; // use scientific notation
-        var int i, remainder, exponent, sd; // counters
+        register UInt32 x; // temp var 
+        register Array s; // space to build integer
+        register boolean sn; // use scientific notation
+        register int i, remainder, exponent, sd; // counters
 
         // shortcut if the number is zero
         if (isZero()) {
@@ -129,10 +129,11 @@ class Decimal32 {
 
         // K+R algo
         let x = significand();
+        let i = 0;
         while ((i < 7) & x.isNonzero()) {
             let remainder = UInt32.div32x8(x, 10, x);
             let s[i] = 48 + remainder;
-            let i = i + 1;
+            inc i;
         }
         do x.dispose();
 
@@ -143,6 +144,7 @@ class Decimal32 {
         // decide if we need scientific notation
         let exponent = exponent();
         let sd = i + exponent;
+        let sn = false;
         if ((exponent < -7) | (sd > 7)) {
             let sn = true;
             let exponent = sd - 1;
@@ -155,7 +157,7 @@ class Decimal32 {
             do output.appendChar(46);
             while (sd < 0) {
                 do output.appendChar(48);
-                let sd = sd + 1;
+                inc sd;
             }
             let sd = -1;
         }
@@ -166,7 +168,7 @@ class Decimal32 {
                 do output.appendChar(46);
             }
             let sd = sd - 1;
-            let i = i - 1;
+            dec i;
             do output.appendChar(s[i]);
         }
 
@@ -189,24 +191,22 @@ class Decimal32 {
                 let remainder = exponent - (sd * 10);
                 let exponent = sd;
                 let s[i] = 48 + remainder;
-                let i = i + 1;
+                inc i;
             }
             while (i > 0) {
-                let i = i - 1;
+                dec i;
                 do output.appendChar(s[i]);
             }
         }
-
-        do s.dispose();
 
         return;
     }
 
     method boolean tryParse(String s, int startOffset, int endOffset) {
 
-        var int decimalExponent;
-        var boolean hasFraction;
-        var char c;
+        register int decimalExponent;
+        register boolean hasFraction;
+        register char c;
 
         // reset self (will use self as UInt32 for parsing purposes)
         let i0 = 0;
@@ -217,14 +217,16 @@ class Decimal32 {
         while ((startOffset < endOffset) & (c = 48)) {
             let c = s.charAt(startOffset);
             if (c = 48) {
-                let startOffset = startOffset + 1;
+                inc startOffset;
             }
         }
 
         // parse integer part
+        let hasFraction = false;
+        let decimalExponent = 0;
         while (startOffset < endOffset) {
             let c = s.charAt(startOffset);
-            let startOffset = startOffset + 1;
+            inc startOffset;
             if (c = 46) {
                 if (hasFraction) {
                     return false;
@@ -244,7 +246,7 @@ class Decimal32 {
                 } else {
                     // out of digits, just add exponent
                     if (~hasFraction) {
-                        let decimalExponent = decimalExponent + 1;
+                        inc decimalExponent;
                     }
                 }
             }
@@ -267,10 +269,10 @@ class Decimal32 {
      */ 
     function void add(Decimal32 a, Decimal32 b, Decimal32 out) {
 
-        var boolean signA, signB;
-        var UInt32 significandA, significandB;
-        var int exponentA, exponentB;
-        var String s;
+        register boolean signA, signB;
+        register UInt32 significandA, significandB;
+        register int exponentA, exponentB;
+        register String s;
         let signA = a.sign();
         let signB = b.sign();
         let significandA = a.significand();
@@ -290,11 +292,11 @@ class Decimal32 {
 
         // match up exponents
         while (exponentB < exponentA) {
-            let exponentB = exponentB + 1;
+            inc exponentB;
             do UInt32.div32x8(significandB, 10, significandB);
         }
         while (exponentA < exponentB) {
-            let exponentA = exponentA + 1;
+            inc exponentA;
             do UInt32.div32x8(significandA, 10, significandA);
         }
 
@@ -327,9 +329,9 @@ class Decimal32 {
      * Multiply two decimals. 
      */ 
     function void mul(Decimal32 a, Decimal32 b, Decimal32 out) {
-        var boolean signA, signB;
-        var UInt32 significandA, significandB;
-        var int exponentA, exponentB;
+        register boolean signA, signB;
+        register UInt32 significandA, significandB;
+        register int exponentA, exponentB;
 
         if (a.isZero() | b.isZero()) {
             do out.setInt(0, 0);
@@ -345,11 +347,11 @@ class Decimal32 {
 
         // shrink down the significands 
         while (Bits.word0(significandA[1]) > 0) {
-            let exponentA = exponentA + 1;
+            inc exponentA;
             do UInt32.div32x8(significandA, 10, significandA);
         }
         while (Bits.word0(significandB[1]) > 0) {
-            let exponentB = exponentB + 1;
+            inc exponentB;
             do UInt32.div32x8(significandB, 10, significandB);
         }
 
@@ -377,9 +379,9 @@ class Decimal32 {
      * which will cause some loss of precision.
      */
     function void div(Decimal32 a, Decimal32 b, Decimal32 out) {
-        var boolean signA, signB;
-        var UInt32 significandA, significandB;
-        var int exponentA, exponentB;
+        register boolean signA, signB;
+        register UInt32 significandA, significandB;
+        register int exponentA, exponentB;
 
         if (a.isZero() | b.isZero()) {
             do out.setInt(0, 0);
@@ -395,7 +397,7 @@ class Decimal32 {
 
         // make sure b < a
         while ((Bits.word0(significandB[1]) > 0) | (Bits.word1(significandB[0]) > 0)) {
-            let exponentB = exponentB + 1;
+            inc exponentB;
             do UInt32.div32x8(significandB, 10, significandB);
         }
 

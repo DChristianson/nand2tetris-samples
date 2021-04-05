@@ -11,6 +11,8 @@ class Calculator {
 
     constructor Calculator new() {
         let currentValue = Decimal32.new();
+        let error = false;
+        let errorOffset = 0;
         return this;
     }
 

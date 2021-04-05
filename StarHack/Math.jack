@@ -31,11 +31,12 @@ class Math {
     }
 
     function int multiply(int x, int y) {
-        var boolean isNegative;
-        var int i, z;
+        register boolean isNegative;
+        register int i, z;
         if ((x = 0) | (y = 0)) {
             return 0;
         }
+        let isNegative = false;
         if (x < 0) {
             let x = -x;
             if (y > 0) {
@@ -50,6 +51,7 @@ class Math {
             }
         }
         let i = 1;
+        let z = 0;
         while (x > 0) {
             if ((x & i) > 0) {
                 let z = z + y;
@@ -110,10 +112,11 @@ class Math {
     }
 
     function int sqrt(int x) {
-        var int y, j, z, zz;
+        register int y, j, z, zz;
+        let y = 0;
         let j = 8;
         while (j > 0) {
-            let j = j - 1;
+            dec j;
             // reuse the candidate term
             let z = y + roots[j];
             let zz = Math.multiply(z, z);

@@ -4,6 +4,12 @@ class Main {
         var String input;
         var Calculator calculator;
 
+        // // test mode
+        // if (true) {
+        //     do Test.test();
+        //     return;
+        // }
+
         let calculator = Calculator.new();
 
         // init calculator display
@@ -13,12 +19,6 @@ class Main {
 
         // init input dialog
         do InputDialog.setPosition(0, 209, 511, 45);
-
-        // test mode
-        // if (true) {
-        //     do Test.test();
-        //     return;
-        // }
 
         // clear display and draw static content
         do Screen.clearScreen();

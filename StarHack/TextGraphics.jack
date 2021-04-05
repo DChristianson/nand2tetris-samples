@@ -6,166 +6,212 @@ class TextGraphics {
 
     static Array screen;
     static int row, column;
-
-    // Character map for displaying characters
-    static Array charMaps; 
-
-    // character buffer
     static Array buffer;
 
-    /** Initializes the screen, and locates the cursor at the screen's top-left. */
+    // character buffer
+    static Array charMap; 
+
     function void init() {
         let screen = 16384;
         let row = 0;
         let column = 0;
-        do TextGraphics.initMap();
         let buffer = Array.new(5);
-        return;
-    }
-
-    // Initializes the character map array
-    function void initMap() {
-    
-        let charMaps = Array.new(127);
-        
-        // Black square, used for displaying non-printable characters.
-        do TextGraphics.create(0,63,63,63,63,63,63,63,63,63,0,0);
-
-        // Assigns the bitmap for each character in the charachter set.
-        // The first parameter is the character index, the next 11 numbers
-        // are the values of each row in the frame that represents this character.
-        do TextGraphics.create(32,0,0,0,0,0,0,0,0,0,0,0);          //
-        do TextGraphics.create(33,12,30,30,30,12,12,0,12,12,0,0);  // !
-        do TextGraphics.create(34,54,54,20,0,0,0,0,0,0,0,0);       // "
-        do TextGraphics.create(35,0,18,18,63,18,18,63,18,18,0,0);  // #
-        do TextGraphics.create(36,12,30,51,3,30,48,51,30,12,12,0); // $
-        do TextGraphics.create(37,0,0,35,51,24,12,6,51,49,0,0);    // %
-        do TextGraphics.create(38,12,30,30,12,54,27,27,27,54,0,0); // &
-        do TextGraphics.create(39,12,12,6,0,0,0,0,0,0,0,0);        // '
-        do TextGraphics.create(40,24,12,6,6,6,6,6,12,24,0,0);      // (
-        do TextGraphics.create(41,6,12,24,24,24,24,24,12,6,0,0);   // )
-        do TextGraphics.create(42,0,0,0,51,30,63,30,51,0,0,0);     // *
-        do TextGraphics.create(43,0,0,0,12,12,63,12,12,0,0,0);     // +
-        do TextGraphics.create(44,0,0,0,0,0,0,0,12,12,6,0);        // ,
-        do TextGraphics.create(45,0,0,0,0,0,63,0,0,0,0,0);         // -
-        do TextGraphics.create(46,0,0,0,0,0,0,0,12,12,0,0);        // .    
-        do TextGraphics.create(47,0,0,32,48,24,12,6,3,1,0,0);      // /
-        
-        do TextGraphics.create(48,12,30,51,51,51,51,51,30,12,0,0); // 0
-        do TextGraphics.create(49,12,14,15,12,12,12,12,12,63,0,0); // 1
-        do TextGraphics.create(50,30,51,48,24,12,6,3,51,63,0,0);   // 2
-        do TextGraphics.create(51,30,51,48,48,28,48,48,51,30,0,0); // 3
-        do TextGraphics.create(52,16,24,28,26,25,63,24,24,60,0,0); // 4
-        do TextGraphics.create(53,63,3,3,31,48,48,48,51,30,0,0);   // 5
-        do TextGraphics.create(54,28,6,3,3,31,51,51,51,30,0,0);    // 6
-        do TextGraphics.create(55,63,49,48,48,24,12,12,12,12,0,0); // 7
-        do TextGraphics.create(56,30,51,51,51,30,51,51,51,30,0,0); // 8
-        do TextGraphics.create(57,30,51,51,51,62,48,48,24,14,0,0); // 9
-        
-        do TextGraphics.create(58,0,0,12,12,0,0,12,12,0,0,0);      // :
-        do TextGraphics.create(59,0,0,12,12,0,0,12,12,6,0,0);      // ;
-        do TextGraphics.create(60,0,0,24,12,6,3,6,12,24,0,0);      // <
-        do TextGraphics.create(61,0,0,0,63,0,0,63,0,0,0,0);        // =
-        do TextGraphics.create(62,0,0,3,6,12,24,12,6,3,0,0);       // >
-        do TextGraphics.create(64,30,51,51,59,59,59,27,3,30,0,0);  // @
-        do TextGraphics.create(63,30,51,51,24,12,12,0,12,12,0,0);  // ?
-
-        do TextGraphics.create(65,30,51,51,51,63,51,51,51,51,0,0); // A 
-        do TextGraphics.create(66,31,51,51,51,31,51,51,51,31,0,0); // B
-        do TextGraphics.create(67,28,54,35,3,3,3,35,54,28,0,0);    // C
-        do TextGraphics.create(68,15,27,51,51,51,51,51,27,15,0,0); // D
-        do TextGraphics.create(69,63,51,35,11,15,11,35,51,63,0,0); // E
-        do TextGraphics.create(70,63,51,35,11,15,11,3,3,3,0,0);    // F
-        do TextGraphics.create(71,28,54,35,3,59,51,51,54,44,0,0);  // G
-        do TextGraphics.create(72,51,51,51,51,63,51,51,51,51,0,0); // H
-        do TextGraphics.create(73,30,12,12,12,12,12,12,12,30,0,0); // I
-        do TextGraphics.create(74,60,24,24,24,24,24,27,27,14,0,0); // J
-        do TextGraphics.create(75,51,51,51,27,15,27,51,51,51,0,0); // K
-        do TextGraphics.create(76,3,3,3,3,3,3,35,51,63,0,0);       // L
-        do TextGraphics.create(77,33,51,63,63,51,51,51,51,51,0,0); // M
-        do TextGraphics.create(78,51,51,55,55,63,59,59,51,51,0,0); // N
-        do TextGraphics.create(79,30,51,51,51,51,51,51,51,30,0,0); // O
-        do TextGraphics.create(80,31,51,51,51,31,3,3,3,3,0,0);     // P
-        do TextGraphics.create(81,30,51,51,51,51,51,63,59,30,48,0);// Q
-        do TextGraphics.create(82,31,51,51,51,31,27,51,51,51,0,0); // R
-        do TextGraphics.create(83,30,51,51,6,28,48,51,51,30,0,0);  // S
-        do TextGraphics.create(84,63,63,45,12,12,12,12,12,30,0,0); // T
-        do TextGraphics.create(85,51,51,51,51,51,51,51,51,30,0,0); // U
-        do TextGraphics.create(86,51,51,51,51,51,30,30,12,12,0,0); // V
-        do TextGraphics.create(87,51,51,51,51,51,63,63,63,18,0,0); // W
-        do TextGraphics.create(88,51,51,30,30,12,30,30,51,51,0,0); // X
-        do TextGraphics.create(89,51,51,51,51,30,12,12,12,30,0,0); // Y
-        do TextGraphics.create(90,63,51,49,24,12,6,35,51,63,0,0);  // Z
-
-        do TextGraphics.create(91,30,6,6,6,6,6,6,6,30,0,0);          // [
-        do TextGraphics.create(92,0,0,1,3,6,12,24,48,32,0,0);        // \
-        do TextGraphics.create(93,30,24,24,24,24,24,24,24,30,0,0);   // ]
-        do TextGraphics.create(94,8,28,54,0,0,0,0,0,0,0,0);          // ^
-        do TextGraphics.create(95,0,0,0,0,0,0,0,0,0,63,0);           // _
-        do TextGraphics.create(96,6,12,24,0,0,0,0,0,0,0,0);          // `
-
-        do TextGraphics.create(97,0,0,0,14,24,30,27,27,54,0,0);      // a
-        do TextGraphics.create(98,3,3,3,15,27,51,51,51,30,0,0);      // b
-        do TextGraphics.create(99,0,0,0,30,51,3,3,51,30,0,0);        // c
-        do TextGraphics.create(100,48,48,48,60,54,51,51,51,30,0,0);  // d
-        do TextGraphics.create(101,0,0,0,30,51,63,3,51,30,0,0);      // e
-        do TextGraphics.create(102,28,54,38,6,15,6,6,6,15,0,0);      // f
-        do TextGraphics.create(103,0,0,30,51,51,51,62,48,51,30,0);   // g
-        do TextGraphics.create(104,3,3,3,27,55,51,51,51,51,0,0);     // h
-        do TextGraphics.create(105,12,12,0,14,12,12,12,12,30,0,0);   // i
-        do TextGraphics.create(106,48,48,0,56,48,48,48,48,51,30,0);  // j
-        do TextGraphics.create(107,3,3,3,51,27,15,15,27,51,0,0);     // k
-        do TextGraphics.create(108,14,12,12,12,12,12,12,12,30,0,0);  // l
-        do TextGraphics.create(109,0,0,0,29,63,43,43,43,43,0,0);     // m
-        do TextGraphics.create(110,0,0,0,29,51,51,51,51,51,0,0);     // n
-        do TextGraphics.create(111,0,0,0,30,51,51,51,51,30,0,0);     // o
-        do TextGraphics.create(112,0,0,0,30,51,51,51,31,3,3,0);      // p
-        do TextGraphics.create(113,0,0,0,30,51,51,51,62,48,48,0);    // q
-        do TextGraphics.create(114,0,0,0,29,55,51,3,3,7,0,0);        // r
-        do TextGraphics.create(115,0,0,0,30,51,6,24,51,30,0,0);      // s
-        do TextGraphics.create(116,4,6,6,15,6,6,6,54,28,0,0);        // t
-        do TextGraphics.create(117,0,0,0,27,27,27,27,27,54,0,0);     // u
-        do TextGraphics.create(118,0,0,0,51,51,51,51,30,12,0,0);     // v
-        do TextGraphics.create(119,0,0,0,51,51,51,63,63,18,0,0);     // w
-        do TextGraphics.create(120,0,0,0,51,30,12,12,30,51,0,0);     // x
-        do TextGraphics.create(121,0,0,0,51,51,51,62,48,24,15,0);    // y
-        do TextGraphics.create(122,0,0,0,63,27,12,6,51,63,0,0);      // z
-        
-        do TextGraphics.create(123,56,12,12,12,7,12,12,12,56,0,0);   // {
-        do TextGraphics.create(124,12,12,12,12,12,12,12,12,12,0,0);  // |
-        do TextGraphics.create(125,7,12,12,12,56,12,12,12,7,0,0);    // }
-        do TextGraphics.create(126,38,45,25,0,0,0,0,0,0,0,0);        // ~
+        let charMap = 15292;
+        // 31: 
+        let @15292 = 16191;let @15293 = 16191;let @15294 = 16191;let @15295 = 16191;let @15296 = 16191;let @15297 = 16191;let @15298 = 16191;let @15299 = 16191;let @15300 = 16191;
+        // 32:  
+        // 33: !
+        let @15314 = 3084;let @15315 = 7710;let @15316 = 7710;let @15317 = 7710;let @15318 = 3084;let @15319 = 3084;let @15321 = 3084;let @15322 = 3084;
+        // 34: "
+        let @15325 = 13878;let @15326 = 13878;let @15327 = 5140;
+        // 35: #
+        let @15337 = 4626;let @15338 = 4626;let @15339 = 16191;let @15340 = 4626;let @15341 = 4626;let @15342 = 16191;let @15343 = 4626;let @15344 = 4626;
+        // 36: $
+        let @15347 = 3084;let @15348 = 7710;let @15349 = 13107;let @15350 = 771;let @15351 = 7710;let @15352 = 12336;let @15353 = 13107;let @15354 = 7710;let @15355 = 3084;let @15356 = 3084;
+        // 37: %
+        let @15360 = 8995;let @15361 = 13107;let @15362 = 6168;let @15363 = 3084;let @15364 = 1542;let @15365 = 13107;let @15366 = 12593;
+        // 38: &
+        let @15369 = 3084;let @15370 = 7710;let @15371 = 7710;let @15372 = 3084;let @15373 = 13878;let @15374 = 6939;let @15375 = 6939;let @15376 = 6939;let @15377 = 13878;
+        // 39: '
+        let @15380 = 3084;let @15381 = 3084;let @15382 = 1542;
+        // 40: (
+        let @15391 = 6168;let @15392 = 3084;let @15393 = 1542;let @15394 = 1542;let @15395 = 1542;let @15396 = 1542;let @15397 = 1542;let @15398 = 3084;let @15399 = 6168;
+        // 41: )
+        let @15402 = 1542;let @15403 = 3084;let @15404 = 6168;let @15405 = 6168;let @15406 = 6168;let @15407 = 6168;let @15408 = 6168;let @15409 = 3084;let @15410 = 1542;
+        // 42: *
+        let @15416 = 13107;let @15417 = 7710;let @15418 = 16191;let @15419 = 7710;let @15420 = 13107;
+        // 43: +
+        let @15427 = 3084;let @15428 = 3084;let @15429 = 16191;let @15430 = 3084;let @15431 = 3084;
+        // 44: ,
+        let @15442 = 3084;let @15443 = 3084;let @15444 = 1542;
+        // 45: -
+        let @15451 = 16191;
+        // 46: .
+        let @15464 = 3084;let @15465 = 3084;
+        // 47: /
+        let @15470 = 8224;let @15471 = 12336;let @15472 = 6168;let @15473 = 3084;let @15474 = 1542;let @15475 = 771;let @15476 = 257;
+        // 48: 0
+        let @15479 = 3084;let @15480 = 7710;let @15481 = 13107;let @15482 = 13107;let @15483 = 13107;let @15484 = 13107;let @15485 = 13107;let @15486 = 7710;let @15487 = 3084;
+        // 49: 1
+        let @15490 = 3084;let @15491 = 3598;let @15492 = 3855;let @15493 = 3084;let @15494 = 3084;let @15495 = 3084;let @15496 = 3084;let @15497 = 3084;let @15498 = 16191;
+        // 50: 2
+        let @15501 = 7710;let @15502 = 13107;let @15503 = 12336;let @15504 = 6168;let @15505 = 3084;let @15506 = 1542;let @15507 = 771;let @15508 = 13107;let @15509 = 16191;
+        // 51: 3
+        let @15512 = 7710;let @15513 = 13107;let @15514 = 12336;let @15515 = 12336;let @15516 = 7196;let @15517 = 12336;let @15518 = 12336;let @15519 = 13107;let @15520 = 7710;
+        // 52: 4
+        let @15523 = 4112;let @15524 = 6168;let @15525 = 7196;let @15526 = 6682;let @15527 = 6425;let @15528 = 16191;let @15529 = 6168;let @15530 = 6168;let @15531 = 15420;
+        // 53: 5
+        let @15534 = 16191;let @15535 = 771;let @15536 = 771;let @15537 = 7967;let @15538 = 12336;let @15539 = 12336;let @15540 = 12336;let @15541 = 13107;let @15542 = 7710;
+        // 54: 6
+        let @15545 = 7196;let @15546 = 1542;let @15547 = 771;let @15548 = 771;let @15549 = 7967;let @15550 = 13107;let @15551 = 13107;let @15552 = 13107;let @15553 = 7710;
+        // 55: 7
+        let @15556 = 16191;let @15557 = 12593;let @15558 = 12336;let @15559 = 12336;let @15560 = 6168;let @15561 = 3084;let @15562 = 3084;let @15563 = 3084;let @15564 = 3084;
+        // 56: 8
+        let @15567 = 7710;let @15568 = 13107;let @15569 = 13107;let @15570 = 13107;let @15571 = 7710;let @15572 = 13107;let @15573 = 13107;let @15574 = 13107;let @15575 = 7710;
+        // 57: 9
+        let @15578 = 7710;let @15579 = 13107;let @15580 = 13107;let @15581 = 13107;let @15582 = 15934;let @15583 = 12336;let @15584 = 12336;let @15585 = 6168;let @15586 = 3598;
+        // 58: :
+        let @15591 = 3084;let @15592 = 3084;let @15595 = 3084;let @15596 = 3084;
+        // 59: ;
+        let @15602 = 3084;let @15603 = 3084;let @15606 = 3084;let @15607 = 3084;let @15608 = 1542;
+        // 60: <
+        let @15613 = 6168;let @15614 = 3084;let @15615 = 1542;let @15616 = 771;let @15617 = 1542;let @15618 = 3084;let @15619 = 6168;
+        // 61: =
+        let @15625 = 16191;let @15628 = 16191;
+        // 62: >
+        let @15635 = 771;let @15636 = 1542;let @15637 = 3084;let @15638 = 6168;let @15639 = 3084;let @15640 = 1542;let @15641 = 771;
+        // 64: @
+        let @15655 = 7710;let @15656 = 13107;let @15657 = 13107;let @15658 = 15163;let @15659 = 15163;let @15660 = 15163;let @15661 = 6939;let @15662 = 771;let @15663 = 7710;
+        // 63: ?
+        let @15644 = 7710;let @15645 = 13107;let @15646 = 13107;let @15647 = 6168;let @15648 = 3084;let @15649 = 3084;let @15651 = 3084;let @15652 = 3084;
+        // 65: A
+        let @15666 = 7710;let @15667 = 13107;let @15668 = 13107;let @15669 = 13107;let @15670 = 16191;let @15671 = 13107;let @15672 = 13107;let @15673 = 13107;let @15674 = 13107;
+        // 66: B
+        let @15677 = 7967;let @15678 = 13107;let @15679 = 13107;let @15680 = 13107;let @15681 = 7967;let @15682 = 13107;let @15683 = 13107;let @15684 = 13107;let @15685 = 7967;
+        // 67: C
+        let @15688 = 7196;let @15689 = 13878;let @15690 = 8995;let @15691 = 771;let @15692 = 771;let @15693 = 771;let @15694 = 8995;let @15695 = 13878;let @15696 = 7196;
+        // 68: D
+        let @15699 = 3855;let @15700 = 6939;let @15701 = 13107;let @15702 = 13107;let @15703 = 13107;let @15704 = 13107;let @15705 = 13107;let @15706 = 6939;let @15707 = 3855;
+        // 69: E
+        let @15710 = 16191;let @15711 = 13107;let @15712 = 8995;let @15713 = 2827;let @15714 = 3855;let @15715 = 2827;let @15716 = 8995;let @15717 = 13107;let @15718 = 16191;
+        // 70: F
+        let @15721 = 16191;let @15722 = 13107;let @15723 = 8995;let @15724 = 2827;let @15725 = 3855;let @15726 = 2827;let @15727 = 771;let @15728 = 771;let @15729 = 771;
+        // 71: G
+        let @15732 = 7196;let @15733 = 13878;let @15734 = 8995;let @15735 = 771;let @15736 = 15163;let @15737 = 13107;let @15738 = 13107;let @15739 = 13878;let @15740 = 11308;
+        // 72: H
+        let @15743 = 13107;let @15744 = 13107;let @15745 = 13107;let @15746 = 13107;let @15747 = 16191;let @15748 = 13107;let @15749 = 13107;let @15750 = 13107;let @15751 = 13107;
+        // 73: I
+        let @15754 = 7710;let @15755 = 3084;let @15756 = 3084;let @15757 = 3084;let @15758 = 3084;let @15759 = 3084;let @15760 = 3084;let @15761 = 3084;let @15762 = 7710;
+        // 74: J
+        let @15765 = 15420;let @15766 = 6168;let @15767 = 6168;let @15768 = 6168;let @15769 = 6168;let @15770 = 6168;let @15771 = 6939;let @15772 = 6939;let @15773 = 3598;
+        // 75: K
+        let @15776 = 13107;let @15777 = 13107;let @15778 = 13107;let @15779 = 6939;let @15780 = 3855;let @15781 = 6939;let @15782 = 13107;let @15783 = 13107;let @15784 = 13107;
+        // 76: L
+        let @15787 = 771;let @15788 = 771;let @15789 = 771;let @15790 = 771;let @15791 = 771;let @15792 = 771;let @15793 = 8995;let @15794 = 13107;let @15795 = 16191;
+        // 77: M
+        let @15798 = 8481;let @15799 = 13107;let @15800 = 16191;let @15801 = 16191;let @15802 = 13107;let @15803 = 13107;let @15804 = 13107;let @15805 = 13107;let @15806 = 13107;
+        // 78: N
+        let @15809 = 13107;let @15810 = 13107;let @15811 = 14135;let @15812 = 14135;let @15813 = 16191;let @15814 = 15163;let @15815 = 15163;let @15816 = 13107;let @15817 = 13107;
+        // 79: O
+        let @15820 = 7710;let @15821 = 13107;let @15822 = 13107;let @15823 = 13107;let @15824 = 13107;let @15825 = 13107;let @15826 = 13107;let @15827 = 13107;let @15828 = 7710;
+        // 80: P
+        let @15831 = 7967;let @15832 = 13107;let @15833 = 13107;let @15834 = 13107;let @15835 = 7967;let @15836 = 771;let @15837 = 771;let @15838 = 771;let @15839 = 771;
+        // 81: Q
+        let @15842 = 7710;let @15843 = 13107;let @15844 = 13107;let @15845 = 13107;let @15846 = 13107;let @15847 = 13107;let @15848 = 16191;let @15849 = 15163;let @15850 = 7710;let @15851 = 12336;
+        // 82: R
+        let @15853 = 7967;let @15854 = 13107;let @15855 = 13107;let @15856 = 13107;let @15857 = 7967;let @15858 = 6939;let @15859 = 13107;let @15860 = 13107;let @15861 = 13107;
+        // 83: S
+        let @15864 = 7710;let @15865 = 13107;let @15866 = 13107;let @15867 = 1542;let @15868 = 7196;let @15869 = 12336;let @15870 = 13107;let @15871 = 13107;let @15872 = 7710;
+        // 84: T
+        let @15875 = 16191;let @15876 = 16191;let @15877 = 11565;let @15878 = 3084;let @15879 = 3084;let @15880 = 3084;let @15881 = 3084;let @15882 = 3084;let @15883 = 7710;
+        // 85: U
+        let @15886 = 13107;let @15887 = 13107;let @15888 = 13107;let @15889 = 13107;let @15890 = 13107;let @15891 = 13107;let @15892 = 13107;let @15893 = 13107;let @15894 = 7710;
+        // 86: V
+        let @15897 = 13107;let @15898 = 13107;let @15899 = 13107;let @15900 = 13107;let @15901 = 13107;let @15902 = 7710;let @15903 = 7710;let @15904 = 3084;let @15905 = 3084;
+        // 87: W
+        let @15908 = 13107;let @15909 = 13107;let @15910 = 13107;let @15911 = 13107;let @15912 = 13107;let @15913 = 16191;let @15914 = 16191;let @15915 = 16191;let @15916 = 4626;
+        // 88: X
+        let @15919 = 13107;let @15920 = 13107;let @15921 = 7710;let @15922 = 7710;let @15923 = 3084;let @15924 = 7710;let @15925 = 7710;let @15926 = 13107;let @15927 = 13107;
+        // 89: Y
+        let @15930 = 13107;let @15931 = 13107;let @15932 = 13107;let @15933 = 13107;let @15934 = 7710;let @15935 = 3084;let @15936 = 3084;let @15937 = 3084;let @15938 = 7710;
+        // 90: Z
+        let @15941 = 16191;let @15942 = 13107;let @15943 = 12593;let @15944 = 6168;let @15945 = 3084;let @15946 = 1542;let @15947 = 8995;let @15948 = 13107;let @15949 = 16191;
+        // 91: [
+        let @15952 = 7710;let @15953 = 1542;let @15954 = 1542;let @15955 = 1542;let @15956 = 1542;let @15957 = 1542;let @15958 = 1542;let @15959 = 1542;let @15960 = 7710;
+        // 92: \
+        let @15965 = 257;let @15966 = 771;let @15967 = 1542;let @15968 = 3084;let @15969 = 6168;let @15970 = 12336;let @15971 = 8224;
+        // 93: ]
+        let @15974 = 7710;let @15975 = 6168;let @15976 = 6168;let @15977 = 6168;let @15978 = 6168;let @15979 = 6168;let @15980 = 6168;let @15981 = 6168;let @15982 = 7710;
+        // 94: ^
+        let @15985 = 2056;let @15986 = 7196;let @15987 = 13878;
+        // 95: _
+        let @16005 = 16191;
+        // 96: `
+        let @16007 = 1542;let @16008 = 3084;let @16009 = 6168;
+        // 97: a
+        let @16021 = 3598;let @16022 = 6168;let @16023 = 7710;let @16024 = 6939;let @16025 = 6939;let @16026 = 13878;
+        // 98: b
+        let @16029 = 771;let @16030 = 771;let @16031 = 771;let @16032 = 3855;let @16033 = 6939;let @16034 = 13107;let @16035 = 13107;let @16036 = 13107;let @16037 = 7710;
+        // 99: c
+        let @16043 = 7710;let @16044 = 13107;let @16045 = 771;let @16046 = 771;let @16047 = 13107;let @16048 = 7710;
+        // 100: d
+        let @16051 = 12336;let @16052 = 12336;let @16053 = 12336;let @16054 = 15420;let @16055 = 13878;let @16056 = 13107;let @16057 = 13107;let @16058 = 13107;let @16059 = 7710;
+        // 101: e
+        let @16065 = 7710;let @16066 = 13107;let @16067 = 16191;let @16068 = 771;let @16069 = 13107;let @16070 = 7710;
+        // 102: f
+        let @16073 = 7196;let @16074 = 13878;let @16075 = 9766;let @16076 = 1542;let @16077 = 3855;let @16078 = 1542;let @16079 = 1542;let @16080 = 1542;let @16081 = 3855;
+        // 103: g
+        let @16086 = 7710;let @16087 = 13107;let @16088 = 13107;let @16089 = 13107;let @16090 = 15934;let @16091 = 12336;let @16092 = 13107;let @16093 = 7710;
+        // 104: h
+        let @16095 = 771;let @16096 = 771;let @16097 = 771;let @16098 = 6939;let @16099 = 14135;let @16100 = 13107;let @16101 = 13107;let @16102 = 13107;let @16103 = 13107;
+        // 105: i
+        let @16106 = 3084;let @16107 = 3084;let @16109 = 3598;let @16110 = 3084;let @16111 = 3084;let @16112 = 3084;let @16113 = 3084;let @16114 = 7710;
+        // 106: j
+        let @16117 = 12336;let @16118 = 12336;let @16120 = 14392;let @16121 = 12336;let @16122 = 12336;let @16123 = 12336;let @16124 = 12336;let @16125 = 13107;let @16126 = 7710;
+        // 107: k
+        let @16128 = 771;let @16129 = 771;let @16130 = 771;let @16131 = 13107;let @16132 = 6939;let @16133 = 3855;let @16134 = 3855;let @16135 = 6939;let @16136 = 13107;
+        // 108: l
+        let @16139 = 3598;let @16140 = 3084;let @16141 = 3084;let @16142 = 3084;let @16143 = 3084;let @16144 = 3084;let @16145 = 3084;let @16146 = 3084;let @16147 = 7710;
+        // 109: m
+        let @16153 = 7453;let @16154 = 16191;let @16155 = 11051;let @16156 = 11051;let @16157 = 11051;let @16158 = 11051;
+        // 110: n
+        let @16164 = 7453;let @16165 = 13107;let @16166 = 13107;let @16167 = 13107;let @16168 = 13107;let @16169 = 13107;
+        // 111: o
+        let @16175 = 7710;let @16176 = 13107;let @16177 = 13107;let @16178 = 13107;let @16179 = 13107;let @16180 = 7710;
+        // 112: p
+        let @16186 = 7710;let @16187 = 13107;let @16188 = 13107;let @16189 = 13107;let @16190 = 7967;let @16191 = 771;let @16192 = 771;
+        // 113: q
+        let @16197 = 7710;let @16198 = 13107;let @16199 = 13107;let @16200 = 13107;let @16201 = 15934;let @16202 = 12336;let @16203 = 12336;
+        // 114: r
+        let @16208 = 7453;let @16209 = 14135;let @16210 = 13107;let @16211 = 771;let @16212 = 771;let @16213 = 1799;
+        // 115: s
+        let @16219 = 7710;let @16220 = 13107;let @16221 = 1542;let @16222 = 6168;let @16223 = 13107;let @16224 = 7710;
+        // 116: t
+        let @16227 = 1028;let @16228 = 1542;let @16229 = 1542;let @16230 = 3855;let @16231 = 1542;let @16232 = 1542;let @16233 = 1542;let @16234 = 13878;let @16235 = 7196;
+        // 117: u
+        let @16241 = 6939;let @16242 = 6939;let @16243 = 6939;let @16244 = 6939;let @16245 = 6939;let @16246 = 13878;
+        // 118: v
+        let @16252 = 13107;let @16253 = 13107;let @16254 = 13107;let @16255 = 13107;let @16256 = 7710;let @16257 = 3084;
+        // 119: w
+        let @16263 = 13107;let @16264 = 13107;let @16265 = 13107;let @16266 = 16191;let @16267 = 16191;let @16268 = 4626;
+        // 120: x
+        let @16274 = 13107;let @16275 = 7710;let @16276 = 3084;let @16277 = 3084;let @16278 = 7710;let @16279 = 13107;
+        // 121: y
+        let @16285 = 13107;let @16286 = 13107;let @16287 = 13107;let @16288 = 15934;let @16289 = 12336;let @16290 = 6168;let @16291 = 3855;
+        // 122: z
+        let @16296 = 16191;let @16297 = 6939;let @16298 = 3084;let @16299 = 1542;let @16300 = 13107;let @16301 = 16191;
+        // 123: {
+        let @16304 = 14392;let @16305 = 3084;let @16306 = 3084;let @16307 = 3084;let @16308 = 1799;let @16309 = 3084;let @16310 = 3084;let @16311 = 3084;let @16312 = 14392;
+        // 124: |
+        let @16315 = 3084;let @16316 = 3084;let @16317 = 3084;let @16318 = 3084;let @16319 = 3084;let @16320 = 3084;let @16321 = 3084;let @16322 = 3084;let @16323 = 3084;
+        // 125: }
+        let @16326 = 1799;let @16327 = 3084;let @16328 = 3084;let @16329 = 3084;let @16330 = 14392;let @16331 = 3084;let @16332 = 3084;let @16333 = 3084;let @16334 = 1799;
+        // 126: ~
+        let @16337 = 9766;let @16338 = 11565;let @16339 = 6425;
 
     	return;
     }
 
-    // Creates the character map array of the given character index, using the given values.
-    function void create(int index, int a, int b, int c, int d, int e,
-                         int f, int g, int h, int i, int j, int k) {
-        var Array map;
-
-        let map = Array.new(11);
-        let charMaps[index] = map;
-
-        let map[0] = a + (a * 256);
-        let map[1] = b + (b * 256);
-        let map[2] = c + (c * 256);
-        let map[3] = d + (d * 256);
-        let map[4] = e + (e * 256);
-        let map[5] = f + (f * 256);
-        let map[6] = g + (g * 256);
-        let map[7] = h + (h * 256);
-        let map[8] = i + (i * 256);
-        let map[9] = j + (j * 256);
-        let map[10] = k + (k * 256);
-
-        return;
-    }
-
-    /**
-     * Print text at the given row/col position. An alignment of 1 will center the 
-     * string at the specified position, 2 will right align, any other input will left align.
-     */
     function void drawTextAligned(String s, int row, int col, int alignment) {
         if (alignment = 1) {
             let col = col - (s.length() / 2);
@@ -190,22 +236,10 @@ class TextGraphics {
         return;        
     }
     
-    // Returns the character map (array of size 11) of the given character.
-    // If the given character is invalid or non-printable, returns the
-    // character map of a black square.
-    function Array getMap(char c) {
-        if ((c < 32) | (c > 126)) {
-            let c = 0;
-        }
-        return charMaps[c];
-    }
-
-    /** Moves the cursor to the j-th column of the i-th row,
-     *  and erases the character displayed there. */
     function void moveCursor(int i, int j) {
-        var int offset;
-        var int mask;
-        var int k;
+        register int offset;
+        register int mask;
+        register int k;
         let row = i;
         let column = j;
         let offset = column / 2;
@@ -217,20 +251,27 @@ class TextGraphics {
         let offset = (row * 352);
         while (k < 11) {
             let screen[offset] = (screen[offset] & mask);
-            let k = k + 1;
+            inc k;
         }
         return;
     }
 
-    /** Displays the given character at the cursor location,
-     *  and advances the cursor one column forward. */
     function void printChar(char c) {
-        var Array map;
-        var int offset;
-        var int mask;
-        var int shift;
-        var int k;
-        let map = TextGraphics.getMap(c);
+        register Array map;
+        register int offset;
+        register int mask;
+        register int shift;
+        register int k;
+
+        // get char
+        if ((c < 32) | (c > 126)) {
+            let c = 0;
+        } else {
+            let c = (c - 31) * 11;
+        }
+        let map = charMap + c;
+
+        // compute offset
         let offset = column / 2;
         if ((column - (offset + offset)) > 0) {
             let shift = ~255;
@@ -240,16 +281,17 @@ class TextGraphics {
             let mask = ~255;
         }
         let offset = (row * 352) + offset;
+        let k = 0;
         while (k < 11) {
             let screen[offset] = (screen[offset] & mask) + (map[k] & shift);
             let offset = offset + 32;
-            let k = k + 1;
+            inc k;
         }
         // advance
-        let column = column + 1;
+        inc column;
         if (column > 63) {
             let column = 0;
-            let row = row + 1;
+            inc row;
             if (row > 22) {
                 let row = 0;
             }
@@ -257,14 +299,13 @@ class TextGraphics {
         return;
     }
 
-    /** displays the given string starting at the cursor location,
-     *  and advances the cursor appropriately. */
     function void printString(String s) {
-        var int i, len;
+        register int i, len;
         let len = s.length();
+        let i = 0;
         while (i < len) {
             do TextGraphics.printChar(s.charAt(i));
-            let i = i + 1;
+            inc i;
         }
         return;
     }
@@ -272,7 +313,7 @@ class TextGraphics {
     /** Displays the given integer starting at the cursor location,
      *  and advances the cursor appropriately. */
     function void printInt(int val) {
-        var int d, r, i;
+        register int d, r, i;
 
         if (val < 0) {
             do TextGraphics.printChar(45);
@@ -291,13 +332,13 @@ class TextGraphics {
             let d = val / 10;
             let r = val - (10 * d);
             let buffer[i] = (48 + r);
-            let i = i + 1;
+            inc i;
             let val = d;
         }
  
         // reverse in place
         while (i > 0) {
-            let i = i - 1;
+            dec i;
             do TextGraphics.printChar(buffer[i]);
         }
 
@@ -307,7 +348,7 @@ class TextGraphics {
     /** Advances the cursor to the beginning of the next line. */
     function void println() {
         let column = 0;
-        let row = row + 1;
+        inc row;
         if (row > 22) {
             let row = 0;
         }
@@ -316,10 +357,9 @@ class TextGraphics {
 
     /** clear text in given rectangle **/
     function void clearText(int r1, int c1, int r2, int c2) {
-        var int offset, rowStart, rowEnd;
-        var int mask;
-        var int stop;
-        var boolean halfStart, halfEnd;
+        register int offset, rowStart, rowEnd;
+        register int stop;
+        register boolean halfStart, halfEnd;
 
         let rowStart = c1 / 2;
         let halfStart = (c1 - (rowStart + rowStart)) > 0;
@@ -347,15 +387,14 @@ class TextGraphics {
         return;
     }
 
-    /** Moves the cursor one column back. */
     function void backSpace() {
-        var int offset;
-        var int mask;
-        var int k;
-        let column = column - 1;
+        register int offset;
+        register int mask;
+        register int k;
+        dec column;
         if (column < 0) {
             let column = 63;
-            let row = row - 1;
+            dec row;
             if (row < 0) {
                 let row = 22;
             }
@@ -367,10 +406,11 @@ class TextGraphics {
             let mask = ~255;
         }
         let offset = (row * 352) + offset;
+        let k = 0;
         while (k < 11) {
             let screen[offset] = (screen[offset] & mask);
             let offset = offset + 32;
-            let k = k + 1;
+            inc k;
         }
         return;
     }

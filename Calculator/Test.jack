@@ -3,14 +3,13 @@
  */
 class Test {
 
-
-    function void eval(String s) {
+    function void eval(String e) {
         var Calculator calculator;
         var Decimal32 result;
         var String s;
         let calculator = Calculator.new();
-        do calculator.update(s);
-        do Output.printString(s);
+        do calculator.update(e);
+        do Output.printString(e);
         do Output.printString(" = ");
         if (calculator.error()) {
             do Output.printString("ERR");
@@ -26,7 +25,7 @@ class Test {
     }
 
     function void test() {
-        do Test.eval("0");
+        //do Test.eval("0");
         do Test.eval("1");
         do Test.eval("10");
         do Test.eval("1024");
@@ -43,14 +42,15 @@ class Test {
         do Test.eval("-.001 * 100");
         do Test.eval("1 + 2");
         do Test.eval("1 - 2");
+        do Test.eval("1 / 2");
+        do Test.eval("-1 / 2");
         do Test.eval("-1 - -2");
         do Test.eval("-1 / -2");
-        do Test.eval("-1 * / -2");
+        do Test.eval("-1 - (-2)");
+        do Test.eval("-1 / (-2)");
         do Test.eval("2 + 3 * 4");
-        do Test.eval("(2 + 3) * 4");
         do Test.eval("2 + (3 * 4)");
         return;
     }
-
 
 }
