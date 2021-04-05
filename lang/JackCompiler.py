@@ -8,10 +8,13 @@ ops = ['+', '-', '*', '/', '&', '|', '<', '>', '=']
 unaryOps = ['-', '~']
 keywordConstants = ['true', 'false', 'null', 'this']
 
+enable_vm_ext = False
+
 # jack -> vm mappings
 kindSegments = {
     'static': 'static',
     'field': 'this',
+    'register': 'static',
     'var': 'local'
 }
 vmOps = {
@@ -53,6 +56,38 @@ class VMWriter:
     def if_goto(self, name):
         self.out.write('if-goto %s\n' % (name))
 
+    def poke(self, to_segment, to_value, from_segment, from_value):
+        if enable_vm_ext:
+            self.out.write('poke %s %d %s %d\n' % (to_segment, to_value, from_segment, from_value))
+        else:
+            self.push('constant', from_value)
+            if 'constant~' == from_segment:
+                self.op('not')
+            elif 'constant-' == from_segment:
+                self.op('neg')
+            self.push(to_segment, to_value)
+            self.pop('pointer', 1)
+            self.pop('that', 0)
+
+    def inc(self, segment, value):
+        if enable_vm_ext:
+            self.out.write('inc %s %d\n' % (segment, value))
+        else:
+            self.push(segment, value)
+            self.push('constant', 1)
+            self.op('add')
+            self.pop(segment, value)
+
+    def dec(self, segment, value):
+        if enable_vm_ext:
+            self.out.write('dec %s %d\n' % (segment, value))
+        else:
+            self.push(segment, value)
+            self.push('constant', 1)
+            self.op('neg')
+            self.op('add')
+            self.pop(segment, value)
+
     def push(self, segment, value):
         self.out.write('push %s %d\n' % (segment, value))
 
@@ -72,11 +107,13 @@ class JackCompiler:
         self.vmWriter = vmWriter
         self.className = None
         self.nextLabel = 0
+        self.registerCount = 0
         self.symbols = {
             'static': {},
-            'this': {},
+            'field': {},
             'argument': {},
-            'local': {}
+            'register': {},
+            'var': {}
         }
     
     #
@@ -88,23 +125,29 @@ class JackCompiler:
         self.nextLabel += 1
         return label
 
-    def addVar(self, segment, varType, varName):
-        idx = len(self.symbols[segment])
-        self.symbols[segment][varName] = (segment, idx, varType)
+    def addVar(self, kind, segment, varType, varName):
+        idx = len(self.symbols[kind])
+        if 'static' == kind:
+            self.registerCount += 1
+        if 'register' == kind:
+            idx += self.registerCount
+        self.symbols[kind][varName] = (segment, idx, varType)
 
     def findVar(self, varName):
-        for segment in ['local', 'argument', 'this', 'static']:
+        for kind in ['var', 'register', 'argument', 'field', 'static']:
             try:
-                return self.symbols[segment][varName]
+                return self.symbols[kind][varName]
             except:
                 pass
         raise KeyError('cannot find variable: %s' % varName)
             
-    def numVars(self, segment):
-        return len(self.symbols[segment])
+    def numVars(self, kind):
+        return len(self.symbols[kind])
 
     def clearSubroutineTable(self):
-        self.symbols['local'] = {}
+        self.symbols['var'] = {}
+        self.registerCount += len(self.symbols['register'])
+        self.symbols['register'] = {}
         self.symbols['argument'] = {}
 
     #
@@ -133,18 +176,15 @@ class JackCompiler:
         else:
             raise KeyError('cannot find pragma: %s' % kind)
 
-    def compileVarDec(self, *args):
-        self.compileVarDecs('var')
-
     def compileVarDecs(self, *args):
         kind = self.tokenizer.expect('keyword', *args)
         segment = kindSegments[kind]
         varType = self.expectType('int', 'char', 'boolean')
         varName = self.tokenizer.expect('identifier')
-        self.addVar(segment, varType, varName)
+        self.addVar(kind, segment, varType, varName)
         while self.tokenizer.consume('symbol', ','):
             varName = self.tokenizer.expect('identifier')
-            self.addVar(segment, varType, varName)
+            self.addVar(kind, segment, varType, varName)
         self.tokenizer.expect('symbol', ';')
 
     def expectType(self, *args):
@@ -157,27 +197,27 @@ class JackCompiler:
         subroutineKind = self.tokenizer.expect('keyword', 'function', 'method', 'constructor') 
         subroutineType = self.expectType('void', 'int', 'char', 'boolean')
         subroutineName = self.tokenizer.expect('identifier')
-
+        
         # record parameters
         if subroutineKind == 'method':
-            self.addVar('argument', self.className, 'this')
+            self.addVar('argument', 'argument', self.className, 'this')
         self.tokenizer.expect('symbol', '(') 
         self.compileParameterList()
         self.tokenizer.expect('symbol', ')') 
 
         # compile rest of body
         self.tokenizer.expect('symbol', '{') 
-        while self.tokenizer.peek('keyword', 'var'):
-            self.compileVarDec(self, 'var')
+        while self.tokenizer.peek('keyword', 'var', 'register'):
+            self.compileVarDecs(self, 'var', 'register')
 
         # function decl
         subroutineName = self.className + '.' + subroutineName
-        self.vmWriter.function(subroutineName, self.numVars('local'))
+        self.vmWriter.function(subroutineName, self.numVars('var'))
 
         # preamble
         if subroutineKind == 'constructor':
             # memory alloc
-            self.vmWriter.push('constant', self.numVars('this'))
+            self.vmWriter.push('constant', self.numVars('field'))
             self.vmWriter.call('Memory.alloc', 1)
             self.vmWriter.pop('pointer', 0)
         elif subroutineKind == 'method':
@@ -198,12 +238,12 @@ class JackCompiler:
         
         parameterType = self.expectType('int', 'char', 'boolean')
         parameterName = self.tokenizer.expect('identifier')
-        self.addVar('argument', parameterType, parameterName)
+        self.addVar('argument', 'argument', parameterType, parameterName)
         
         while self.tokenizer.consume('symbol', ','):
             parameterType = self.expectType('int', 'char', 'boolean')
             parameterName = self.tokenizer.expect('identifier')
-            self.addVar('argument', parameterType, parameterName)
+            self.addVar('argument', 'argument', parameterType, parameterName)
 
     def compileStatements(self):
         while not self.tokenizer.peek('symbol', '}'):
@@ -215,6 +255,8 @@ class JackCompiler:
             self.compileDoStatement()
         elif self.tokenizer.peek('keyword', 'let'):
             self.compileLetStatement()
+        elif self.tokenizer.peek('keyword', 'inc', 'dec'):
+            self.compileIncDecStatement()
         elif self.tokenizer.peek('keyword', 'return'):
             self.compileReturnStatement()
         elif self.tokenizer.peek('keyword', 'while'):
@@ -226,10 +268,30 @@ class JackCompiler:
 
     def compileLetStatement(self):
         self.tokenizer.expect('keyword', 'let')
+        if self.tokenizer.consume('symbol', '@'):
+            # handle direct address assignment
+            if self.tokenizer.peek('integerConstant'):
+                to_segment = 'constant'
+                to_value = self.tokenizer.expect('integerConstant')
+            else:
+                varName = self.tokenizer.expect('identifier')
+                to_segment, to_value, _ = self.findVar(varName)
+            # convert into poke
+            self.tokenizer.expect('symbol', '=')
+            from_segment = 'constant'
+            if (self.tokenizer.peek('symbol', '~', '-')):
+                symbol = self.tokenizer.expect('symbol')
+                from_segment = 'constant' + symbol
+            from_value = self.tokenizer.expect('integerConstant')
+            self.tokenizer.expect('symbol', ';')
+            self.vmWriter.poke(to_segment, int(to_value), from_segment, int(from_value))
+            return
+
+        # handle regular assignment
+        isArrayAssignment = False
         varName = self.tokenizer.expect('identifier')
         segment, value, _ = self.findVar(varName)
         # handle array access
-        isArrayAssignment = False
         if self.tokenizer.consume('symbol', '['):
             isArrayAssignment = True
             self.vmWriter.push(segment, value)
@@ -326,6 +388,20 @@ class JackCompiler:
         # do call
         self.vmWriter.call(subroutineName, nargs)
         self.vmWriter.pop('temp', 0)
+        self.tokenizer.expect('symbol', ';')
+
+    def compileIncDecStatement(self):
+        keyword = self.tokenizer.expect('keyword', 'inc', 'dec')
+
+        isArrayAssignment = False
+        varName = self.tokenizer.expect('identifier')
+        segment, value, _ = self.findVar(varName)
+
+        if 'inc' == keyword:
+            self.vmWriter.inc(segment, value)
+        else:
+            self.vmWriter.dec(segment, value)
+
         self.tokenizer.expect('symbol', ';')
 
     def compileReturnStatement(self):
