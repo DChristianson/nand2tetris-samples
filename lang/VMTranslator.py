@@ -48,6 +48,8 @@ class Parser:
                 return Command(components[0], components[1])
             elif len(components) == 3:
                 return Command(components[0], components[1], int(components[2]))
+            elif len(components) == 4:
+                return Command(components[0], components[1], int(components[2]), int(components[3]))
             elif len(components) == 5:
                 return Command(components[0], components[1], int(components[2]), components[3], int(components[4]))
     
@@ -402,7 +404,7 @@ class ASMTranslator:
     def _sto(self, segment, i, op='M=D'):
         if 'constant' == segment:
             return [
-                '@%s' % i,
+                '@%d' % i,
                 op
             ]
         elif 'static' == segment:
@@ -428,87 +430,136 @@ class ASMTranslator:
                 ]
         return ['???']
 
-    # increment a segment by 1
-    def _inc(self, segment, i):
+    # increment a segment by step
+    def _inc(self, segment, i, step):
+        if step > 1:
+            value = [
+                '@%d' % step,
+                'D=A'
+            ]
+            op = 'M=M+D'
+        else:
+            value = []
+            op = 'M=M+1'
         if 'static' == segment:
-            return [
+            return value + [
                 self.static_address(i),
-                'M=M+1'
+                op
             ]
         elif 'temp' == segment:
-            return [
+            return value + [
                 temp_register(i),
-                'M=M+1'
+                op
             ]
         elif 'pointer' == segment:
-            return [
+            return value + [
                 pointer_register(i),
-                'M=M+1'
+                op
             ]
         elif segment in _memory_segments:
             if 0 == i:
-                return [
+                return value + [
                     memory_segment_address(segment),
                     'A=M',
-                    'M=M+1'
+                    op
                 ]
             elif 1 == i:
-                return [
+                return value + [
                     memory_segment_address(segment),
                     'A=M+1',
-                    'M=M+1'
+                    op
                 ]
-            else:
-                return [
-                    memory_segment_address(segment),
-                    'D=M',
-                    '@%d' % i,
-                    'A=D+A',
-                    'M=M+1'
-                ]
-        else:
-            return ['???']
+            # not going to handle more complex case
+        return ['???']
 
-    # decrement a segment by one 
-    def _dec(self, segment, i):
+    # decrement a segment by step
+    def _dec(self, segment, i, step):
+        if step > 1:
+            value = [
+                '@%d' % step,
+                'D=A'
+            ]
+            op = 'M=M-D'
+        else:
+            value = []
+            op = 'M=M-1'
+        if 'static' == segment:
+            return value + [
+                self.static_address(i),
+                op
+            ]
+        elif 'temp' == segment:
+            return value + [
+                temp_register(i),
+                op
+            ]
+        elif 'pointer' == segment:
+            return value + [
+                pointer_register(i),
+                op
+            ]
+        elif segment in _memory_segments:
+            if 0 == i:
+                return value + [
+                    memory_segment_address(segment),
+                    'A=M',
+                    op
+                ]
+            elif 1 == i:
+                return value + [
+                    memory_segment_address(segment),
+                    'A=M+1',
+                    op
+                ]
+            # not going to handle more complex case
+        return ['???']
+
+    # invert a segment 
+    def _inv(self, segment, i):
         if 'static' == segment:
             return [
                 self.static_address(i),
-                'M=M-1'
+                'M=!M'
             ]
         elif 'temp' == segment:
             return [
                 temp_register(i),
-                'M=M-1'
+                'M=!M'
             ]
         elif 'pointer' == segment:
             return [
                 pointer_register(i),
-                'M=M-1'
+                'M=!M'
             ]
         elif segment in _memory_segments:
             if 0 == i:
                 return [
                     memory_segment_address(segment),
                     'A=M',
-                    'M=M-1'
+                    'M=!M'
                 ]
             elif 1 == i:
                 return [
                     memory_segment_address(segment),
                     'A=M+1',
-                    'M=M-1'
-                ]
+                    'M=!M'
+            ]
             else:
                 return [
                     memory_segment_address(segment),
                     'D=M',
                     '@%d' % i,
                     'A=D+A',
-                    'M=M-1'
+                    'M=!M'
                 ]
-        else:
-            return ['???']
+        return ['???']        
+
+    # drop the top of the stack
+    def _drop(self):
+        return [
+            '@SP',
+            'AM=M-1'
+        ]
 
     def _pop(self, segment, i):
         if 'static' == segment:
@@ -769,7 +820,7 @@ class Optimizer:
                     continue
                 dependencies.append(called_function_name)
             commands.append(command)
-        self.optimize_analyze(commands)
+        #self.optimize_analyze(commands)
         function.commands = commands
         function.dependencies = dependencies
 
@@ -807,6 +858,7 @@ class Function:
             self.dependencies.add(function_name)
 
     def translate(self, translator, out, global_line_count):
+        print(f'translating: {self.function_name}')
         translator.filename = self.filename
         translator.function_name = self.function_name
         out.write(f'// Begin: {self.function_name}\n')

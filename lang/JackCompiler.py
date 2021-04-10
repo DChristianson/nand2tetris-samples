@@ -65,39 +65,57 @@ class VMWriter:
         if options.enable_vm_ext:
             self.out.write('poke %s %d %s %d\n' % (to_segment, to_value, from_segment, from_value))
         else:
-            self.push('constant', from_value)
             if 'constant~' == from_segment:
+                self.push('constant', from_value)
                 self.op('not')
             elif 'constant-' == from_segment:
+                self.push('constant', from_value)
                 self.op('neg')
+            else:
+                self.push(from_segment, from_value)
             self.push(to_segment, to_value)
             self.pop('pointer', 1)
             self.pop('that', 0)
 
-    def inc(self, segment, value):
+    def inc(self, segment, value, step):
         if options.enable_vm_ext:
-            self.out.write('inc %s %d\n' % (segment, value))
+            self.out.write('inc %s %d %d\n' % (segment, value, step))
         else:
             self.push(segment, value)
-            self.push('constant', 1)
+            self.push('constant', step)
             self.op('add')
             self.pop(segment, value)
 
-    def dec(self, segment, value):
+    def dec(self, segment, value, step):
         if options.enable_vm_ext:
-            self.out.write('dec %s %d\n' % (segment, value))
+            self.out.write('dec %s %d %d\n' % (segment, value, step))
         else:
             self.push(segment, value)
-            self.push('constant', 1)
+            self.push('constant', step)
             self.op('neg')
             self.op('add')
+            self.pop(segment, value)
+
+    def inv(self, segment, value):
+        if options.enable_vm_ext:
+            self.out.write('inv %s %d\n' % (segment, value))
+        else:
+            self.push(segment, value)
+            self.op('not')
             self.pop(segment, value)
 
     def ldd(self, segment, value):
         if options.enable_vm_ext:
             self.out.write('ldd %s %d\n' % (segment, value))
         else:
-            self.push(segment, value)
+            if 'constant~' == segment:
+                self.push('constant', value)
+                self.op('not')
+            elif 'constant-' == segment:
+                self.push('constant', value)
+                self.op('neg')
+            else:
+                self.push(segment, value)
             self.pop('temp', 1)
 
     def sto(self, segment, value):
@@ -105,13 +123,21 @@ class VMWriter:
             self.out.write('sto %s %d\n' % (segment, value))
         else:
             self.push('temp', 1)
-            self.pop(segment, value)
+            self.push(segment, value)
+            self.pop('pointer', 1)
+            self.pop('that', 0)
 
     def push(self, segment, value):
         self.out.write('push %s %d\n' % (segment, value))
 
     def pop(self, segment, value):
         self.out.write('pop %s %d\n' % (segment, value))
+
+    def drop(self):
+        if options.enable_vm_ext:
+            self.out.write('drop\n')
+        else:
+            self.pop('temp', 0)
 
     def op(self, op):
         self.out.write('%s\n' % op)
@@ -274,7 +300,7 @@ class JackCompiler:
             self.compileDoStatement()
         elif self.tokenizer.peek('keyword', 'let'):
             self.compileLetStatement()
-        elif self.tokenizer.peek('keyword', 'inc', 'dec'):
+        elif self.tokenizer.peek('keyword', 'inc', 'dec', 'inv'):
             self.compileIncDecStatement()
         elif self.tokenizer.peek('keyword', 'ldd'):
             self.compileLddStatement()
@@ -410,19 +436,25 @@ class JackCompiler:
 
         # do call
         self.vmWriter.call(subroutineName, nargs)
-        self.vmWriter.pop('temp', 0)
+        self.vmWriter.drop()
         self.tokenizer.expect('symbol', ';')
 
     def compileIncDecStatement(self):
-        keyword = self.tokenizer.expect('keyword', 'inc', 'dec')
+        keyword = self.tokenizer.expect('keyword', 'inc', 'dec', 'inv')
 
         varName = self.tokenizer.expect('identifier')
         segment, value, _ = self.findVar(varName)
 
+        step = 1
+        if self.tokenizer.peek('integerConstant'):
+            step = int(self.tokenizer.expect('integerConstant'))
+
         if 'inc' == keyword:
-            self.vmWriter.inc(segment, value)
+            self.vmWriter.inc(segment, value, step)
+        elif 'dec' == keyword:
+            self.vmWriter.dec(segment, value, step)
         else:
-            self.vmWriter.dec(segment, value)
+            self.vmWriter.inv(segment, value)
 
         self.tokenizer.expect('symbol', ';')
 

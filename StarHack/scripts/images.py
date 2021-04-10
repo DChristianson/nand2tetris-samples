@@ -42,7 +42,7 @@ def emit_sprite(image, fp):
     for chunk in chunker(map(bit, data), 16):
         word = bits2int(reversed(chunk))
         fp.write(f'        let @offset = {int2jack(word)};\n')
-        fp.write(f'        let offset = offset + 32;\n')
+        fp.write(f'        inc offset 32;\n')
 
 def emit_run(varname, offset, n, run, fp):
     if len(run) == 0:
@@ -132,7 +132,7 @@ def emit_data(dataMap, fp):
 
 def encode_data(image):
     dataMap = {}
-    offset = 0
+    offset = 16384
     if not image.mode == 'RGBA':
         image = image.convert(mode='RGBA')
     data = image.getdata()

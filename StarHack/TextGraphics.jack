@@ -797,22 +797,8 @@ class TextGraphics {
     }
     
     function void moveCursor(int i, int j) {
-        register int offset;
-        register int mask;
-        register int k;
         let row = i;
         let column = j;
-        let offset = column / 2;
-        if ((column - (offset + offset)) > 0) {
-            let mask = 255;
-        } else {
-            let mask = ~255;
-        }
-        let offset = (row * 352);
-        while (k < 11) {
-            let screen[offset] = (screen[offset] & mask);
-            inc k;
-        }
         return;
     }
 
@@ -844,7 +830,7 @@ class TextGraphics {
         let k = 0;
         while (k < 11) {
             let screen[offset] = (screen[offset] & mask) + (map[k] & shift);
-            let offset = offset + 32;
+            inc offset 32;
             inc k;
         }
         // advance
