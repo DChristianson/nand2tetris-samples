@@ -60,12 +60,21 @@ def emit_rle(runs, fp):
             if n > 1:
                 r = run[0]
                 if explicit_zero or (not r == 0):
-                    fp.write(f'        let i = {offset};\n')
-                    fp.write(f'        while (i < {offset + n})' + ' {\n')
-                    fp.write(f'            let @i = {int2jack(r)};\n')
-                    fp.write(f'            let i = i + 1;\n')
-                    fp.write('        }\n')
-                offset = offset + n
+                    if n > 32:
+                        fp.write(f'        let i = {offset};\n')
+                        fp.write(f'        while (i < {offset + n})' + ' {\n')
+                        fp.write(f'            let @i = {int2jack(r)};\n')
+                        fp.write(f'            inc i;\n')
+                        fp.write('        }\n')
+                        offset = offset + n
+                    else:
+                        fp.write(f'        ldd {int2jack(r)};\n')
+                        for i in range(0, n):
+                            fp.write(f'        sto {offset};\n')
+                            offset += 1
+                else:
+                    offset = offset + n
+
             else:
                 for r in run:
                     if explicit_zero or (not r == 0):
@@ -113,6 +122,26 @@ def encode_rle(image):
         offset += 1 + len(run)
     yield (offset, [])
 
+def emit_data(dataMap, fp):
+    for value, offsets in dataMap.items():
+        if not explicit_zero and value == 0:
+            continue
+        fp.write(f'        ldd {int2jack(value)};\n')
+        for offset in offsets:
+            fp.write(f'        sto {offset};\n')
+
+def encode_data(image):
+    dataMap = {}
+    offset = 0
+    if not image.mode == 'RGBA':
+        image = image.convert(mode='RGBA')
+    data = image.getdata()
+    for chunk in chunker(map(bit, data), 16):
+        word = bits2int(reversed(chunk))
+        dataMap.setdefault(word, []).append(offset)
+        offset += 1
+    return dataMap
+
 if __name__ == "__main__":
 
     #
@@ -132,8 +161,9 @@ if __name__ == "__main__":
             print(f'extracting screen code for {filename}')
             out.write(f'    function void {screenName}() ' + '{\n')
             with Image.open(filename, 'r') as image:
-                runs = list(encode_rle(image))
-                emit_rle(runs, out)
+                emit_data(encode_data(image), out)
+                # runs = list(encode_rle(image))
+                # emit_rle(runs, out)
             out.write("        return;\n")
             out.write("    }\n")
 

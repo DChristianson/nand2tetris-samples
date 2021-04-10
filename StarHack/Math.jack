@@ -8,25 +8,23 @@ class Math {
 
     /** Initializes the library. */
     function void init() {
-        if (roots = 0) {
-            let roots = Array.new(16);
-            let roots[0] = 1;
-            let roots[1] = 2;
-            let roots[2] = 4;
-            let roots[3] = 8;
-            let roots[4] = 16;
-            let roots[5] = 32;
-            let roots[6] = 64;
-            let roots[7] = 128;
-            let roots[8] = 256;
-            let roots[9] = 512;
-            let roots[10] = 1024;
-            let roots[11] = 2048;
-            let roots[12] = 4096;
-            let roots[13] = 8192;
-            let roots[14] = 16384;
-            let roots[15] = ~(32767);
-        }
+        let roots = Array.new(16);
+        let roots[0] = 1;
+        let roots[1] = 2;
+        let roots[2] = 4;
+        let roots[3] = 8;
+        let roots[4] = 16;
+        let roots[5] = 32;
+        let roots[6] = 64;
+        let roots[7] = 128;
+        let roots[8] = 256;
+        let roots[9] = 512;
+        let roots[10] = 1024;
+        let roots[11] = 2048;
+        let roots[12] = 4096;
+        let roots[13] = 8192;
+        let roots[14] = 16384;
+        let roots[15] = ~(32767);
         return;
     }
 
@@ -113,10 +111,10 @@ class Math {
 
     function int sqrt(int x) {
         register int y, j, z, zz;
-        let y = 0;
         let j = 8;
+        let y = 0;
         while (j > 0) {
-            dec j;
+            let j = j - 1;
             // reuse the candidate term
             let z = y + roots[j];
             let zz = Math.multiply(z, z);

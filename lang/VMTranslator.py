@@ -1,6 +1,16 @@
 import sys
 import re
 import os
+from itertools import islice
+
+def window(seq, n=2):
+    it = iter(seq)
+    result = tuple(islice(it, 0, n, 1))
+    if len(result) == n:
+        yield result
+    for elem in it:
+        result = result[1:] + (elem,)
+        yield result
 
 class Command:
 
@@ -297,33 +307,44 @@ class ASMTranslator:
         else:
             return ['???']
 
+    # directly copy one segment to another (avoid stack)
     def _poke(self, to_segment, i, from_segment, j):
         if 'constant' == from_segment:
-            value = [
-                '@%d' % j,
-                'D=A'
-            ]
+            if 0 == j:
+                value = []
+                op = 'M=0'
+            elif 1 == j:
+                value = []
+                op = 'M=1'
+            else:
+                value = [
+                    '@%d' % j,
+                    'D=A'
+                ]
+                op = 'M=D'
         elif 'constant~' == from_segment:
             value = [
                 '@%d' % j,
                 'D=!A'
             ]
+            op = 'M=D'
         elif 'constant-' == from_segment:
             value = [
                 '@%d' % j,
                 'D=-A'
             ]
+            op = 'M=D'
 
         if 'constant' == to_segment:
-            return value +[
+            return value + [
                 '@%s' % i,
-                'M=D'
+                op
             ]
         elif 'static' == to_segment:
             return value + [
                 self.static_address(i),
                 'A=M',
-                'M=D'
+                op
             ]
         elif to_segment in _memory_segments:
             if 0 == i:
@@ -331,14 +352,14 @@ class ASMTranslator:
                     memory_segment_address(to_segment),
                     'A=M',
                     'A=M',
-                    'M=D'
+                    op
                 ]
             elif 1 == i:
                 return value + [
                     memory_segment_address(segment),
                     'A=M+1',
                     'A=M',
-                    'M=D'
+                    op
                 ]
             else:
                 return [
@@ -352,11 +373,62 @@ class ASMTranslator:
                     '@R13',
                     'A=M',
                     'A=M',
-                    'M=D'
+                    op
                 ]
         else:
             return ['???']
 
+    # load d register
+    def _ldd(self, segment, i):
+        if 'constant' == segment:
+            return [
+                '@%d' % i,
+                'D=A'
+            ]
+        elif 'constant~' == segment:
+            return [
+                '@%d' % i,
+                'D=!A'
+            ]
+        elif 'constant-' == segment:
+            return [
+                '@%d' % i,
+                'D=-A'
+            ]
+        else:
+            return ['???']
+
+    # write to constant address
+    def _sto(self, segment, i, op='M=D'):
+        if 'constant' == segment:
+            return [
+                '@%s' % i,
+                op
+            ]
+        elif 'static' == segment:
+            return [
+                self.static_address(i),
+                'A=M',
+                op
+            ]
+        elif segment in _memory_segments:
+            if 0 == i:
+                return [
+                    memory_segment_address(segment),
+                    'A=M',
+                    'A=M',
+                    op
+                ]
+            elif 1 == i:
+                return [
+                    memory_segment_address(segment),
+                    'A=M+1',
+                    'A=M',
+                    op
+                ]
+        return ['???']
+
+    # increment a segment by 1
     def _inc(self, segment, i):
         if 'static' == segment:
             return [
@@ -397,6 +469,7 @@ class ASMTranslator:
         else:
             return ['???']
 
+    # decrement a segment by one 
     def _dec(self, segment, i):
         if 'static' == segment:
             return [
@@ -531,10 +604,9 @@ class ASMTranslator:
         for i in range(0, vars):
             setup += [
                 'M=0', # now zero var
-                'A=A+1'
+                'AD=A+1'
             ]
         setup += [
-            'D=A', # set sp
             '@SP',
             'M=D'
         ]
@@ -568,12 +640,6 @@ class ASMTranslator:
     def _call(self, function_name, args):
         address, label = self.next_return_address_label()
         return [
-            address, # push return address
-            'D=A',
-            '@SP',
-            'AM=M+1',
-            'A=A-1',
-            'M=D',
             self.function_call_address(function_name), # jump to function
             'D=A',
             '@R13',
@@ -582,15 +648,22 @@ class ASMTranslator:
             'D=A',
             '@R14',
             'M=D',
+            address, # leave return address in data register
+            'D=A',
             '@save_stack', # jump to stack save
             '0; JMP',
             label
         ]
 
+    
     def _save_stack(self):
         address, label = self.next_address_label('save_stack')
         return [
-            '(save_stack)'
+            '(save_stack)',
+            '@SP', # push return address (should be in d register)
+            'AM=M+1',
+            'A=A-1',
+            'M=D',
         ] + self._push_registers('@LCL', '@ARG', '@THIS', '@THAT') + [
             '@SP', # set new arg segment
             'D=M',
@@ -638,6 +711,118 @@ class ASMTranslator:
             '0; JMP'
         ]
 
+    # meta op - pushes new file/function scope for inline calls
+    def _inline_call(self, filename, function_name):
+        self.filename = filename
+        self.function_name = function_name
+        return []
+
+    # meta op -  file/function scope for inline calls
+    def _inline_return(self, filename, function_name):
+        self.filename = filename
+        self.function_name = function_name
+        return []
+
+
+
+# function categorizations
+def match_code(expr, commands, exclude=None):
+    if len(expr) != len(commands):
+        return False
+    if all([re.match(pattern, command.symbolic()) for (pattern, command) in zip(expr, commands)]):
+        return exclude is None or not exclude(commands)
+    return False
+
+def scan(label, expr, commands, exclude=None):
+    for w in window(commands, len(expr)):
+        if match_code(expr, w, exclude=exclude):
+            print(f'{label}: {[command.symbolic() for command in w]}')
+            
+
+def is_constant_accessor(function):
+    return match_code(['function .*', 'push constant .*', 'return'], function.commands)
+    
+def is_static_accessor(function):
+    return match_code(['function .*', 'push static .*', 'return'], function.commands)
+
+def is_member_accessor(function):
+    return match_code(['function .*', 'push argument 0', 'pop pointer 0', 'push this .*', 'return'], function.commands)
+
+class Optimizer:
+
+    def __init__(self):
+        pass
+
+    def optimize(self, function, functions):
+        commands = []
+        dependencies = []
+        for command in function.commands:
+            if 'call' == command.command:
+                called_function_name = command.args[0]
+                inline_function = functions[called_function_name]
+                inline_commands = self.try_inline(inline_function)
+                if inline_commands is not None:
+                    print(f'inlining: {called_function_name}')
+                    commands.append(Command('inline_call', inline_function.filename, inline_function.function_name))
+                    commands.extend(inline_commands)
+                    commands.append(Command('inline_return', function.filename, function.function_name))
+                    continue
+                dependencies.append(called_function_name)
+            commands.append(command)
+        self.optimize_analyze(commands)
+        function.commands = commands
+        function.dependencies = dependencies
+
+    def try_inline(self, function):
+        if is_constant_accessor(function):
+            return [function.commands[1]]
+        if is_static_accessor(function):
+            return [function.commands[1]]
+        if is_member_accessor(function):
+            return [Command('pop', 'pointer', 1), Command('push', 'that', function.commands[3].args[1])]
+        return None
+
+    def optimize_analyze(self, commands):
+        scan('s_pushpushop', ['push .*', 'push .*', '(add|sub|eq|lt|gt)'], commands)
+        scan('s_pushpop_poke', ['push .*', 'pop .*'], commands, lambda w: w[0].args == w[1].args)
+        scan('s_pushpop_noop', ['push .*', 'pop .*'], commands, lambda w: w[0].args != w[1].args)
+        scan('s_poppush_dup', ['pop .*', 'push .*'], commands, lambda w: w[0].args != w[1].args)
+        scan('s_pokepoke', ['poke .*', 'poke .*'], commands, lambda w: w[0].args[2:] != w[1].args[2:])
+        scan('s_pushipop', ['push .*', 'inline_call .*', 'pop .*'], commands)
+        scan('s_mulby2_a', ['push constant .*', 'function Math.multiply 2'], commands)
+        scan('s_mulby2_b', ['push constant .*', 'push .*', 'function Math.multiply 2'], commands)
+
+class Function:
+
+    def __init__(self, filename, function_name):
+        self.filename = filename
+        self.function_name = function_name
+        self.commands = []
+        self.dependencies = set()
+
+    def append(self, command):
+        self.commands.append(command)
+        if 'call' == command.command:
+            function_name = command.args[0]
+            self.dependencies.add(function_name)
+
+    def translate(self, translator, out, global_line_count):
+        translator.filename = self.filename
+        translator.function_name = self.function_name
+        out.write(f'// Begin: {self.function_name}\n')
+        line_count = 0
+        for command in self.commands:
+            out.write(f'// {command.symbolic()}\n')
+            for instruction in translator.translate(command):
+                    out.write(instruction)
+                    if not instruction.startswith('('):
+                        out.write(f' // {global_line_count}')
+                        global_line_count += 1
+                        line_count += 1
+                    out.write('\n')
+        out.write(f'// End: {self.function_name} / {line_count} lines\n')
+        return global_line_count      
+
 class Preassembler:
 
     def __init__(self):
@@ -652,25 +837,15 @@ class Preassembler:
             if function_name in seen:
                 continue
             seen.add(function_name)
-            frontier.extend(self.functions[function_name]['dependencies'])
+            frontier.extend(self.functions[function_name].dependencies)
         return seen
  
     def add(self, command):
         if 'function' == command.command:
             function_name = command.args[0]
-            self.current_function = {
-                'filename': self.filename,
-                'function_name': function_name,
-                'commands': [],
-                'dependencies': set()
-            }
+            self.current_function = Function(self.filename, function_name)
             self.functions[function_name] = self.current_function
-
-        elif 'call' == command.command:
-            function_name = command.args[0]
-            self.current_function['dependencies'].add(function_name)
-        
-        self.current_function['commands'].append(command)        
+        self.current_function.append(command)        
 
 def translate(program, init_vm, vm_files, out):
     preassembler = Preassembler()
@@ -684,6 +859,12 @@ def translate(program, init_vm, vm_files, out):
             parser = Parser(fp)
             for command in parser:
                 preassembler.add(command)
+
+    # optimizer
+    optimizer = Optimizer()
+    for function_name in preassembler.reachable_functions('Sys.init'):
+        function = preassembler.functions[function_name]
+        optimizer.optimize(function, preassembler.functions)
 
     # emit preamble
     out.write('// Program: %s\n' % program)
@@ -700,21 +881,7 @@ def translate(program, init_vm, vm_files, out):
     # emit all functions reachable from Sys.init
     for function_name in preassembler.reachable_functions('Sys.init'):
         function = preassembler.functions[function_name]
-        filename = function['filename']
-        translator.filename = filename
-        translator.function_name = function_name
-        out.write(f'// Begin: {function_name}\n')
-        line_count = 0
-        for command in function['commands']:
-            out.write(f'// {command.symbolic()}\n')
-            for instruction in translator.translate(command):
-                    out.write(instruction)
-                    if not instruction.startswith('('):
-                        out.write(f' // {global_line_count}')
-                        global_line_count += 1
-                        line_count += 1
-                    out.write('\n')
-        out.write(f'// End: {function_name} / {line_count} lines\n')
+        global_line_count = function.translate(translator, out, global_line_count)
         
 if __name__ == '__main__':
     

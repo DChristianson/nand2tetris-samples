@@ -16,15 +16,12 @@ class Main {
 
             // run game
             do Random.seed(waitTime);
-            let game = StarHackGame.new();
-            do game.start();
-            while (game.isRunning()) {
-                do game.update();
+            do StarHackGame.init();
+            do StarHackGame.start();
+            while (StarHackGame.isRunning()) {
+                do StarHackGame.update();
             }
-            do game.end();
-
-            // end
-            do game.dispose();
+            do StarHackGame.end();
 
         }
         return;

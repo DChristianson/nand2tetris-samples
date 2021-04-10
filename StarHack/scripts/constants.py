@@ -1,6 +1,8 @@
 #
 # Generate constants.jack file
 #
+
+# strings for UX
 stringConstants = {
     'missionStatus': 'Mission Status',
     'divider': '--------------',
@@ -62,25 +64,73 @@ stringConstants = {
     'tooFar': 'You are too far away!',
     'resupplySuccess': 'Missiles and drone crew resupplied.',
     'resupplyRefuse': 'Resupply denied. Stop shooting us!',
+    'help00': 'LRS: Long Range Scan',
+    'help01': 'MOV: Micro Jump in sector',
+    'help02': 'JMP: JuMP to a nearby sector',
+    'help03': 'PAC: Fire Particle Cannon',
+    'help04': 'AMM: Fire AntiMatter Missiles',
+    'help05': 'SDN: Shields DowN',
+    'help06': 'SUP: Shields UP',
+    'help07': 'RPR: RePaiR damage',
+    'help08': 'RSP: ReSuPply ship',
+    'help09': 'STA: STAtus report',
 }
+constantChars = sum([len(s) for s in stringConstants.values()]) + len(stringConstants)
+
+# sector names
+sectorNames = []
+for i in range(0, 8):
+    for j in range(0, 8):
+        sectorIndex = j * 8 + i
+        sectorNames.append(f'Sector {i}-{j}')
+sectorNameChars = sum([len(s) for s in sectorNames]) + len(sectorNames)
+
+# figure out offsets
+offset = 12288
+constantOffsets = {}
+charOffsetMap = {}
+
+for var, value in stringConstants.items():
+    constantOffsets[var] = offset
+    offset += 1
+    for c in value:
+        charOffsetMap.setdefault(c, []).append(offset)
+        offset += 1
+
+for index, value in enumerate(sectorNames):
+    constantOffsets[f'sectorNames[{index}]'] = offset
+    offset += 1
+    for c in value:
+        charOffsetMap.setdefault(c, []).append(offset)
+        offset += 1
 
 with open('Constants.jack', 'w') as fp:
     fp.write('class Constants {\n')
     fp.write(f'    static Array sectorNames;\n')
-    for var in stringConstants:
-        fp.write(f'    static String {var};\n')
-    fp.write('    function void init() {\n')
+
+    fp.write(f'    function void init() {{\n')
+    fp.write(f'        register int offset;\n')
+
     for var, value in stringConstants.items():
-        fp.write(f'        let {var} = "{value}";\n')
-    fp.write(f'        let sectorNames = Array.new(64);\n')
-    for i in range(0, 8):
-        for j in range(0, 8):
-            sectorIndex = j * 8 + i
-            fp.write(f'        let sectorNames[{sectorIndex}]= "Sector {i}-{j}";\n')
+        fp.write(f'        let @{constantOffsets[var]} = {len(value)};\n')
+
+    fp.write(f'        let sectorNames = Array.new({len(sectorNames)});\n')
+    fp.write(f'        let offset = sectorNames;\n')
+    for index, value in enumerate(sectorNames):
+        offset = constantOffsets[f'sectorNames[{index}]']
+        fp.write(f'        let @offset = {offset};\n')
+        fp.write(f'        inc offset;\n')
+        fp.write(f'        let @{offset} = {len(value)};\n')
+
+    for c, offsets in charOffsetMap.items():
+        fp.write(f'        ldd {ord(c)};\n')
+        for offset in offsets:
+            fp.write(f'        sto {offset};\n')
+    
     fp.write('        return;\n')
     fp.write('    }\n')
     for var in stringConstants:
-        fp.write(f'    function String {var}() ' + '{ return ' + var + '; }\n')
+        fp.write(f'    function String {var}() {{ return {constantOffsets[var]}; }}\n')
     fp.write(f'    function String sectorName(int i) ' + '{ return sectorNames[i]; }\n')
     fp.write('}\n')
     

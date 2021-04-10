@@ -3,12 +3,17 @@ import os
 import traceback
 from xml.sax.saxutils import escape
 from tokenizer import JackTokenizer, ParseError
+from optparse import OptionParser
 
+# read args
+op = OptionParser()
+op.add_option('-x', '--extensions', action='store_true', dest='enable_vm_ext', help='enable extended vm mode')
+(options, args) = op.parse_args()
+
+# jack operators and keywords
 ops = ['+', '-', '*', '/', '&', '|', '<', '>', '=']
 unaryOps = ['-', '~']
 keywordConstants = ['true', 'false', 'null', 'this']
-
-enable_vm_ext = False
 
 # jack -> vm mappings
 kindSegments = {
@@ -57,7 +62,7 @@ class VMWriter:
         self.out.write('if-goto %s\n' % (name))
 
     def poke(self, to_segment, to_value, from_segment, from_value):
-        if enable_vm_ext:
+        if options.enable_vm_ext:
             self.out.write('poke %s %d %s %d\n' % (to_segment, to_value, from_segment, from_value))
         else:
             self.push('constant', from_value)
@@ -70,7 +75,7 @@ class VMWriter:
             self.pop('that', 0)
 
     def inc(self, segment, value):
-        if enable_vm_ext:
+        if options.enable_vm_ext:
             self.out.write('inc %s %d\n' % (segment, value))
         else:
             self.push(segment, value)
@@ -79,13 +84,27 @@ class VMWriter:
             self.pop(segment, value)
 
     def dec(self, segment, value):
-        if enable_vm_ext:
+        if options.enable_vm_ext:
             self.out.write('dec %s %d\n' % (segment, value))
         else:
             self.push(segment, value)
             self.push('constant', 1)
             self.op('neg')
             self.op('add')
+            self.pop(segment, value)
+
+    def ldd(self, segment, value):
+        if options.enable_vm_ext:
+            self.out.write('ldd %s %d\n' % (segment, value))
+        else:
+            self.push(segment, value)
+            self.pop('temp', 1)
+
+    def sto(self, segment, value):
+        if options.enable_vm_ext:
+            self.out.write('sto %s %d\n' % (segment, value))
+        else:
+            self.push('temp', 1)
             self.pop(segment, value)
 
     def push(self, segment, value):
@@ -257,6 +276,10 @@ class JackCompiler:
             self.compileLetStatement()
         elif self.tokenizer.peek('keyword', 'inc', 'dec'):
             self.compileIncDecStatement()
+        elif self.tokenizer.peek('keyword', 'ldd'):
+            self.compileLddStatement()
+        elif self.tokenizer.peek('keyword', 'sto'):
+            self.compileStoStatement()
         elif self.tokenizer.peek('keyword', 'return'):
             self.compileReturnStatement()
         elif self.tokenizer.peek('keyword', 'while'):
@@ -393,7 +416,6 @@ class JackCompiler:
     def compileIncDecStatement(self):
         keyword = self.tokenizer.expect('keyword', 'inc', 'dec')
 
-        isArrayAssignment = False
         varName = self.tokenizer.expect('identifier')
         segment, value, _ = self.findVar(varName)
 
@@ -402,6 +424,33 @@ class JackCompiler:
         else:
             self.vmWriter.dec(segment, value)
 
+        self.tokenizer.expect('symbol', ';')
+
+    def compileLddStatement(self):
+        keyword = self.tokenizer.expect('keyword', 'ldd')
+        # handle direct address assignment
+        if (self.tokenizer.peek('symbol', '~', '-')):
+            symbol = self.tokenizer.expect('symbol')
+            segment = 'constant' + symbol
+            value = self.tokenizer.expect('integerConstant')
+        elif self.tokenizer.peek('integerConstant'):
+            segment = 'constant'
+            value = self.tokenizer.expect('integerConstant')
+        else:
+            varName = self.tokenizer.expect('identifier')
+            segment, value, _ = self.findVar(varName)
+        self.vmWriter.ldd(segment, int(value))
+        self.tokenizer.expect('symbol', ';')
+
+    def compileStoStatement(self):
+        keyword = self.tokenizer.expect('keyword', 'sto')
+        if self.tokenizer.peek('integerConstant'):
+            segment = 'constant'
+            value = self.tokenizer.expect('integerConstant')
+        else:
+            varName = self.tokenizer.expect('identifier')
+            segment, value, _ = self.findVar(varName)
+        self.vmWriter.sto(segment, int(value))
         self.tokenizer.expect('symbol', ';')
 
     def compileReturnStatement(self):
@@ -536,7 +585,7 @@ def analyze(jack_file, vm_file):
 
 if __name__ == "__main__":
     
-    path = os.path.normpath(sys.argv[1])
+    path = os.path.normpath(args[0])
 
     if os.path.isdir(path):
         # program directory

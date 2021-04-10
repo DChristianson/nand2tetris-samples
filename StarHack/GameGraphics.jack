@@ -8,37 +8,35 @@ class GameGraphics {
     }
 
     function void wipeScreen() {
-        var int i, j;
-        while (i < 16) {
-            let i = i + 1;
-            let j = 16 - i;
-            while (j < 8192) {
-                let screen[j] = 0;
-                let j = j + 16;
-            }
+        register int i;
+        let i = screen;
+        while (i < 24576) {
+            let @i = 0;
+            inc i;
         }
         return;
     }
 
     function void clearTiles(int x1, int y1, int x2, int y2) {
-        var int s, e, w;
+        register int s, e, w;
         let w = x2 - x1;
+        let x1 = x1 + screen;
         let y1 = y1 * 16;
         let y2 = y2 * 16;
         while (y1 < y2) {
             let s = (y1 * 32) + x1;
             let e = s + w;
             while (s < e) {
-                let screen[s] = 0;
-                let s = s + 1;
+                let @s = 0;
+                inc s;
             }
-            let y1 = y1 + 1;
+            inc y1;
         } 
         return;
     }
 
     function void invertTile(int x, int y) {
-        var int offset; let offset = (y * 512) + x;
+        register int offset; let offset = (y * 512) + x;
         let screen[offset] = ~screen[offset];
         let offset = offset + 32;
         let screen[offset] = ~screen[offset];
