@@ -79,8 +79,8 @@ constantChars = sum([len(s) for s in stringConstants.values()]) + len(stringCons
 
 # sector names
 sectorNames = []
-for i in range(0, 8):
-    for j in range(0, 8):
+for j in range(0, 8):
+    for i in range(0, 8):
         sectorIndex = j * 8 + i
         sectorNames.append(f'Sector {i}-{j}')
 sectorNameChars = sum([len(s) for s in sectorNames]) + len(sectorNames)

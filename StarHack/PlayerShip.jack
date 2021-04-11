@@ -206,7 +206,7 @@ class PlayerShip {
         return;
     }
 
-    method void update(StarHackGame game) {
+    method void update() {
         if (shieldsUp) {
             let powerReserve = powerReserve - 5;
             if (shieldLevel < 100) {

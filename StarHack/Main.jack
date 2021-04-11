@@ -1,7 +1,5 @@
 class Main {
 
-    static StarHackGame game;
-
     function void main() {
         var int waitTime;
         var int commandCode;
@@ -22,6 +20,7 @@ class Main {
                 do StarHackGame.update();
             }
             do StarHackGame.end();
+            do StarHackGame.clear();
 
         }
         return;

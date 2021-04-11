@@ -10,7 +10,7 @@ class Memory {
     function void init() {
         let freeList = 2048;
         let @2048 = 0;
-        let @2049 = 13244;
+        let @2049 = 10224; // give space for math, chars, and constants
         return;
     }
 
