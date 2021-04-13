@@ -35,41 +35,46 @@ class GameGraphics {
         return;
     }
 
-    function void invertTile(int x, int y) {
+    function void animateTile(int x, int y) {
+        register int i;
         register int offset; let offset = (y * 512) + x;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        inv offset;
-        inc offset 32;
-        return;
+        let i = 0;
+        while (i < 8) {
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            inv offset;
+            inc offset 32;
+            do Sys.wait(100);
+            inc i;
+        }
     }
 
 }

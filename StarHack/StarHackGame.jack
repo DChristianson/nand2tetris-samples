@@ -21,7 +21,7 @@ class StarHackGame {
     }
 
     function void init() {
-        var int i, sectorIndex;
+        register int i, sectorIndex;
         register Anomaly anomaly;
         register Habitat habitat;
         register Star star;
@@ -42,7 +42,7 @@ class StarHackGame {
             let star = stars.get(i);
             let sectorIndex = StarHackGame.randomSector();
             do star.init(sectorIndex, StarHackGame.randomSubsector(sectorIndex));
-            let sectorScan = sectorScans.get(star.sectorIndex());
+            let sectorScan = sectorScans.get(sectorIndex);
             do sectorScan.incStars(1);
             inc i;
         }
@@ -54,7 +54,7 @@ class StarHackGame {
             let habitat = habitats.get(i);
             let sectorIndex = StarHackGame.randomSector();
             do habitat.init(sectorIndex, StarHackGame.randomSubsector(sectorIndex), 50 + Random.randInt(100), Random.randInt(2), 10000);
-            let sectorScan = sectorScans.get(habitat.sectorIndex());
+            let sectorScan = sectorScans.get(sectorIndex);
             do sectorScan.incHabitats(1);
             inc i;
         }
@@ -66,7 +66,7 @@ class StarHackGame {
             let anomaly = anomalies.get(i);
             let sectorIndex = StarHackGame.randomSector();
             do anomaly.init(sectorIndex, StarHackGame.randomSubsector(sectorIndex), 100);
-            let sectorScan = sectorScans.get(anomaly.sectorIndex());
+            let sectorScan = sectorScans.get(sectorIndex);
             do sectorScan.incAnomalies(1);
             inc i;
         }
@@ -78,7 +78,7 @@ class StarHackGame {
     }
 
     function int randomSubsector(int sectorIndex) {
-        var int subsectorIndex;
+        register int subsectorIndex;
         while (true) {
             let subsectorIndex = Random.randInt(144);
             if (~StarHackGame.occupied(sectorIndex, subsectorIndex)) {
@@ -641,12 +641,7 @@ class StarHackGame {
         let y = StarMap.subsectorY(subsectorIndex);
         // animate strike
         if (animate) {
-            let i = 0;
-            while (i < 8) {
-                do GameGraphics.invertTile(2 + x, 2 + y);
-                do Sys.wait(100);
-                let i = i + 1;
-            }
+            do GameGraphics.animateTile(2 + x, 2 + y);
         }
         // process hit
         let i = 0;
@@ -660,7 +655,7 @@ class StarHackGame {
                 do CommandTerminal.printMessage(Constants.messageIncoming());
                 do CommandTerminal.printMessage(Constants.sectorName(sectorIndex));
                 if (habitat.isDestroyed()) {
-                    let habitatsLeft = habitatsLeft - 1;
+                    dec habitatsLeft;
                     do sectorScan.incHabitats(-1);
                     do CommandTerminal.printMessage(Constants.habitatDestroyed());
                 } else {
@@ -692,12 +687,7 @@ class StarHackGame {
         do CommandTerminal.clear();
         // animate strike
         if (animate) {
-            let i = 0;
-            while (i < 8) {
-                do GameGraphics.invertTile(2 + x, 2 + y);
-                do Sys.wait(100);
-                inc i;
-            }
+            do GameGraphics.animateTile(2 + x, 2 + y);
         }
         // process hit
         let sectorIndex = playerShip.sectorIndex();
@@ -708,7 +698,7 @@ class StarHackGame {
             if ((~(habitat.isDestroyed())) & (habitat.sectorIndex() = sectorIndex) & (habitat.subsectorIndex() = subsectorIndex)) {
                 do habitat.hit(p);
                 if (habitat.isDestroyed()) {
-                    let habitatsLeft = habitatsLeft - 1;
+                    dec habitatsLeft;
                     let friendlyFire = true;
                     let sectorScan = sectorScans.get(sectorIndex);
                     do sectorScan.incHabitats(-1);
@@ -728,7 +718,7 @@ class StarHackGame {
             if ((~(anomaly.isDestroyed())) & (anomaly.sectorIndex() = sectorIndex) & (anomaly.subsectorIndex() = subsectorIndex)) {
                 do anomaly.hit(p);
                 if (anomaly.isDestroyed()) {
-                    let anomaliesLeft = anomaliesLeft - 1;
+                    dec anomaliesLeft;
                     let sectorScan = sectorScans.get(sectorIndex);
                     do sectorScan.incAnomalies(-1);
                     do CommandTerminal.printMessage(Constants.anomalyDestroyed());

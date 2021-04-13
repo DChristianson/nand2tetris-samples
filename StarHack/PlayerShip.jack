@@ -80,7 +80,7 @@ class PlayerShip {
     }
 
     method int move(int x, int y) {
-        var int d;
+        register int d;
         let d = StarMap.distance(
             x, y, 
             StarMap.subsectorX(subsectorIndex), StarMap.subsectorY(subsectorIndex)
@@ -94,7 +94,7 @@ class PlayerShip {
     }
 
     method int jump(int x, int y) {
-        var int d;
+        register int d;
         let d = StarMap.distance(
             x, y, 
             StarMap.sectorX(sectorIndex), StarMap.sectorY(sectorIndex)
@@ -111,7 +111,7 @@ class PlayerShip {
     }
 
     method int fireLasers(int x, int y, int p) {
-        var int d;
+        register int d;
         if (powerReserve < p) {
             return 0;
         } 
@@ -146,7 +146,6 @@ class PlayerShip {
     }
     
     method void hit(int p) {
-        var int r;
         if (shieldsUp) {
             if (p < shieldLevel) {
                 let shieldLevel = shieldLevel - p;
@@ -183,7 +182,7 @@ class PlayerShip {
     }
 
     method void repair() {
-        var int repairRate;
+        register int repairRate;
         let repairRate = dronePopulation / 25;
         if (hullIntegrity < 100) {
             let hullIntegrity = hullIntegrity + repairRate;

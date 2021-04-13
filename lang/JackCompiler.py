@@ -46,11 +46,17 @@ class VMWriter:
     def comment(self, text):
         self.out.write('// %s\n' % text)
 
-    def function(self, name, nargs):
-        self.out.write('function %s %d\n' % (name, nargs))
+    def function(self, name, nvars, nargs):
+        if options.enable_vm_ext:
+            self.out.write('function-ext %s %d %d\n' % (name, nvars, nargs))
+        else:
+            self.out.write('function %s %d\n' % (name, nvars))
 
     def call(self, name, nargs):
-        self.out.write('call %s %d\n' % (name, nargs))
+        if options.enable_vm_ext:
+            self.out.write('call-ext %s\n' % (name))
+        else:
+            self.out.write('call %s %d\n' % (name, nargs))
 
     def label(self, name):
         self.out.write('label %s\n' % (name))
@@ -257,7 +263,7 @@ class JackCompiler:
 
         # function decl
         subroutineName = self.className + '.' + subroutineName
-        self.vmWriter.function(subroutineName, self.numVars('var'))
+        self.vmWriter.function(subroutineName, self.numVars('var'), self.numVars('argument'))
 
         # preamble
         if subroutineKind == 'constructor':

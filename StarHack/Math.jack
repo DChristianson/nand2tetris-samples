@@ -39,11 +39,12 @@ class Math {
      *  the Jack expressions x*y and multiply(x,y) return the same value.
      */
     function int multiply(int x, int y) {
-        var boolean isNegative;
-        var int i, z;
+        register boolean isNegative;
+        register int i, z;
         if ((x = 0) | (y = 0)) {
             return 0;
         }
+        let isNegative = false;
         if (x < 0) {
             let x = -x;
             if (y > 0) {
@@ -58,6 +59,7 @@ class Math {
             }
         }
         let i = 1;
+        let z = 0;
         while (x > 0) {
             if ((x & i) > 0) {
                 let z = z + y;
@@ -124,7 +126,7 @@ class Math {
 
     /** Returns the integer part of the square root of x. */
     function int sqrt(int x) {
-        var int y, j, z, zz;
+        register int y, j, z, zz;
         let j = 8;
         while (j > 0) {
             let j = j - 1;
