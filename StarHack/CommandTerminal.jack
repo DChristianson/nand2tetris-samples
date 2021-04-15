@@ -190,9 +190,9 @@ class CommandTerminal {
     function char readChar() {
         var char c;
         while (c = 0) {
-            let c = keyPressed();
+            let c = CommandTerminal.keyPressed();
         }
-        while (keyPressed() = c) {
+        while (CommandTerminal.keyPressed() = c) {
         }
         return c;
     }
@@ -207,9 +207,9 @@ class CommandTerminal {
         do TextGraphics.printString(message);
         while (c = 0) {
             inc i;
-            let c = keyPressed();
+            let c = CommandTerminal.keyPressed();
         }
-        while (keyPressed() = c) {
+        while (CommandTerminal.keyPressed() = c) {
             inc i;
         }
         return i;

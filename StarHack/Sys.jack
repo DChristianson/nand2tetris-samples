@@ -27,7 +27,7 @@ class Sys {
 
     /** Waits approximately duration milliseconds and returns.  */
     function void wait(int duration) {
-        let duration = duration * 10;
+        let duration = duration * 100;
         while (duration > 0) {
             let duration = duration - 1;
         }

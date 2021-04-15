@@ -11,16 +11,16 @@ class StarHackGame {
     static ObjectArray stars;
     static ObjectArray sectorScans;
 
-    function void clear() {
-        do playerShip.dispose();
-        do anomalies.dispose();
-        do habitats.dispose();
-        do stars.dispose();
-        do sectorScans.dispose();
+    function void init() {
+        let playerShip = Array.new(10);
+        let sectorScans = ObjectArray.new(64, 4);
+        let stars = ObjectArray.new(32, 2);
+        let habitats = ObjectArray.new(habitatsLeft, 5);
+        let anomalies = ObjectArray.new(anomaliesLeft, 4);
         return;
     }
 
-    function void init() {
+    function void reset() {
         register int i, sectorIndex;
         register Anomaly anomaly;
         register Habitat habitat;
@@ -31,12 +31,11 @@ class StarHackGame {
         let friendlyFire = 0;
         let displayMode = 0;
 
-        let sectorScans = ObjectArray.new(64, 4);
+        do sectorScans.clear();
 
         let sectorIndex = StarHackGame.randomSector();
-        let playerShip = PlayerShip.new(sectorIndex, StarHackGame.randomSubsector(sectorIndex));
+        do playerShip.init(sectorIndex, StarHackGame.randomSubsector(sectorIndex));
 
-        let stars = ObjectArray.new(32, 2);
         let i = 0;
         while (i < 32) {
             let star = stars.get(i);
@@ -48,7 +47,6 @@ class StarHackGame {
         }
 
         let habitatsLeft = 8;
-        let habitats = ObjectArray.new(habitatsLeft, 5);
         let i = 0;
         while (i < habitatsLeft) {
             let habitat = habitats.get(i);
@@ -60,7 +58,6 @@ class StarHackGame {
         }
 
         let anomaliesLeft = 8;
-        let anomalies = ObjectArray.new(anomaliesLeft, 4);
         let i = 0;
         while (i < anomaliesLeft) {
             let anomaly = anomalies.get(i);
@@ -70,7 +67,7 @@ class StarHackGame {
             do sectorScan.incAnomalies(1);
             inc i;
         }
-
+        return;
     }
 
     function int randomSector() {
@@ -98,8 +95,10 @@ class StarHackGame {
             let i = 0;
             while (i < 32) {
                 let star = stars.get(i);
-                if ((star.sectorIndex() = sectorIndex) & (star.subsectorIndex() = subsectorIndex)) {
-                    return true;
+                if (star.sectorIndex() = sectorIndex) {
+                    if (star.subsectorIndex() = subsectorIndex) {
+                        return true;
+                    }
                 }
                 inc i;
             }
@@ -108,8 +107,10 @@ class StarHackGame {
             let i = 0;
             while (i < 8) {
                 let habitat = habitats.get(i);
-                if ((habitat.sectorIndex() = sectorIndex) & (habitat.subsectorIndex() = subsectorIndex)) {
-                    return true;
+                if (habitat.sectorIndex() = sectorIndex) {
+                    if (habitat.subsectorIndex() = subsectorIndex) {
+                        return true;
+                    }
                 }
                 inc i;
             }
@@ -118,8 +119,10 @@ class StarHackGame {
             let i = 0;
             while (i < 8) {
                 let anomaly = anomalies.get(i);
-                if ((anomaly.sectorIndex() = sectorIndex) & (anomaly.subsectorIndex() = subsectorIndex)) {
-                    return true;
+                if (anomaly.sectorIndex() = sectorIndex) {
+                    if (anomaly.subsectorIndex() = subsectorIndex) {
+                        return true;
+                    }
                 }
                 inc i;
             }
@@ -742,11 +745,11 @@ class StarHackGame {
             while (i < 8) {
                 let anomaly = anomalies.get(i);
                 if (~(anomaly.isDestroyed())) {
-                    do anomaly.update(this);
+                    do anomaly.update();
                 }
                 inc i;
             }
-            do playerShip.update(this);
+            do playerShip.update();
         }
         return;
     }

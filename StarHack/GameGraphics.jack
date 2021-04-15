@@ -37,44 +37,46 @@ class GameGraphics {
 
     function void animateTile(int x, int y) {
         register int i;
-        register int offset; let offset = (y * 512) + x;
+        register Array start, offset; 
+        let start = screen + (y * 512) + x;
         let i = 0;
         while (i < 8) {
-            inv offset;
+            let offset = start;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
+            inv offset[0];
             inc offset 32;
-            inv offset;
-            inc offset 32;
+            inv offset[0];
             do Sys.wait(100);
             inc i;
         }
+        return;
     }
-
+ 
 }

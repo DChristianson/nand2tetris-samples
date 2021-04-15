@@ -70,7 +70,7 @@ def emit_rle(runs, fp):
                     else:
                         fp.write(f'        ldd {int2jack(r)};\n')
                         for i in range(0, n):
-                            fp.write(f'        sto {offset};\n')
+                            fp.write(f'        sto @{offset};\n')
                             offset += 1
                 else:
                     offset = offset + n

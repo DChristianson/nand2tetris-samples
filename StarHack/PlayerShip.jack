@@ -12,11 +12,10 @@ class PlayerShip {
     field int powerReserve;
     field int dronePopulation;
 
-    constructor PlayerShip new(int sector, int subsector) {
+    method void init (int sector, int subsector) {
 
         let sectorIndex = sector;
         let subsectorIndex = subsector;
-
         let shieldsUp = false;
         let shieldLevel = 100;
         let hullIntegrity = 100;
@@ -26,13 +25,8 @@ class PlayerShip {
         let powerReserve = 100;
         let dronePopulation = 100;
 
-        return this;
-
-    }
-
-    method void dispose() {
-        do Memory.deAlloc(this);
         return;
+
     }
 
     method int sectorIndex() {

@@ -138,9 +138,7 @@ class ASMTranslator:
             'D=A',
             '@SP',
             'M=D',
-        ] + self._call('Sys.init', 0) + [
-            label,
-            address,
+            self.function_call_address('Sys.init'), # jump to function
             '0; JMP'
         ] + self._save_stack() + self._pop_stack()
 
@@ -525,6 +523,14 @@ class ASMTranslator:
                     'A=M+1',
                     op
                 ]
+            elif 1 == step:
+                return [
+                    memory_segment_address(segment),
+                    'D=M',
+                    '@%d' % i,
+                    'A=D+A',
+                    'M=M+1',
+                ]
             # not going to handle more complex case
         return ['???']
 
@@ -566,6 +572,14 @@ class ASMTranslator:
                     memory_segment_address(segment),
                     'A=M+1',
                     op
+                ]
+            elif 1 == step:
+                return [
+                    memory_segment_address(segment),
+                    'D=M',
+                    '@%d' % i,
+                    'A=D+A',
+                    'M=M-1',
                 ]
             # not going to handle more complex case
         return ['???']
@@ -863,20 +877,22 @@ class ASMTranslator:
         address, label = self.next_return_address_label()
         self.function_name = function_name
         setup = [
-            self.function_declaration_label(),
-            'D=A', # save return address
-            '@R13',
-            'M=D',
-            '@%d' % (5 + args), # need space for return value
-            'D=A',
-            '@R14',
-            'M=D',
-            address, # leave return address in data register
-            'D=A',
-            '@save_stack', # jump to stack save
-            '0; JMP',
-            label
+            self.function_declaration_label()
         ]
+        if function_name != 'Sys.init':
+            setup += [
+                '@R13', # save call return address R13
+                'M=D',
+                '@%d' % (5 + args), # need space for return value
+                'D=A',
+                '@R14',
+                'M=D',
+                address, # leave return address in data register
+                'D=A',
+                '@save_stack', # jump to stack save
+                '0; JMP',
+                label
+            ]
         if 0 == vars:
             return setup
         setup += [
@@ -973,10 +989,14 @@ class ASMTranslator:
         address, label = self.next_address_label('save_stack')
         return [
             '(save_stack)',
-            '@SP', # push return address (should be in d register)
+            '@R15', # push return address (should be in d register)
+            'M=D',
+            '@R13', # push call return address (should be in d register)
+            'D=M',
+            '@SP',
             'AM=M+1',
             'A=A-1',
-            'M=D',
+            'M=D'
         ] + self._push_registers('@LCL', '@ARG', '@THIS', '@THAT') + [
             '@SP', # set new arg segment
             'D=M',
@@ -988,7 +1008,7 @@ class ASMTranslator:
             'D=M',
             '@LCL',
             'M=D',
-            '@R13', # jump to function
+            '@R15', # jump to function
             'A=M',
             '0; JMP'
         ]        
@@ -1164,6 +1184,7 @@ class Optimizer:
         scan('s_eqif', ['eq', 'if-goto .*'], commands)
         scan('s_not', ['not'], commands)
         scan('s_inv', ['inv'], commands)
+        scan('s_setzero', ['ldd constant.* (0|1)', 'sdd .*'], commands)
         scan('s_constif', ['push constant .*', 'eq', 'if-goto .*'], commands)
         scan('s_zeroeq', ['push constant .*', 'push .*', 'eq', 'if-goto .*'], commands)
         scan('s_static_un', ['push (static|constant)', '(neg|not)'], commands)

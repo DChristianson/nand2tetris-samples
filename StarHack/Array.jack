@@ -7,10 +7,5 @@ class Array {
     function Array new(int size) {
         return Memory.alloc(size);
     }
-
-    /** Disposes this array. */
-    method void dispose() {
-        do Memory.deAlloc(this);
-        return;
-    }
+    
 }

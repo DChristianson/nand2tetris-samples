@@ -25,8 +25,8 @@ kindSegments = {
 vmOps = {
     '+': 'add',
     '-': 'sub',
-    '*': 'call Math.multiply 2',
-    '/': 'call Math.divide 2',
+    '*': 'call-ext Math.multiply' if options.enable_vm_ext else 'call Math.multiply 2',
+    '/': 'call-ext Math.divide' if options.enable_vm_ext else 'call Math.divide 2',
     '&': 'and',
     '|': 'or',
     '<': 'lt',
@@ -450,6 +450,15 @@ class JackCompiler:
 
         varName = self.tokenizer.expect('identifier')
         segment, value, _ = self.findVar(varName)
+        # array access
+        if self.tokenizer.consume('symbol', '['):
+            self.vmWriter.push(segment, value)
+            self.compileExpression()
+            self.tokenizer.expect('symbol', ']')
+            self.vmWriter.op('add')
+            self.vmWriter.pop('pointer', 1)
+            # handle lookup
+            segment, value = 'that', 0
 
         step = 1
         if self.tokenizer.peek('integerConstant'):
@@ -482,6 +491,7 @@ class JackCompiler:
 
     def compileStoStatement(self):
         keyword = self.tokenizer.expect('keyword', 'sto')
+        self.tokenizer.expect('symbol', '@')
         if self.tokenizer.peek('integerConstant'):
             segment = 'constant'
             value = self.tokenizer.expect('integerConstant')

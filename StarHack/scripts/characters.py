@@ -118,4 +118,4 @@ for code, char, bitmap in data:
 for value, offsets in charMap.items():
     print(f'ldd {value};')
     for offset in offsets:
-        print(f'sto {offset};')
+        print(f'sto @{offset};')

@@ -92,16 +92,18 @@ charOffsetMap = {}
 
 for var, value in stringConstants.items():
     constantOffsets[var] = offset
+    charOffsetMap.setdefault(len(value), []).append(offset)
     offset += 1
     for c in value:
-        charOffsetMap.setdefault(c, []).append(offset)
+        charOffsetMap.setdefault(ord(c), []).append(offset)
         offset += 1
 
 for index, value in enumerate(sectorNames):
     constantOffsets[f'sectorNames[{index}]'] = offset
+    charOffsetMap.setdefault(len(value), []).append(offset)
     offset += 1
     for c in value:
-        charOffsetMap.setdefault(c, []).append(offset)
+        charOffsetMap.setdefault(ord(c), []).append(offset)
         offset += 1
 
 with open('Constants.jack', 'w') as fp:
@@ -110,22 +112,17 @@ with open('Constants.jack', 'w') as fp:
 
     fp.write(f'    function void init() {{\n')
     fp.write(f'        register int offset;\n')
-
-    for var, value in stringConstants.items():
-        fp.write(f'        let @{constantOffsets[var]} = {len(value)};\n')
-
     fp.write(f'        let sectorNames = Array.new({len(sectorNames)});\n')
     fp.write(f'        let offset = sectorNames;\n')
     for index, value in enumerate(sectorNames):
         offset = constantOffsets[f'sectorNames[{index}]']
         fp.write(f'        let @offset = {offset};\n')
         fp.write(f'        inc offset;\n')
-        fp.write(f'        let @{offset} = {len(value)};\n')
 
     for c, offsets in charOffsetMap.items():
-        fp.write(f'        ldd {ord(c)};\n')
+        fp.write(f'        ldd {c};\n')
         for offset in offsets:
-            fp.write(f'        sto {offset};\n')
+            fp.write(f'        sto @{offset};\n')
     
     fp.write('        return;\n')
     fp.write('    }\n')

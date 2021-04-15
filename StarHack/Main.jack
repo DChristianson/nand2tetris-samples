@@ -5,6 +5,8 @@ class Main {
         var int commandCode;
         var int commandCoordinates;
 
+        do StarHackGame.init();
+
         while (true) {
 
             // attract loop
@@ -14,13 +16,12 @@ class Main {
 
             // run game
             do Random.seed(waitTime);
-            do StarHackGame.init();
+            do StarHackGame.reset();
             do StarHackGame.start();
             while (StarHackGame.isRunning()) {
                 do StarHackGame.update();
             }
             do StarHackGame.end();
-            do StarHackGame.clear();
 
         }
         return;
