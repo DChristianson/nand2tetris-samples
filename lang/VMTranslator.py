@@ -1166,8 +1166,8 @@ class Optimizer:
             commands,
             lambda w: [Command(f'if-goto-not', *w[1].args)],
             lambda w: w[0].args != w[2].args))
-        # 
-        self.optimize_analyze(commands)
+        # debugging
+        # self.optimize_debug(commands)
         function.commands = commands
 
     def try_inline(self, function):
@@ -1179,7 +1179,8 @@ class Optimizer:
             return [Command('pop', 'pointer', 1), Command('push', 'that', function.commands[3].args[1])]
         return None
 
-    def optimize_analyze(self, commands):
+    # debugging function - report on sequences that might be interesting
+    def optimize_debug(self, commands):
         scan('s_if', ['if-goto .*'], commands)
         scan('s_eqif', ['eq', 'if-goto .*'], commands)
         scan('s_not', ['not'], commands)
