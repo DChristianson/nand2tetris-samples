@@ -31,10 +31,14 @@ class StarHackGame {
         let friendlyFire = 0;
         let displayMode = 0;
 
+        do TextGraphics.drawTextAligned(Constants.msg00(), 2, 3, 0);
+
         do sectorScans.clear();
 
         let sectorIndex = StarHackGame.randomSector();
         do playerShip.init(sectorIndex, StarHackGame.randomSubsector(sectorIndex));
+
+        do TextGraphics.drawTextAligned(Constants.msg01(), 4, 6, 0);
 
         let i = 0;
         while (i < 32) {
@@ -45,6 +49,8 @@ class StarHackGame {
             do sectorScan.incStars(1);
             inc i;
         }
+
+        do TextGraphics.drawTextAligned(Constants.msg02(), 5, 6, 0);
 
         let habitatsLeft = 8;
         let i = 0;
@@ -57,6 +63,8 @@ class StarHackGame {
             inc i;
         }
 
+        do TextGraphics.drawTextAligned(Constants.msg03(), 7, 6, 0);
+
         let anomaliesLeft = 8;
         let i = 0;
         while (i < anomaliesLeft) {
@@ -67,6 +75,9 @@ class StarHackGame {
             do sectorScan.incAnomalies(1);
             inc i;
         }
+
+        do TextGraphics.drawLabelValue(Constants.daysLeft(), (timeLeft / 100), 10, 32, 0);
+
         return;
     }
 
@@ -165,11 +176,6 @@ class StarHackGame {
 
     function void start() {
         // intro
-        do TextGraphics.drawTextAligned(Constants.msg00(), 2, 3, 0);
-        do TextGraphics.drawTextAligned(Constants.msg01(), 4, 6, 0);
-        do TextGraphics.drawTextAligned(Constants.msg02(), 5, 6, 0);
-        do TextGraphics.drawTextAligned(Constants.msg03(), 7, 6, 0);
-        do TextGraphics.drawLabelValue(Constants.daysLeft(), (timeLeft / 100), 10, 32, 0);
         do CommandTerminal.awaitScreen(Constants.pressKey());
         do GameGraphics.wipeScreen();
 
