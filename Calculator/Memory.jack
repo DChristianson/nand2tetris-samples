@@ -1,7 +1,6 @@
 // This file is adapted from www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/12/Memory.jack
 
 class Memory {
 
@@ -9,8 +8,8 @@ class Memory {
 
     function void init() {
         let freeList = 2048;
-        let @2048 = 0;
-        let @2049 = 10224; // give space for math, chars, and constants
+        let freeList[0] = 0;
+        let freeList[1] = 14336;
         return;
     }
 
@@ -54,7 +53,7 @@ class Memory {
         }
         return freeSegment;
     }
-
+    
     function void deAlloc(Array o) {
         let o[-2] = freeList;
         let freeList = o - 2;

@@ -1,0 +1,43 @@
+// This file is adapted from  www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+
+class Keyboard {
+
+    static Array keyboard;
+    static String buffer;
+
+    function void init() {
+        let keyboard = 24576;
+        let buffer = String.new(64);
+        return;
+    } 
+
+    function String readLine(String message) {
+        var char c;
+        do Output.printString(message);
+        do buffer.clear();
+        while (true) {
+            let c = 0;
+            while (c = 0) {
+                let c = keyboard[0];
+            }
+            while (keyboard[0] = c) {
+                // do nothing
+            }
+            if (c = 128) {
+                return buffer;
+            }
+            if (c = 129) {
+                do buffer.eraseLastChar();
+                do Output.backSpace();
+
+            } else {
+                do buffer.appendChar(c);
+                do Output.printChar(c);
+            }
+        }
+        return 0;
+    }   
+
+}

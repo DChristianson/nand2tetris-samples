@@ -1,0 +1,168 @@
+// This file is adapted from www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+
+class Screen {
+
+    static Array screen;
+    static boolean color;
+    static Array pixelMasks;
+    static Array invMasks;
+  
+    function void init() {
+        let color = true;
+        let screen = 16384;
+        let pixelMasks = Array.new(16);
+        let pixelMasks[0] = 1;
+        let pixelMasks[1] = 2;
+        let pixelMasks[2] = 4;
+        let pixelMasks[3] = 8;
+        let pixelMasks[4] = 16;
+        let pixelMasks[5] = 32;
+        let pixelMasks[6] = 64;
+        let pixelMasks[7] = 128;
+        let pixelMasks[8] = 256;
+        let pixelMasks[9] = 512;
+        let pixelMasks[10] = 1024;
+        let pixelMasks[11] = 2048;
+        let pixelMasks[12] = 4096;
+        let pixelMasks[13] = 8192;
+        let pixelMasks[14] = 16384;
+        let pixelMasks[15] = ~(32767);
+        let invMasks = Array.new(16);
+        let invMasks[0] = ~1;
+        let invMasks[1] = ~2;
+        let invMasks[2] = ~4;
+        let invMasks[3] = ~8;
+        let invMasks[4] = ~16;
+        let invMasks[5] = ~32;
+        let invMasks[6] = ~64;
+        let invMasks[7] = ~128;
+        let invMasks[8] = ~256;
+        let invMasks[9] = ~512;
+        let invMasks[10] = ~1024;
+        let invMasks[11] = ~2048;
+        let invMasks[12] = ~4096;
+        let invMasks[13] = ~8192;
+        let invMasks[14] = ~16384;
+        let invMasks[15] = 32767;
+        return;
+    }
+
+    function void clearScreen() {
+        var int i;
+        let i = 8192;
+        while (i > 0) {
+            let i = i - 1;
+            let screen[i] = 0;
+        }
+        return;
+    }
+
+    function void setColor(boolean b) {
+        let color = b;
+        return;
+    }
+
+    function void drawLine(int x1, int y1, int x2, int y2) {
+        var int dx, dy, ix, iy, cx, cy, diff;
+        var int offset, xBit, bitMask;
+        let dx = x2 - x1;
+        let dy = y2 - y1;
+        // vertical
+        let cy = dy + 1;
+        if (dx = 0) {
+            if (y2 < y1) {
+                let y1 = y2;
+            }
+            let offset = (x1 / 16);
+            let xBit = x1 - (16 * offset);
+            let offset = (y1 * 32) + offset;
+            if (color) {
+                while (cy > 0) {
+                    let screen[offset] = screen[offset] | pixelMasks[xBit];
+                    let offset = offset + 32;
+                    let cy = cy - 1;
+                }
+            } else {
+                while (cy > 0) {
+                    let screen[offset] = screen[offset] & invMasks[xBit];
+                    let offset = offset + 32;
+                    let cy = cy - 1;
+                }
+            }
+            return;
+        }
+        // horizontal
+        let cx = dx + 1;
+        if (dy = 0) {
+            if (x2 < x1) {
+                let x1 = x2;
+            }
+            let offset = (x1 / 16);
+            let xBit = x1 - (16 * offset);
+            let offset = (y1 * 32) + offset;
+            if (color) {
+                if (xBit > 0) {
+                    // start
+                    let cx = cx - (16 - xBit);
+                    let bitMask = ~(pixelMasks[xBit - 1] - 1);
+                    if (cx < 0) {
+                        let cx = 16 + cx;
+                        let bitMask = bitMask & (pixelMasks[cx] - 1);
+                        let cx = 0;
+                    }
+                    let screen[offset] = screen[offset] | bitMask;
+                    let offset = offset + 1;
+                }             
+                while (cx > 16) {
+                    // middle
+                    let screen[offset] = ~0;
+                    let offset = offset + 1;
+                    let cx = cx - 16;
+                }
+                if (cx > 0) {
+                    // end
+                    let bitMask = pixelMasks[cx] - 1;
+                    let screen[offset] = screen[offset] | bitMask;
+                }
+            } else {
+                if (xBit > 0) {
+                    // start
+                    let cx = cx - (16 - xBit);
+                    let bitMask = ~(pixelMasks[xBit - 1] - 1);
+                    if (cx < 0) {
+                        let cx = 16 + cx;
+                        let bitMask = bitMask & (pixelMasks[cx] - 1);
+                        let cx = 0;
+                    }
+                    let screen[offset] = screen[offset] & ~(bitMask);
+                    let offset = offset + 1;
+                }             
+                while (cx > 16) {
+                    // middle
+                    let screen[offset] = 0;
+                    let offset = offset + 1;
+                    let cx = cx - 16;
+                }
+                if (cx > 0) {
+                    // end
+                    let bitMask = pixelMasks[cx] - 1;
+                    let screen[offset] = screen[offset] & ~(bitMask);
+                }
+            }
+            return;
+        }
+        return;
+    }
+
+    function void drawRectangle(int x1, int y1, int x2, int y2) {
+        while (~(y1 > y2)) {
+            do Screen.drawLine(x1, y1, x2, y1);
+            let y1 = y1 + 1;
+        }
+        return;
+    }
+
+
+}
