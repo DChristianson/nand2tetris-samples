@@ -2,42 +2,42 @@
 
 Here are two sample programs written for the Hack computer in the Jack language
 
-## Note: spoilers ahead
+I originally built the Calculator program as part of the Nand2Tetris Coursera. But I got interested in doing just a little bit more and started working on a classic "Trek" style game - StarHack. A couple of things became apparent...
 
-This code makes use of a few Jack and VM extensions that aren't part of the Nand2Tetris course. If you want to compile it yourself or use it in your own projects - you'll need to work with the provided compiler and VM translator.
+  * It turns out there were quite a few bugs in the OS routines I had developed for the course - ones that had somehow slipped past the course test procedures.
+  * The first version of StarHack easily fit in RAM ... but not ROM. The first version used almost 32K VM instructions - and would have required 200K of ROM to encode as Hack instructions!
 
-The story here is: I originally built the Calculator program as a pure Jack program. As I was winding up the course I got interested in doing just a little bit more and started working on a classic "Trek" style game - StarHack. This all went pretty smoothly at first. Then I started to realize a few things:
+So long story short, I set about fixing, and cleaning, and otherwise shrinking the code.
 
-  * to my horror my OS code had more than a few holes in it. As far as the course went it was fine for passing the assignment, but there were bugs in edge cases that only evidenced themselves as I started to refactor for compactness.
-  * Less embarrasing but equally concerning, the compiled hack assembly code for the Calculator (that I had only ever run in VM emulator) was too big to fit on the emulated machine. For all intents and purposes it was not a real Hack program.
-  * In the case of StarHack things were much worse - the first version was having problems staying under the emulator's limit of 32767 instructions. The equivalent Hack assembly was much worse - upwards of 200K instructions!
+# Notes on language extensions
 
-So long story short, I set about fixing, and cleaning, and adding a few language features to bring things under control
+This code makes use of a few Jack and VM extensions that aren't part of the Nand2Tetris course. If you want to compile either program for yourself you'll need to work with the provided compiler and VM translator.
 
-  * The first Jack extension added is the "register" variable type - which lets you define variables in functions that don't live on the stack but are instead assigned to memory like statics - faster and less code to read/write - but have to be used carefully since they retain their value from call to call
-  * The second was to develop a set of VM extensions that you could call from Jack to basically write a mix of assembly and Jack code 
+  * The first extension added was the "register" variable declaration 
+  ** register variables can be defined inside a function like a local var but are assigned to memory like statics
+  ** Note: register is faster and more compact than var but has to be used carefully since these variables retain their value from call to call
+  * The second innovation was to develop a set of VM extensions to help load graphics in to memory 
   ** let @ is a convention for let statements that will write a constant to a memory address without using the stack. This is used for a lot of graphics in StarHack
-  ** ldd and sto go a step further - they let you load the D register from a Jack variable and store it as a separate operation - useful when copying the same D value to multiple locations without doing a reload. This is used extensively in StarHack to load full screen graphics.
+  ** ldd and sto go a step further - they let you load the D register from a Jack variable and store it as a separate operation - useful when copying the same D value to multiple locations without doing a reload. This is used to pare down graphics code even further by eliminating redundant data loading.
   ** inc, dec and inv are new Jack statement types that can increment, decrement and invert (not) a variable without using the stack. 
 
 These extensions were relatively easy to add - but StarHack was still 50K lines of Hack assembly. So the VMTranslator got a few upgrades:
 
-* First off the translator does a preprocessing pass to read in all functions - in order to eliminate unused functions - and enable optimization passes.
-* The first set of optimizations was to reduce the overhead of function calls by inlining simple calls 
-* The next batch got more complicated - identifying more and more patterns that were redundant or could otherwise be reduced to fewer operations.
-* At the same time I realized I could go further with non-inlined function calls: function-ext and call-ext are changes to the function / call semantics of the VM to reduce the number of instructions needed at the call site. Namely the implementation of call-ext only needs to load the return address for a call into the D register and the called function address into the A register - then jump.
+* The first set of optimizations was to reduce the overhead of function calls by inlining simple calls, thus avoiding any function call overdhe
+* The next batch involved analyzing VM code to identify and replace redundant operations with more efficient versions - removing things like addition by 1 or 0, or consecutive push and pop to and from the same memory segment
+* The final addition was to focus on changes to the function / call semantics of the VM to reduce the number of instructions needed at the call site.
 
-Once these were in place - it was enough but I contemplate if simply rewriting StarHack as pure Hack assembly might have been easier...
+Once these were in place - StarHack fit - barely - although maybe it would have been easier to just start with Hack assembly...
 
 # Building and running Calculator
 
-Calculator is a simple numerical calculator... but note I have currently left out the OS code - if you want to run it yourself outside the VM emulator you will need your own OS.
+Calculator is a simple numerical calculator using decimal floating point numbers.
 
-To build for the VM emulator (all VM extensions replaced with standard VM equivalents):
+To build for the VM emulator use the following command:
 
 python3 lang/JackCompiler.py Calculator
 
-To build for Hack (will need your own OS jack code)
+To build for Hack you will need the extensions:
 
 python3 lang/JackCompiler.py -x Calculator
 python3 lang/VMTranslator.py Calculator
