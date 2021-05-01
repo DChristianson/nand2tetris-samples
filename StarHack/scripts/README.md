@@ -1,0 +1,1 @@
+This directory contains miscellaneous python scripts used to code-generate the full-screen and sprite graphics used in the game. 

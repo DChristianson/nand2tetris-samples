@@ -1,3 +1,4 @@
+# Produce character graphics code fragment optimized for reduced instruction count - output to stdout
 
 def int2jack(i):
     if i < 32768:

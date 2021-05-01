@@ -1,3 +1,4 @@
+# Produce command matching code fragment optimized for reduced instruction count - output to stdout
 
 commands = [
     ('LRS', 'Long Range Scan'),

@@ -1,3 +1,7 @@
+#
+# Generate Screens.jack and Sprites.jack files 
+#
+
 import sys
 import subprocess
 import os
@@ -6,7 +10,7 @@ import glob
 from PIL import Image
 import itertools
 
-aseprite_path = '/Users/dchristianson/Library/Application Support/Steam/steamapps/common/Aseprite/Aseprite.app/Contents/MacOS/'
+aseprite_path = '<path to aesprite>'
 explicit_zero = False
 
 def chunker(iterable, n):

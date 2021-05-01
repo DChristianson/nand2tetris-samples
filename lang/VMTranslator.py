@@ -3,7 +3,7 @@ import re
 import os
 from itertools import islice
 
-# sliding window
+# sliding window util function
 def window(seq, n=2):
     it = iter(seq)
     result = tuple(islice(it, 0, n, 1))

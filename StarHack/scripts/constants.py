@@ -1,5 +1,5 @@
 #
-# Generate constants.jack file
+# Generate Constants.jack file
 #
 
 # strings for UX

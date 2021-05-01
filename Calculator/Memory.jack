@@ -19,15 +19,15 @@ class Memory {
         let needed = size + 2;
         let freeSegment = freeList;
         let lastSegment = 0;
-        while ((needed > freeSegment[1]) & (freeSegment[0] > 0)) {
+        while (needed > freeSegment[1]) {
             let lastSegment = freeSegment;
             let freeSegment = freeSegment[0];
+            if (freeSegment = 0) {
+                // THROW?
+                return 0;
+            }
         }
         let available = freeSegment[1];
-        if (needed > available) {
-            // TODO: THROW
-            return 0;
-        }
         if ((needed < available) & ((available - needed) > 2)) {
             // SPLIT
             let freeSegment[1] = needed;
