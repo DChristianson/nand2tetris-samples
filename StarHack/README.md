@@ -22,13 +22,17 @@ This code makes use of a few Jack and VM extensions that aren't part of the Nand
 
 To build for the VM emulator (all VM extensions replaced with standard VM equivalents):
 
+```
 python3 lang/JackCompiler.py StarHack
+```
 
 To build for Hack
 
+```
 python3 lang/JackCompiler.py -x StarHack
 python3 lang/VMTranslator.py  StarHack
 python3 lang/asm.py  StarHack/StarHack.asm StarHack/StarHack.hack
+```
 
 # Links
  * https://www.nand2tetris.org/
