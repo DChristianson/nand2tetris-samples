@@ -6,10 +6,14 @@ This code makes use of a few Jack and VM extensions that aren't part of the Nand
 
 To build for the VM emulator (all VM extensions replaced with standard VM equivalents):
 
+```
 python3 lang/JackCompiler.py Calculator
+```
 
 To build for Hack
 
+```
 python3 lang/JackCompiler.py -x Calculator
 python3 lang/VMTranslator.py  Calculator
 python3 lang/asm.py  Calculator/Calculator.asm Calculator/Calculator.hack
+```
