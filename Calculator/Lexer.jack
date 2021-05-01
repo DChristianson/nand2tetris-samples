@@ -44,7 +44,7 @@ class Lexer {
         let startOffset = endOffset;
         while (endOffset < len) {
             let c = string.charAt(endOffset);
-            let endOffset = endOffset + 1;
+            inc endOffset;
             if (c < 33) {
                 // ignore all whitespace and control characters
                 let startOffset = endOffset;
@@ -98,7 +98,7 @@ class Lexer {
             if ((~(c = 46)) & ((c < 48) | (c > 57))) {
                 return;
             }
-            let endOffset = endOffset + 1;
+            inc endOffset;
         }
         return;
     }

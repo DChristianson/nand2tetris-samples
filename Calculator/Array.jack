@@ -1,11 +1,16 @@
 // This file is adapted from www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
+
+
 class Array {
 
-    /** Constructs a new Array of the given size. */
     function Array new(int size) {
         return Memory.alloc(size);
     }
-    
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
 }

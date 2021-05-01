@@ -4,7 +4,7 @@ class SectorScan {
     field int habitats;
     field int anomalies;
     field int stars;
-
+    
     method boolean scanned() {
         return scanned;
     }

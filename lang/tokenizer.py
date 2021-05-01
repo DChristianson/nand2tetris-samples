@@ -7,7 +7,7 @@ keywords = set([
     'class', 'constructor', 'function', 'method', 'field',
     'static', 'register', 'var', 'int', 'char', 'boolean', 'void', 'true',
     'false', 'null', 'this', 'let', 'do', 'if', 'else', 'while', 'inc', 'dec',
-    'return'
+    'inv', 'ldd', 'sto', 'return'
 ])
 
 whitespace = ' \t\n\r\v\f'

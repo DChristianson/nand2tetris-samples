@@ -4,6 +4,12 @@ class Main {
         var String input;
         var Calculator calculator;
 
+        // test mode
+        // if (true) {
+        //     do Test.test();
+        //     return;
+        // }
+
         let calculator = Calculator.new();
 
         // init calculator display
@@ -13,12 +19,6 @@ class Main {
 
         // init input dialog
         do InputDialog.setPosition(0, 209, 511, 45);
-
-        // test mode
-        // if (true) {
-        //     do Test.test();
-        //     return;
-        // }
 
         // clear display and draw static content
         do Screen.clearScreen();
@@ -33,12 +33,10 @@ class Main {
             do Display.displayDecimal32(calculator.currentValue());
             let input = InputDialog.readInput("Enter an expression (example: 10 + (3 * 2.5)):");
             while (calculator.error()) {
-                do input.dispose();
                 // TODO: display error position
                 let input = InputDialog.readInput("Error reading expression, try again:");
             }
             do calculator.update(input);
-            do input.dispose();
         }
 
         return;

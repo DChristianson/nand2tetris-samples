@@ -1,17 +1,11 @@
 class Main {
 
-    static StarHackGame game;
-
     function void main() {
         var int waitTime;
         var int commandCode;
         var int commandCoordinates;
 
-        do GameGraphics.init();
-        do Constants.init();
-        do Sprites.init();
-        do Screens.init();
-        do CommandTerminal.init();
+        do StarHackGame.init();
 
         while (true) {
 
@@ -22,15 +16,12 @@ class Main {
 
             // run game
             do Random.seed(waitTime);
-            let game = StarHackGame.new();
-            do game.start();
-            while (game.isRunning()) {
-                do game.update();
+            do StarHackGame.reset();
+            do StarHackGame.start();
+            while (StarHackGame.isRunning()) {
+                do StarHackGame.update();
             }
-            do game.end();
-
-            // end
-            do game.dispose();
+            do StarHackGame.end();
 
         }
         return;

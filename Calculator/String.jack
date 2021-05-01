@@ -1,0 +1,59 @@
+// This file is adapted from www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/String.jack
+
+class String {
+
+    field int length;
+    field Array array;
+
+    constructor String new(int maxLength) {
+        if (maxLength > 0) {
+            let array = Array.new(maxLength);
+        } else {
+            let array = 0;
+        }
+        return this;
+    }
+
+    method void dispose() {
+        if (array > 0) {
+            do array.dispose();
+        }
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int length() {
+        return length;
+    }
+
+    method void clear() {
+        let length = 0;
+        return;
+    }
+
+    method char charAt(int j) {
+        return array[j];
+    }
+
+    method void setCharAt(int j, char c) {
+        let array[j] = c;
+        return;
+    }
+
+    method String appendChar(char c) {
+        let array[length] = c;
+        let length = length + 1;
+        return this;
+    }
+
+    method void eraseLastChar() {
+        if (length > 0) {
+            let length = length - 1;
+        }
+        return;
+    }
+
+}

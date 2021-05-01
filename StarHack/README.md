@@ -6,7 +6,7 @@ Star Hack is an homage to classic "Trek" style games written for the Jack progra
 
 ![Screenshot](https://github.com/DChristianson/nand2tetris-samples/blob/master/screenshots/starhack.png)
 
-In this game you are tasked with exploring an 8x8 region of space in a limited amount of time while managing your ship's resources. In simple terms this means fighting hostile spacecraft, dubbed "anomalies" and defending friendly habitats. 
+In this game you are tasked with exploring an 8x8 region of space in a limited amount of time while managing your ship's resources. In simple terms this means fighting hostile spacecraft and defending friendly habitats. 
 
 Key:
 
@@ -18,11 +18,17 @@ Key:
 
 # Running the code
 
-Right now Star Hack ... is too big to run on the Hack computer. In fact without optimizations even the VM code is too big to run in the Hack VM emulator. There are simply too many instructions...
+This code makes use of a few Jack and VM extensions that aren't part of the Nand2Tetris course - mostly focused on reducing instruction counts in the compiled assembly language. Without them the code simply wouldn't fit in the CPU simulator!
 
-In order to get around this first hurdle the Jack compiler found in the nand2tetris-samples project implements a few extensions and optimizations that enable the code to "fit" on a VM emulator, and several of the provided OS libraries have been modified to aid in this effort.
+To build for the VM emulator (all VM extensions replaced with standard VM equivalents):
 
-Note that if you want to use the provided OS code and compiler to shortcut the Nand2Tetris course... well, you're only cheating yourself... 
+python3 lang/JackCompiler.py StarHack
+
+To build for Hack
+
+python3 lang/JackCompiler.py -x StarHack
+python3 lang/VMTranslator.py  StarHack
+python3 lang/asm.py  StarHack/StarHack.asm StarHack/StarHack.hack
 
 # Links
  * https://www.nand2tetris.org/

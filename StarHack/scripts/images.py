@@ -1,3 +1,7 @@
+#
+# Generate Screens.jack and Sprites.jack files 
+#
+
 import sys
 import subprocess
 import os
@@ -6,7 +10,7 @@ import glob
 from PIL import Image
 import itertools
 
-aseprite_path = '/Users/dchristianson/Library/Application Support/Steam/steamapps/common/Aseprite/Aseprite.app/Contents/MacOS/'
+aseprite_path = '<path to aesprite>'
 explicit_zero = False
 
 def chunker(iterable, n):
@@ -41,8 +45,8 @@ def emit_sprite(image, fp):
     data = image.getdata()
     for chunk in chunker(map(bit, data), 16):
         word = bits2int(reversed(chunk))
-        fp.write(f'        let screen[offset] = {int2jack(word)};\n')
-        fp.write(f'        let offset = offset + 32;\n')
+        fp.write(f'        let @offset = {int2jack(word)};\n')
+        fp.write(f'        inc offset 32;\n')
 
 def emit_run(varname, offset, n, run, fp):
     if len(run) == 0:
@@ -52,24 +56,33 @@ def emit_run(varname, offset, n, run, fp):
     return offset
 
 def emit_rle(runs, fp):
-    fp.write('        var int i;\n')
-    offset = 0
+    fp.write('        register int i;\n')
+    offset = 16384
     for n, run in runs:
         if len(run) > 0:
             fp.write(f'        // {n}: {",".join(map(str, run))}\n')
             if n > 1:
                 r = run[0]
                 if explicit_zero or (not r == 0):
-                    fp.write(f'        let i = {offset};\n')
-                    fp.write(f'        while (i < {offset + n})' + ' {\n')
-                    fp.write(f'            let screen[i] = {int2jack(r)};\n')
-                    fp.write(f'            let i = i + 1;\n')
-                    fp.write('        }\n')
-                offset = offset + n
+                    if n > 32:
+                        fp.write(f'        let i = {offset};\n')
+                        fp.write(f'        while (i < {offset + n})' + ' {\n')
+                        fp.write(f'            let @i = {int2jack(r)};\n')
+                        fp.write(f'            inc i;\n')
+                        fp.write('        }\n')
+                        offset = offset + n
+                    else:
+                        fp.write(f'        ldd {int2jack(r)};\n')
+                        for i in range(0, n):
+                            fp.write(f'        sto @{offset};\n')
+                            offset += 1
+                else:
+                    offset = offset + n
+
             else:
                 for r in run:
                     if explicit_zero or (not r == 0):
-                        fp.write(f'        let screen[{offset}] = {int2jack(r)};\n')
+                        fp.write(f'        let @{offset} = {int2jack(r)};\n')
                     offset += 1
     
 def encode_rle(image):
@@ -113,6 +126,26 @@ def encode_rle(image):
         offset += 1 + len(run)
     yield (offset, [])
 
+def emit_data(dataMap, fp):
+    for value, offsets in dataMap.items():
+        if not explicit_zero and value == 0:
+            continue
+        fp.write(f'        ldd {int2jack(value)};\n')
+        for offset in offsets:
+            fp.write(f'        sto {offset};\n')
+
+def encode_data(image):
+    dataMap = {}
+    offset = 16384
+    if not image.mode == 'RGBA':
+        image = image.convert(mode='RGBA')
+    data = image.getdata()
+    for chunk in chunker(map(bit, data), 16):
+        word = bits2int(reversed(chunk))
+        dataMap.setdefault(word, []).append(offset)
+        offset += 1
+    return dataMap
+
 if __name__ == "__main__":
 
     #
@@ -127,18 +160,14 @@ if __name__ == "__main__":
     with open('Screens.jack', 'w') as out:
         out.write(f'class Screens ' + '{\n')
         out.write(f'    #pragma optimizeArrayAssignment\n')
-        out.write('    static Array screen;')
-        out.write('    function void init() {\n')
-        out.write('        let screen = 16384;\n')
-        out.write('        return;\n')
-        out.write('    }\n')
 
         for screenName, filename in screens.items():
             print(f'extracting screen code for {filename}')
             out.write(f'    function void {screenName}() ' + '{\n')
             with Image.open(filename, 'r') as image:
-                runs = list(encode_rle(image))
-                emit_rle(runs, out)
+                emit_data(encode_data(image), out)
+                # runs = list(encode_rle(image))
+                # emit_rle(runs, out)
             out.write("        return;\n")
             out.write("    }\n")
 
@@ -160,16 +189,11 @@ if __name__ == "__main__":
 
         out.write('class Sprites {\n')
         out.write('    #pragma optimizeArrayAssignment\n')
-        out.write('    static Array screen;')
-        out.write('    function void init() {\n')
-        out.write('        let screen = 16384;\n')
-        out.write('        return;\n')
-        out.write('    }\n')
 
         for spritename, filename in sprites.items():
             print(f'extracting sprite code for {filename}')
             out.write(f'    function void {spritename}(int x, int y) ' + '{\n')
-            out.write('        var int offset; let offset = (y * 512) + x;\n')
+            out.write('        register int offset; let offset = 16384 + (y * 512) + x;\n')
             with Image.open(filename, 'r') as image:
                 emit_sprite(image, out)
             out.write('        return;\n')

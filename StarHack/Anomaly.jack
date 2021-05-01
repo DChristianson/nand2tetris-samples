@@ -30,23 +30,22 @@ class Anomaly {
         return;
     }
 
-    method void update(StarHackGame game) {
-        var int i;
-        var PlayerShip playerShip;
-        var Habitat habitat;
+    method void update() {
+        register PlayerShip playerShip;
+        register Habitat habitat;
         if (cooldown > 0) {
             let cooldown = cooldown - 1;
             return;
         }
-        let playerShip = game.playerShip();
+        let playerShip = StarHackGame.playerShip();
         if (sectorIndex = playerShip.sectorIndex()) {
-            do game.anomalyFireUpon(sectorIndex, playerShip.subsectorIndex(), 25, true);
+            do StarHackGame.anomalyFireUpon(sectorIndex, playerShip.subsectorIndex(), 25, true);
             let cooldown = cooldown + 1;
             return;
         }
-        let habitat = game.findHabitat(sectorIndex, subsectorIndex, 20);
+        let habitat = StarHackGame.findHabitat(sectorIndex, subsectorIndex, 20);
         if (habitat > 0) {
-            do game.anomalyFireUpon(sectorIndex, habitat.subsectorIndex(), 25, false);
+            do StarHackGame.anomalyFireUpon(sectorIndex, habitat.subsectorIndex(), 25, false);
             let cooldown = cooldown + 2;
         }
         return;

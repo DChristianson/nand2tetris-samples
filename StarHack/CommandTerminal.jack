@@ -27,16 +27,16 @@ class CommandTerminal {
 
         let commandString = Array.new(3);
         let commandHelp = Array.new(10);
-        let commandHelp[0] = "LRS: Long Range Scan";
-        let commandHelp[1] = "MOV: Micro Jump in sector";
-        let commandHelp[2] = "JMP: JuMP to a nearby sector";
-        let commandHelp[3] = "PAC: Fire Particle Cannon";
-        let commandHelp[4] = "AMM: Fire AntiMatter Missiles";
-        let commandHelp[5] = "SDN: Shields DowN";
-        let commandHelp[6] = "SUP: Shields UP";
-        let commandHelp[7] = "RPR: RePaiR damage";
-        let commandHelp[8] = "RSP: ReSuPply ship";
-        let commandHelp[9] = "STA: STAtus report";
+        let commandHelp[0] = Constants.help00();
+        let commandHelp[1] = Constants.help01();
+        let commandHelp[2] = Constants.help02();
+        let commandHelp[3] = Constants.help03();
+        let commandHelp[4] = Constants.help04();
+        let commandHelp[5] = Constants.help05();
+        let commandHelp[6] = Constants.help06();
+        let commandHelp[7] = Constants.help07();
+        let commandHelp[8] = Constants.help08();
+        let commandHelp[9] = Constants.help09();
         return;
     }
 
@@ -80,14 +80,14 @@ class CommandTerminal {
             }
             if (c = 129) {
                 if (i > 0) {
-                    let i = i - 1;
+                    dec i;
                     let commandString[i] = 0;
                     do TextGraphics.backSpace();
                 }
             } else {
                 if (i < 3) {
                     let commandString[i] = c;
-                    let i = i + 1;
+                    inc i;
                     do TextGraphics.printChar(c);
                 }
             }
@@ -111,7 +111,7 @@ class CommandTerminal {
             }
             if (c = 129) {
                 if (i > 0) {
-                    let i = i - 1;
+                    dec i;
                     let result = -1;
                     do TextGraphics.backSpace();
                 }
@@ -130,7 +130,7 @@ class CommandTerminal {
                         let result = v;
                         do TextGraphics.printChar(c);
                     } 
-                    let i = i + 1;
+                    inc i;
                 }
             }
         }
@@ -160,7 +160,7 @@ class CommandTerminal {
                 return result;
             }
             if (i > 0) {
-                let i = i - 1;
+                dec i;
                 do TextGraphics.backSpace();
             }
             let result = c = 89;
@@ -169,7 +169,7 @@ class CommandTerminal {
             } else {
                 do TextGraphics.printChar(78);
             }
-            let i = i + 1;
+            inc i;
         }
         do CommandTerminal.advance();
         return false;
@@ -190,9 +190,9 @@ class CommandTerminal {
     function char readChar() {
         var char c;
         while (c = 0) {
-            let c = keyPressed();
+            let c = CommandTerminal.keyPressed();
         }
-        while (keyPressed() = c) {
+        while (CommandTerminal.keyPressed() = c) {
         }
         return c;
     }
@@ -206,11 +206,11 @@ class CommandTerminal {
         do TextGraphics.moveCursor(19, 25);
         do TextGraphics.printString(message);
         while (c = 0) {
-            let i = i + 1;
-            let c = keyPressed();
+            inc i;
+            let c = CommandTerminal.keyPressed();
         }
-        while (keyPressed() = c) {
-            let i = i + 1;
+        while (CommandTerminal.keyPressed() = c) {
+            inc i;
         }
         return i;
     }

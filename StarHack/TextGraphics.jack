@@ -6,166 +6,772 @@ class TextGraphics {
 
     static Array screen;
     static int row, column;
-
-    // Character map for displaying characters
-    static Array charMaps; 
-
-    // character buffer
     static Array buffer;
 
-    /** Initializes the screen, and locates the cursor at the screen's top-left. */
+    // character buffer
+    static Array charMap; 
+
     function void init() {
         let screen = 16384;
         let row = 0;
         let column = 0;
-        do TextGraphics.initMap();
         let buffer = Array.new(5);
-        return;
-    }
-
-    // Initializes the character map array
-    function void initMap() {
-    
-        let charMaps = Array.new(127);
-        
-        // Black square, used for displaying non-printable characters.
-        do TextGraphics.create(0,63,63,63,63,63,63,63,63,63,0,0);
-
-        // Assigns the bitmap for each character in the charachter set.
-        // The first parameter is the character index, the next 11 numbers
-        // are the values of each row in the frame that represents this character.
-        do TextGraphics.create(32,0,0,0,0,0,0,0,0,0,0,0);          //
-        do TextGraphics.create(33,12,30,30,30,12,12,0,12,12,0,0);  // !
-        do TextGraphics.create(34,54,54,20,0,0,0,0,0,0,0,0);       // "
-        do TextGraphics.create(35,0,18,18,63,18,18,63,18,18,0,0);  // #
-        do TextGraphics.create(36,12,30,51,3,30,48,51,30,12,12,0); // $
-        do TextGraphics.create(37,0,0,35,51,24,12,6,51,49,0,0);    // %
-        do TextGraphics.create(38,12,30,30,12,54,27,27,27,54,0,0); // &
-        do TextGraphics.create(39,12,12,6,0,0,0,0,0,0,0,0);        // '
-        do TextGraphics.create(40,24,12,6,6,6,6,6,12,24,0,0);      // (
-        do TextGraphics.create(41,6,12,24,24,24,24,24,12,6,0,0);   // )
-        do TextGraphics.create(42,0,0,0,51,30,63,30,51,0,0,0);     // *
-        do TextGraphics.create(43,0,0,0,12,12,63,12,12,0,0,0);     // +
-        do TextGraphics.create(44,0,0,0,0,0,0,0,12,12,6,0);        // ,
-        do TextGraphics.create(45,0,0,0,0,0,63,0,0,0,0,0);         // -
-        do TextGraphics.create(46,0,0,0,0,0,0,0,12,12,0,0);        // .    
-        do TextGraphics.create(47,0,0,32,48,24,12,6,3,1,0,0);      // /
-        
-        do TextGraphics.create(48,12,30,51,51,51,51,51,30,12,0,0); // 0
-        do TextGraphics.create(49,12,14,15,12,12,12,12,12,63,0,0); // 1
-        do TextGraphics.create(50,30,51,48,24,12,6,3,51,63,0,0);   // 2
-        do TextGraphics.create(51,30,51,48,48,28,48,48,51,30,0,0); // 3
-        do TextGraphics.create(52,16,24,28,26,25,63,24,24,60,0,0); // 4
-        do TextGraphics.create(53,63,3,3,31,48,48,48,51,30,0,0);   // 5
-        do TextGraphics.create(54,28,6,3,3,31,51,51,51,30,0,0);    // 6
-        do TextGraphics.create(55,63,49,48,48,24,12,12,12,12,0,0); // 7
-        do TextGraphics.create(56,30,51,51,51,30,51,51,51,30,0,0); // 8
-        do TextGraphics.create(57,30,51,51,51,62,48,48,24,14,0,0); // 9
-        
-        do TextGraphics.create(58,0,0,12,12,0,0,12,12,0,0,0);      // :
-        do TextGraphics.create(59,0,0,12,12,0,0,12,12,6,0,0);      // ;
-        do TextGraphics.create(60,0,0,24,12,6,3,6,12,24,0,0);      // <
-        do TextGraphics.create(61,0,0,0,63,0,0,63,0,0,0,0);        // =
-        do TextGraphics.create(62,0,0,3,6,12,24,12,6,3,0,0);       // >
-        do TextGraphics.create(64,30,51,51,59,59,59,27,3,30,0,0);  // @
-        do TextGraphics.create(63,30,51,51,24,12,12,0,12,12,0,0);  // ?
-
-        do TextGraphics.create(65,30,51,51,51,63,51,51,51,51,0,0); // A 
-        do TextGraphics.create(66,31,51,51,51,31,51,51,51,31,0,0); // B
-        do TextGraphics.create(67,28,54,35,3,3,3,35,54,28,0,0);    // C
-        do TextGraphics.create(68,15,27,51,51,51,51,51,27,15,0,0); // D
-        do TextGraphics.create(69,63,51,35,11,15,11,35,51,63,0,0); // E
-        do TextGraphics.create(70,63,51,35,11,15,11,3,3,3,0,0);    // F
-        do TextGraphics.create(71,28,54,35,3,59,51,51,54,44,0,0);  // G
-        do TextGraphics.create(72,51,51,51,51,63,51,51,51,51,0,0); // H
-        do TextGraphics.create(73,30,12,12,12,12,12,12,12,30,0,0); // I
-        do TextGraphics.create(74,60,24,24,24,24,24,27,27,14,0,0); // J
-        do TextGraphics.create(75,51,51,51,27,15,27,51,51,51,0,0); // K
-        do TextGraphics.create(76,3,3,3,3,3,3,35,51,63,0,0);       // L
-        do TextGraphics.create(77,33,51,63,63,51,51,51,51,51,0,0); // M
-        do TextGraphics.create(78,51,51,55,55,63,59,59,51,51,0,0); // N
-        do TextGraphics.create(79,30,51,51,51,51,51,51,51,30,0,0); // O
-        do TextGraphics.create(80,31,51,51,51,31,3,3,3,3,0,0);     // P
-        do TextGraphics.create(81,30,51,51,51,51,51,63,59,30,48,0);// Q
-        do TextGraphics.create(82,31,51,51,51,31,27,51,51,51,0,0); // R
-        do TextGraphics.create(83,30,51,51,6,28,48,51,51,30,0,0);  // S
-        do TextGraphics.create(84,63,63,45,12,12,12,12,12,30,0,0); // T
-        do TextGraphics.create(85,51,51,51,51,51,51,51,51,30,0,0); // U
-        do TextGraphics.create(86,51,51,51,51,51,30,30,12,12,0,0); // V
-        do TextGraphics.create(87,51,51,51,51,51,63,63,63,18,0,0); // W
-        do TextGraphics.create(88,51,51,30,30,12,30,30,51,51,0,0); // X
-        do TextGraphics.create(89,51,51,51,51,30,12,12,12,30,0,0); // Y
-        do TextGraphics.create(90,63,51,49,24,12,6,35,51,63,0,0);  // Z
-
-        do TextGraphics.create(91,30,6,6,6,6,6,6,6,30,0,0);          // [
-        do TextGraphics.create(92,0,0,1,3,6,12,24,48,32,0,0);        // \
-        do TextGraphics.create(93,30,24,24,24,24,24,24,24,30,0,0);   // ]
-        do TextGraphics.create(94,8,28,54,0,0,0,0,0,0,0,0);          // ^
-        do TextGraphics.create(95,0,0,0,0,0,0,0,0,0,63,0);           // _
-        do TextGraphics.create(96,6,12,24,0,0,0,0,0,0,0,0);          // `
-
-        do TextGraphics.create(97,0,0,0,14,24,30,27,27,54,0,0);      // a
-        do TextGraphics.create(98,3,3,3,15,27,51,51,51,30,0,0);      // b
-        do TextGraphics.create(99,0,0,0,30,51,3,3,51,30,0,0);        // c
-        do TextGraphics.create(100,48,48,48,60,54,51,51,51,30,0,0);  // d
-        do TextGraphics.create(101,0,0,0,30,51,63,3,51,30,0,0);      // e
-        do TextGraphics.create(102,28,54,38,6,15,6,6,6,15,0,0);      // f
-        do TextGraphics.create(103,0,0,30,51,51,51,62,48,51,30,0);   // g
-        do TextGraphics.create(104,3,3,3,27,55,51,51,51,51,0,0);     // h
-        do TextGraphics.create(105,12,12,0,14,12,12,12,12,30,0,0);   // i
-        do TextGraphics.create(106,48,48,0,56,48,48,48,48,51,30,0);  // j
-        do TextGraphics.create(107,3,3,3,51,27,15,15,27,51,0,0);     // k
-        do TextGraphics.create(108,14,12,12,12,12,12,12,12,30,0,0);  // l
-        do TextGraphics.create(109,0,0,0,29,63,43,43,43,43,0,0);     // m
-        do TextGraphics.create(110,0,0,0,29,51,51,51,51,51,0,0);     // n
-        do TextGraphics.create(111,0,0,0,30,51,51,51,51,30,0,0);     // o
-        do TextGraphics.create(112,0,0,0,30,51,51,51,31,3,3,0);      // p
-        do TextGraphics.create(113,0,0,0,30,51,51,51,62,48,48,0);    // q
-        do TextGraphics.create(114,0,0,0,29,55,51,3,3,7,0,0);        // r
-        do TextGraphics.create(115,0,0,0,30,51,6,24,51,30,0,0);      // s
-        do TextGraphics.create(116,4,6,6,15,6,6,6,54,28,0,0);        // t
-        do TextGraphics.create(117,0,0,0,27,27,27,27,27,54,0,0);     // u
-        do TextGraphics.create(118,0,0,0,51,51,51,51,30,12,0,0);     // v
-        do TextGraphics.create(119,0,0,0,51,51,51,63,63,18,0,0);     // w
-        do TextGraphics.create(120,0,0,0,51,30,12,12,30,51,0,0);     // x
-        do TextGraphics.create(121,0,0,0,51,51,51,62,48,24,15,0);    // y
-        do TextGraphics.create(122,0,0,0,63,27,12,6,51,63,0,0);      // z
-        
-        do TextGraphics.create(123,56,12,12,12,7,12,12,12,56,0,0);   // {
-        do TextGraphics.create(124,12,12,12,12,12,12,12,12,12,0,0);  // |
-        do TextGraphics.create(125,7,12,12,12,56,12,12,12,7,0,0);    // }
-        do TextGraphics.create(126,38,45,25,0,0,0,0,0,0,0,0);        // ~
-
+        let charMap = 15292;
+        ldd 16191;
+        sto @15292;
+        sto @15293;
+        sto @15294;
+        sto @15295;
+        sto @15296;
+        sto @15297;
+        sto @15298;
+        sto @15299;
+        sto @15300;
+        sto @15339;
+        sto @15342;
+        sto @15418;
+        sto @15429;
+        sto @15451;
+        sto @15498;
+        sto @15509;
+        sto @15528;
+        sto @15534;
+        sto @15556;
+        sto @15625;
+        sto @15628;
+        sto @15670;
+        sto @15710;
+        sto @15718;
+        sto @15721;
+        sto @15747;
+        sto @15795;
+        sto @15800;
+        sto @15801;
+        sto @15813;
+        sto @15848;
+        sto @15875;
+        sto @15876;
+        sto @15913;
+        sto @15914;
+        sto @15915;
+        sto @15941;
+        sto @15949;
+        sto @16005;
+        sto @16067;
+        sto @16154;
+        sto @16266;
+        sto @16267;
+        sto @16296;
+        sto @16301;
+        ldd 3084;
+        sto @15314;
+        sto @15318;
+        sto @15319;
+        sto @15321;
+        sto @15322;
+        sto @15347;
+        sto @15355;
+        sto @15356;
+        sto @15363;
+        sto @15369;
+        sto @15372;
+        sto @15380;
+        sto @15381;
+        sto @15392;
+        sto @15398;
+        sto @15403;
+        sto @15409;
+        sto @15427;
+        sto @15428;
+        sto @15430;
+        sto @15431;
+        sto @15442;
+        sto @15443;
+        sto @15464;
+        sto @15465;
+        sto @15473;
+        sto @15479;
+        sto @15487;
+        sto @15490;
+        sto @15493;
+        sto @15494;
+        sto @15495;
+        sto @15496;
+        sto @15497;
+        sto @15505;
+        sto @15561;
+        sto @15562;
+        sto @15563;
+        sto @15564;
+        sto @15591;
+        sto @15592;
+        sto @15595;
+        sto @15596;
+        sto @15602;
+        sto @15603;
+        sto @15606;
+        sto @15607;
+        sto @15614;
+        sto @15618;
+        sto @15637;
+        sto @15639;
+        sto @15648;
+        sto @15649;
+        sto @15651;
+        sto @15652;
+        sto @15755;
+        sto @15756;
+        sto @15757;
+        sto @15758;
+        sto @15759;
+        sto @15760;
+        sto @15761;
+        sto @15878;
+        sto @15879;
+        sto @15880;
+        sto @15881;
+        sto @15882;
+        sto @15904;
+        sto @15905;
+        sto @15923;
+        sto @15935;
+        sto @15936;
+        sto @15937;
+        sto @15945;
+        sto @15968;
+        sto @16008;
+        sto @16106;
+        sto @16107;
+        sto @16110;
+        sto @16111;
+        sto @16112;
+        sto @16113;
+        sto @16140;
+        sto @16141;
+        sto @16142;
+        sto @16143;
+        sto @16144;
+        sto @16145;
+        sto @16146;
+        sto @16257;
+        sto @16276;
+        sto @16277;
+        sto @16298;
+        sto @16305;
+        sto @16306;
+        sto @16307;
+        sto @16309;
+        sto @16310;
+        sto @16311;
+        sto @16315;
+        sto @16316;
+        sto @16317;
+        sto @16318;
+        sto @16319;
+        sto @16320;
+        sto @16321;
+        sto @16322;
+        sto @16323;
+        sto @16327;
+        sto @16328;
+        sto @16329;
+        sto @16331;
+        sto @16332;
+        sto @16333;
+        ldd 7710;
+        sto @15315;
+        sto @15316;
+        sto @15317;
+        sto @15348;
+        sto @15351;
+        sto @15354;
+        sto @15370;
+        sto @15371;
+        sto @15417;
+        sto @15419;
+        sto @15480;
+        sto @15486;
+        sto @15501;
+        sto @15512;
+        sto @15520;
+        sto @15542;
+        sto @15553;
+        sto @15567;
+        sto @15571;
+        sto @15575;
+        sto @15578;
+        sto @15655;
+        sto @15663;
+        sto @15644;
+        sto @15666;
+        sto @15754;
+        sto @15762;
+        sto @15820;
+        sto @15828;
+        sto @15842;
+        sto @15850;
+        sto @15864;
+        sto @15872;
+        sto @15883;
+        sto @15894;
+        sto @15902;
+        sto @15903;
+        sto @15921;
+        sto @15922;
+        sto @15924;
+        sto @15925;
+        sto @15934;
+        sto @15938;
+        sto @15952;
+        sto @15960;
+        sto @15974;
+        sto @15982;
+        sto @16023;
+        sto @16037;
+        sto @16043;
+        sto @16048;
+        sto @16059;
+        sto @16065;
+        sto @16070;
+        sto @16086;
+        sto @16093;
+        sto @16114;
+        sto @16126;
+        sto @16147;
+        sto @16175;
+        sto @16180;
+        sto @16186;
+        sto @16197;
+        sto @16219;
+        sto @16224;
+        sto @16256;
+        sto @16275;
+        sto @16278;
+        ldd 13878;
+        sto @15325;
+        sto @15326;
+        sto @15373;
+        sto @15377;
+        sto @15689;
+        sto @15695;
+        sto @15733;
+        sto @15739;
+        sto @15987;
+        sto @16026;
+        sto @16055;
+        sto @16074;
+        sto @16234;
+        sto @16246;
+        ldd 5140;
+        sto @15327;
+        ldd 4626;
+        sto @15337;
+        sto @15338;
+        sto @15340;
+        sto @15341;
+        sto @15343;
+        sto @15344;
+        sto @15916;
+        sto @16268;
+        ldd 13107;
+        sto @15349;
+        sto @15353;
+        sto @15361;
+        sto @15365;
+        sto @15416;
+        sto @15420;
+        sto @15481;
+        sto @15482;
+        sto @15483;
+        sto @15484;
+        sto @15485;
+        sto @15502;
+        sto @15508;
+        sto @15513;
+        sto @15519;
+        sto @15541;
+        sto @15550;
+        sto @15551;
+        sto @15552;
+        sto @15568;
+        sto @15569;
+        sto @15570;
+        sto @15572;
+        sto @15573;
+        sto @15574;
+        sto @15579;
+        sto @15580;
+        sto @15581;
+        sto @15656;
+        sto @15657;
+        sto @15645;
+        sto @15646;
+        sto @15667;
+        sto @15668;
+        sto @15669;
+        sto @15671;
+        sto @15672;
+        sto @15673;
+        sto @15674;
+        sto @15678;
+        sto @15679;
+        sto @15680;
+        sto @15682;
+        sto @15683;
+        sto @15684;
+        sto @15701;
+        sto @15702;
+        sto @15703;
+        sto @15704;
+        sto @15705;
+        sto @15711;
+        sto @15717;
+        sto @15722;
+        sto @15737;
+        sto @15738;
+        sto @15743;
+        sto @15744;
+        sto @15745;
+        sto @15746;
+        sto @15748;
+        sto @15749;
+        sto @15750;
+        sto @15751;
+        sto @15776;
+        sto @15777;
+        sto @15778;
+        sto @15782;
+        sto @15783;
+        sto @15784;
+        sto @15794;
+        sto @15799;
+        sto @15802;
+        sto @15803;
+        sto @15804;
+        sto @15805;
+        sto @15806;
+        sto @15809;
+        sto @15810;
+        sto @15816;
+        sto @15817;
+        sto @15821;
+        sto @15822;
+        sto @15823;
+        sto @15824;
+        sto @15825;
+        sto @15826;
+        sto @15827;
+        sto @15832;
+        sto @15833;
+        sto @15834;
+        sto @15843;
+        sto @15844;
+        sto @15845;
+        sto @15846;
+        sto @15847;
+        sto @15854;
+        sto @15855;
+        sto @15856;
+        sto @15859;
+        sto @15860;
+        sto @15861;
+        sto @15865;
+        sto @15866;
+        sto @15870;
+        sto @15871;
+        sto @15886;
+        sto @15887;
+        sto @15888;
+        sto @15889;
+        sto @15890;
+        sto @15891;
+        sto @15892;
+        sto @15893;
+        sto @15897;
+        sto @15898;
+        sto @15899;
+        sto @15900;
+        sto @15901;
+        sto @15908;
+        sto @15909;
+        sto @15910;
+        sto @15911;
+        sto @15912;
+        sto @15919;
+        sto @15920;
+        sto @15926;
+        sto @15927;
+        sto @15930;
+        sto @15931;
+        sto @15932;
+        sto @15933;
+        sto @15942;
+        sto @15948;
+        sto @16034;
+        sto @16035;
+        sto @16036;
+        sto @16044;
+        sto @16047;
+        sto @16056;
+        sto @16057;
+        sto @16058;
+        sto @16066;
+        sto @16069;
+        sto @16087;
+        sto @16088;
+        sto @16089;
+        sto @16092;
+        sto @16100;
+        sto @16101;
+        sto @16102;
+        sto @16103;
+        sto @16125;
+        sto @16131;
+        sto @16136;
+        sto @16165;
+        sto @16166;
+        sto @16167;
+        sto @16168;
+        sto @16169;
+        sto @16176;
+        sto @16177;
+        sto @16178;
+        sto @16179;
+        sto @16187;
+        sto @16188;
+        sto @16189;
+        sto @16198;
+        sto @16199;
+        sto @16200;
+        sto @16210;
+        sto @16220;
+        sto @16223;
+        sto @16252;
+        sto @16253;
+        sto @16254;
+        sto @16255;
+        sto @16263;
+        sto @16264;
+        sto @16265;
+        sto @16274;
+        sto @16279;
+        sto @16285;
+        sto @16286;
+        sto @16287;
+        sto @16300;
+        ldd 771;
+        sto @15350;
+        sto @15475;
+        sto @15507;
+        sto @15535;
+        sto @15536;
+        sto @15547;
+        sto @15548;
+        sto @15616;
+        sto @15635;
+        sto @15641;
+        sto @15662;
+        sto @15691;
+        sto @15692;
+        sto @15693;
+        sto @15727;
+        sto @15728;
+        sto @15729;
+        sto @15735;
+        sto @15787;
+        sto @15788;
+        sto @15789;
+        sto @15790;
+        sto @15791;
+        sto @15792;
+        sto @15836;
+        sto @15837;
+        sto @15838;
+        sto @15839;
+        sto @15966;
+        sto @16029;
+        sto @16030;
+        sto @16031;
+        sto @16045;
+        sto @16046;
+        sto @16068;
+        sto @16095;
+        sto @16096;
+        sto @16097;
+        sto @16128;
+        sto @16129;
+        sto @16130;
+        sto @16191;
+        sto @16192;
+        sto @16211;
+        sto @16212;
+        ldd 12336;
+        sto @15352;
+        sto @15471;
+        sto @15503;
+        sto @15514;
+        sto @15515;
+        sto @15517;
+        sto @15518;
+        sto @15538;
+        sto @15539;
+        sto @15540;
+        sto @15558;
+        sto @15559;
+        sto @15583;
+        sto @15584;
+        sto @15851;
+        sto @15869;
+        sto @15970;
+        sto @16051;
+        sto @16052;
+        sto @16053;
+        sto @16091;
+        sto @16117;
+        sto @16118;
+        sto @16121;
+        sto @16122;
+        sto @16123;
+        sto @16124;
+        sto @16202;
+        sto @16203;
+        sto @16289;
+        ldd 8995;
+        sto @15360;
+        sto @15690;
+        sto @15694;
+        sto @15712;
+        sto @15716;
+        sto @15723;
+        sto @15734;
+        sto @15793;
+        sto @15947;
+        ldd 6168;
+        sto @15362;
+        sto @15391;
+        sto @15399;
+        sto @15404;
+        sto @15405;
+        sto @15406;
+        sto @15407;
+        sto @15408;
+        sto @15472;
+        sto @15504;
+        sto @15524;
+        sto @15529;
+        sto @15530;
+        sto @15560;
+        sto @15585;
+        sto @15613;
+        sto @15619;
+        sto @15638;
+        sto @15647;
+        sto @15766;
+        sto @15767;
+        sto @15768;
+        sto @15769;
+        sto @15770;
+        sto @15944;
+        sto @15969;
+        sto @15975;
+        sto @15976;
+        sto @15977;
+        sto @15978;
+        sto @15979;
+        sto @15980;
+        sto @15981;
+        sto @16009;
+        sto @16022;
+        sto @16222;
+        sto @16290;
+        ldd 1542;
+        sto @15364;
+        sto @15382;
+        sto @15393;
+        sto @15394;
+        sto @15395;
+        sto @15396;
+        sto @15397;
+        sto @15402;
+        sto @15410;
+        sto @15444;
+        sto @15474;
+        sto @15506;
+        sto @15546;
+        sto @15608;
+        sto @15615;
+        sto @15617;
+        sto @15636;
+        sto @15640;
+        sto @15867;
+        sto @15946;
+        sto @15953;
+        sto @15954;
+        sto @15955;
+        sto @15956;
+        sto @15957;
+        sto @15958;
+        sto @15959;
+        sto @15967;
+        sto @16007;
+        sto @16076;
+        sto @16078;
+        sto @16079;
+        sto @16080;
+        sto @16221;
+        sto @16228;
+        sto @16229;
+        sto @16231;
+        sto @16232;
+        sto @16233;
+        sto @16299;
+        ldd 12593;
+        sto @15366;
+        sto @15557;
+        sto @15943;
+        ldd 6939;
+        sto @15374;
+        sto @15375;
+        sto @15376;
+        sto @15661;
+        sto @15700;
+        sto @15706;
+        sto @15771;
+        sto @15772;
+        sto @15779;
+        sto @15781;
+        sto @15858;
+        sto @16024;
+        sto @16025;
+        sto @16033;
+        sto @16098;
+        sto @16132;
+        sto @16135;
+        sto @16241;
+        sto @16242;
+        sto @16243;
+        sto @16244;
+        sto @16245;
+        sto @16297;
+        ldd 8224;
+        sto @15470;
+        sto @15971;
+        ldd 257;
+        sto @15476;
+        sto @15965;
+        ldd 3598;
+        sto @15491;
+        sto @15586;
+        sto @15773;
+        sto @16021;
+        sto @16109;
+        sto @16139;
+        ldd 3855;
+        sto @15492;
+        sto @15699;
+        sto @15707;
+        sto @15714;
+        sto @15725;
+        sto @15780;
+        sto @16032;
+        sto @16077;
+        sto @16081;
+        sto @16133;
+        sto @16134;
+        sto @16230;
+        sto @16291;
+        ldd 7196;
+        sto @15516;
+        sto @15525;
+        sto @15545;
+        sto @15688;
+        sto @15696;
+        sto @15732;
+        sto @15868;
+        sto @15986;
+        sto @16073;
+        sto @16235;
+        ldd 4112;
+        sto @15523;
+        ldd 6682;
+        sto @15526;
+        ldd 6425;
+        sto @15527;
+        sto @16339;
+        ldd 15420;
+        sto @15531;
+        sto @15765;
+        sto @16054;
+        ldd 7967;
+        sto @15537;
+        sto @15549;
+        sto @15677;
+        sto @15681;
+        sto @15685;
+        sto @15831;
+        sto @15835;
+        sto @15853;
+        sto @15857;
+        sto @16190;
+        ldd 15934;
+        sto @15582;
+        sto @16090;
+        sto @16201;
+        sto @16288;
+        ldd 15163;
+        sto @15658;
+        sto @15659;
+        sto @15660;
+        sto @15736;
+        sto @15814;
+        sto @15815;
+        sto @15849;
+        ldd 2827;
+        sto @15713;
+        sto @15715;
+        sto @15724;
+        sto @15726;
+        ldd 11308;
+        sto @15740;
+        ldd 8481;
+        sto @15798;
+        ldd 14135;
+        sto @15811;
+        sto @15812;
+        sto @16099;
+        sto @16209;
+        ldd 11565;
+        sto @15877;
+        sto @16338;
+        ldd 2056;
+        sto @15985;
+        ldd 9766;
+        sto @16075;
+        sto @16337;
+        ldd 14392;
+        sto @16120;
+        sto @16304;
+        sto @16312;
+        sto @16330;
+        ldd 7453;
+        sto @16153;
+        sto @16164;
+        sto @16208;
+        ldd 11051;
+        sto @16155;
+        sto @16156;
+        sto @16157;
+        sto @16158;
+        ldd 1799;
+        sto @16213;
+        sto @16308;
+        sto @16326;
+        sto @16334;
+        ldd 1028;
+        sto @16227;
     	return;
     }
 
-    // Creates the character map array of the given character index, using the given values.
-    function void create(int index, int a, int b, int c, int d, int e,
-                         int f, int g, int h, int i, int j, int k) {
-        var Array map;
-
-        let map = Array.new(11);
-        let charMaps[index] = map;
-
-        let map[0] = a + (a * 256);
-        let map[1] = b + (b * 256);
-        let map[2] = c + (c * 256);
-        let map[3] = d + (d * 256);
-        let map[4] = e + (e * 256);
-        let map[5] = f + (f * 256);
-        let map[6] = g + (g * 256);
-        let map[7] = h + (h * 256);
-        let map[8] = i + (i * 256);
-        let map[9] = j + (j * 256);
-        let map[10] = k + (k * 256);
-
-        return;
-    }
-
-    /**
-     * Print text at the given row/col position. An alignment of 1 will center the 
-     * string at the specified position, 2 will right align, any other input will left align.
-     */
     function void drawTextAligned(String s, int row, int col, int alignment) {
         if (alignment = 1) {
             let col = col - (s.length() / 2);
@@ -190,47 +796,28 @@ class TextGraphics {
         return;        
     }
     
-    // Returns the character map (array of size 11) of the given character.
-    // If the given character is invalid or non-printable, returns the
-    // character map of a black square.
-    function Array getMap(char c) {
-        if ((c < 32) | (c > 126)) {
-            let c = 0;
-        }
-        return charMaps[c];
-    }
-
-    /** Moves the cursor to the j-th column of the i-th row,
-     *  and erases the character displayed there. */
     function void moveCursor(int i, int j) {
-        var int offset;
-        var int mask;
-        var int k;
         let row = i;
         let column = j;
-        let offset = column / 2;
-        if ((column - (offset + offset)) > 0) {
-            let mask = 255;
-        } else {
-            let mask = ~255;
-        }
-        let offset = (row * 352);
-        while (k < 11) {
-            let screen[offset] = (screen[offset] & mask);
-            let k = k + 1;
-        }
         return;
     }
 
-    /** Displays the given character at the cursor location,
-     *  and advances the cursor one column forward. */
     function void printChar(char c) {
-        var Array map;
-        var int offset;
-        var int mask;
-        var int shift;
-        var int k;
-        let map = TextGraphics.getMap(c);
+        register Array map;
+        register int offset;
+        register int mask;
+        register int shift;
+        register int k;
+
+        // get char
+        if ((c < 32) | (c > 126)) {
+            let c = 0;
+        } else {
+            let c = (c - 31) * 11;
+        }
+        let map = charMap + c;
+
+        // compute offset
         let offset = column / 2;
         if ((column - (offset + offset)) > 0) {
             let shift = ~255;
@@ -240,16 +827,17 @@ class TextGraphics {
             let mask = ~255;
         }
         let offset = (row * 352) + offset;
+        let k = 0;
         while (k < 11) {
             let screen[offset] = (screen[offset] & mask) + (map[k] & shift);
-            let offset = offset + 32;
-            let k = k + 1;
+            inc offset 32;
+            inc k;
         }
         // advance
-        let column = column + 1;
+        inc column;
         if (column > 63) {
             let column = 0;
-            let row = row + 1;
+            inc row;
             if (row > 22) {
                 let row = 0;
             }
@@ -257,14 +845,13 @@ class TextGraphics {
         return;
     }
 
-    /** displays the given string starting at the cursor location,
-     *  and advances the cursor appropriately. */
     function void printString(String s) {
-        var int i, len;
+        register int i, len;
         let len = s.length();
+        let i = 0;
         while (i < len) {
             do TextGraphics.printChar(s.charAt(i));
-            let i = i + 1;
+            inc i;
         }
         return;
     }
@@ -272,7 +859,7 @@ class TextGraphics {
     /** Displays the given integer starting at the cursor location,
      *  and advances the cursor appropriately. */
     function void printInt(int val) {
-        var int d, r, i;
+        register int d, r, i;
 
         if (val < 0) {
             do TextGraphics.printChar(45);
@@ -291,13 +878,13 @@ class TextGraphics {
             let d = val / 10;
             let r = val - (10 * d);
             let buffer[i] = (48 + r);
-            let i = i + 1;
+            inc i;
             let val = d;
         }
  
         // reverse in place
         while (i > 0) {
-            let i = i - 1;
+            dec i;
             do TextGraphics.printChar(buffer[i]);
         }
 
@@ -307,7 +894,7 @@ class TextGraphics {
     /** Advances the cursor to the beginning of the next line. */
     function void println() {
         let column = 0;
-        let row = row + 1;
+        inc row;
         if (row > 22) {
             let row = 0;
         }
@@ -316,10 +903,9 @@ class TextGraphics {
 
     /** clear text in given rectangle **/
     function void clearText(int r1, int c1, int r2, int c2) {
-        var int offset, rowStart, rowEnd;
-        var int mask;
-        var int stop;
-        var boolean halfStart, halfEnd;
+        register int offset, rowStart, rowEnd;
+        register int stop;
+        register boolean halfStart, halfEnd;
 
         let rowStart = c1 / 2;
         let halfStart = (c1 - (rowStart + rowStart)) > 0;
@@ -347,15 +933,14 @@ class TextGraphics {
         return;
     }
 
-    /** Moves the cursor one column back. */
     function void backSpace() {
-        var int offset;
-        var int mask;
-        var int k;
-        let column = column - 1;
+        register int offset;
+        register int mask;
+        register int k;
+        dec column;
         if (column < 0) {
             let column = 63;
-            let row = row - 1;
+            dec row;
             if (row < 0) {
                 let row = 22;
             }
@@ -367,10 +952,11 @@ class TextGraphics {
             let mask = ~255;
         }
         let offset = (row * 352) + offset;
+        let k = 0;
         while (k < 11) {
             let screen[offset] = (screen[offset] & mask);
             let offset = offset + 32;
-            let k = k + 1;
+            inc k;
         }
         return;
     }

@@ -11,17 +11,24 @@ class ObjectArray {
         return array;
     }
 
+    method void clear() {
+        register Array offset;
+        register Array end;
+        let offset = this + 2;
+        let end = offset + (count * step);
+        while (offset < end) {
+            let @offset = 0;
+            inc offset;
+        }
+        return;
+    }
+
     method int count() {
         return count;
     }
 
     method Array get(int i) {
         return this + 2 + (i * step);
-    }
-
-    method void dispose() {
-        do Memory.deAlloc(this);
-        return;
     }
 
 }

@@ -61,9 +61,9 @@ class Display {
      * Display a decimal number
      */
     function void displayDecimal32(Decimal32 d) {
-        var char c;
-        var int i, len, x, step;
-        var String value;
+        register char c;
+        register int i, len, x, step;
+        register String value;
 
         let value = String.new(13);
         do d.format(value);
@@ -73,7 +73,7 @@ class Display {
         let x = displayRight - displayMargin - (len * step);
 
         do Display.clear();
-
+        let i = 0;
         while (i < len) {
             let c = value.charAt(i);
             if (x < 0) {
@@ -82,7 +82,7 @@ class Display {
                 do Display.displayChar(c, x);
             }
             let x = x + step;
-            let i = i + 1;
+            inc i;
         }
 
         do value.dispose();
@@ -91,8 +91,8 @@ class Display {
 
    function void displayChar(char c, int x) {
 
-        var int segments;
-        var int right;
+        register int segments;
+        register int right;
 
         let segments = Display.getDisplaySegments(c);
 
