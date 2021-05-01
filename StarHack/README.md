@@ -4,9 +4,9 @@ Star Hack is an homage to classic "Trek" style games written for the Jack progra
 
 # The game
 
-| ![Screenshot](../screenshots/starhack.png) | 
+<img src="../screenshots/starhack.png" data-canonical-src="../screenshots/starhack.png" width="512" />
 
-In this game you are tasked with defending an 8x8 region of space in a limited amount of time while managing your ship's resources. 
+You are tasked with defending an 8x8 region of space while managing your ship's resources.
 
 Key:
 
