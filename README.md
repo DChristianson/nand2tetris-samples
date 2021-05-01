@@ -1,6 +1,6 @@
-# Sample programs for the Hack computer
+# Hack programs
 
-Here are two sample programs written for the [Hack](https://www.nand2tetris.org/) computer in the Jack language
+For more information on the Hack computer go to [nand2tetris.org](nand2tetris.org).
 
 |  [Calculator](./Calculator) | [StarHack](./StarHack) |
 |  ---------- | -------- |
