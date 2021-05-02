@@ -10,6 +10,7 @@ class Habitat {
         let sectorIndex = sector;
         let subsectorIndex = subsector;
         let shields = shld;
+        let type = typ;
         let population = pop;
         return;
     }

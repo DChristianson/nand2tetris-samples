@@ -112,6 +112,7 @@ class Math {
     function int sqrt(int x) {
         register int y, j, z, zz;
         let j = 8;
+        let y = 0;
         while (j > 0) {
             let j = j - 1;
             // reuse the candidate term
