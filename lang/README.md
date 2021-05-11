@@ -5,14 +5,13 @@ Jack extensions
 
   * `register` variable declaration - assigns a local variable to memory as if it were a static. This speeds up execution in addition to reducing instruction count in compiled code.
   * new low-level statements for working with memory - used primarily to speed up graphics drawing and reduce instruction count.
-  ** `let @<address> = <int>` performs the equivalent of a Memory.poke
-  ** `ldd` - load the `d` register from a variable or constant
-  ** `sto` - store the `d` register to an address
-  ** `inc`/`dec`/`inv` - increment / decrement / invert a variable in place 
+    * `let @<address> = <int>` performs the equivalent of a Memory.poke
+    * `ldd` - load the `d` register from a variable or constant
+    * `sto` - store the `d` register to an address
+    * `inc`/`dec`/`inv` - increment / decrement / invert a variable in place 
 
 Compiler extensions
 
-* runs in two passes
-** first pass trims away unreachable functions and inline simple calls to avoid function call overhead
-** second pass optimizes some common redundant VM command sequences 
-* reimplemented function calls to reduce the number of instructions needed at the call site
+  * trims away unreachable functions and inline simple calls to avoid function call overhead
+  * optimizes some common redundant VM command sequences 
+  * reimplemented function calls to reduce the number of instructions needed at the call site
