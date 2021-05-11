@@ -12,6 +12,7 @@ Jack extensions
 
 Compiler extensions
 
-  * trims away unreachable functions and inline simple calls to avoid function call overhead
+  * trims away unreachable functions 
+  * inline simple function calls 
   * optimizes some common redundant VM command sequences 
   * reimplemented function calls to reduce the number of instructions needed at the call site
