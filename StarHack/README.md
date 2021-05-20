@@ -18,6 +18,8 @@ Key:
 
 # Running the code
 
+If you don't want to build the code yourself you can find hack binaries at the top level of this repository. You can try them out in the Nand2Tetris CPU emulator or check out this [online simulator](https://hack-computer.magiwanders.com/) from magiwanders.
+
 This code makes use of a few Jack and VM extensions that aren't part of the Nand2Tetris course - mostly focused on reducing instruction counts in the compiled Hack assembly language. Without them the code as written simply wouldn't fit in the CPU simulator!
 
 To build for the VM emulator (all VM extensions replaced with standard VM equivalents):
