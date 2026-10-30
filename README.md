@@ -1,6 +1,6 @@
 # Hack programs
 
-For more information on the Hack computer go to [nand2tetris.org](nand2tetris.org).
+For more information on the Hack computer go to [nand2tetris.org](https://www.nand2tetris.org).
 
 |  [Calculator](./Calculator) | [StarHack](./StarHack) |
 |  ---------- | -------- |
